@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+    <title>Economical Model</title>
+  </head>
+
+  <body>
+    <!-- navagation bar -->
+      <header id="titlebar">        
+          <div id="drag-region">
+              <div id="window-title">
+                  <span>Economial Model</span>
+                </div>
+          </div>
+          <div id="window-controls">
+              <div class="button" id="min-button">
+                <span>&#xE921;</span>
+              </div>
+              <div class="button" id="max-button">
+                <span>&#xE922;</span>
+              </div>
+              <div class="button" id="restore-button">
+                <span>&#xE923;</span>
+              </div>
+              <div class="button" id="close-button">
+                <span>&#xE8BB;</span>
+      </header>
+
+      <nav class="nav js-nav">
+          <header class="nav-header">
+            <img src ="images/mcgill_logo.png" width="120px" height="90px"/>
+            <h3 class="nav-title">Economical <strong>Modelling</strong></h3>
+          </header>
+
+          <div class="nav-item steps">
+              <button type="button" id="location"  class="nav-button" onclick="load_location()">Location </button>
+              <br>
+              <button type="button" id="mitigation-method"  class="nav-button">Mitigation Method </button>
+              <br>
+              <button type="button" id="method-details"  class="nav-button">Method Details </button>
+              <br>
+              <button type="button" id="calculate"  class="nav-button">Calculate </button>
+              <br>
+              <button type="button" id="result" class="nav-button">Result </button>
+            </div>
+     </nav>
+  
+     <main class="content js-content" id = "content"></main>
+   
+        </div>
+
+    <!-- You can also require other files to run in this process -->
+    <script src="./renderer.js"></script>
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+    <script>
+
+      function load_location() {
+     document.getElementById("content").innerHTML='<object type="text/html" data="location.html" ></object>';
+}
+    </script>
+
+        
+      </body>
+</html>
