@@ -9,6 +9,7 @@
   </head>
 
   <body>
+
     <!-- navagation bar -->
       <header id="titlebar">        
           <div id="drag-region">
@@ -30,7 +31,8 @@
                 <span>&#xE8BB;</span>
       </header>
 
-      <nav class="nav js-nav">
+      <!--sideNav Bar-->
+      <div class="nav js-nav">
           <header class="nav-header">
             <img src ="images/mcgill_logo.png" width="120px" height="90px"/>
             <h3 class="nav-title">Economical <strong>Modelling</strong></h3>
@@ -39,19 +41,24 @@
           <div class="nav-item steps">
               <button type="button" id="location"  class="nav-button" onclick="load_location()">Location </button>
               <br>
-              <button type="button" id="mitigation-method"  class="nav-button">Mitigation Method </button>
               <br>
-              <button type="button" id="method-details"  class="nav-button">Method Details </button>
+              <button type="button" id="mitigation-method"  class="nav-button" onclick="load_mitigation()">Mitigation Method </button>
               <br>
-              <button type="button" id="calculate"  class="nav-button">Calculate </button>
               <br>
-              <button type="button" id="result" class="nav-button">Result </button>
+              <button type="button" id="method-details"  class="nav-button" onclick="load_detailedInfo()">Method Details </button>
+              <br>
+              <br>
+              <button type="button" id="calculate"  class="nav-button" onclick="load_calculation()">Calculate </button>
+              <br>
+              <br>
+              <button type="button" id="result" class="nav-button" onclick="load_result()">Result </button>
             </div>
-     </nav>
+          </div>
   
-     <main class="content js-content" id = "content"></main>
+          <!--main content-->
+      <div class="main" id = "content" ></div>
+  </body>
    
-        </div>
 
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
@@ -59,11 +66,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
-    <script>
 
+    <script>
       function load_location() {
-     document.getElementById("content").innerHTML='<object type="text/html" data="location.html" ></object>';
+        $("#content").empty();
+        $('#content').load("location.html");
 }
+      function load_mitigation(){
+        $("#content").empty();
+        $('#content').load("mitigation.html");
+      }
+      function load_detailedInfo(){
+        $("#content").empty();
+        $('#content').load("method_details.html");
+      }
+      function load_calculation(){
+        $("#content").empty();
+        $('#content').load("calculation.html");
+      }
+      function load_result(){
+        $("#content").empty();
+        $('#content').load("results.html");
+      }
+      $( document ).ready(function() {
+        $("#content").empty();
+        $('#content').load("location.html");
+});
     </script>
 
         
