@@ -5,9 +5,28 @@
 
 <body>
 <div class="calculate-button" align = "center" id="calculate-button">
-        <button type="button" class="btn btn-danger btn-rounded">Calculate</button>
+        <button type="button" class="btn btn-danger btn-rounded" onclick="testWriteToFile()">Calculate</button>
       </div>
         </div>
+
+<script>
+   var fs = require('fs')
+      var filepath = "D:\\testing\\test.txt";
+      var content = "This is the new content of the file";
+
+       function testWriteToFile(){
+    fs.writeFile(filepath, content, (err) =>{
+        if(err){
+            alert("An error has occured" + err.message);
+            console.log(err);
+            return;
+        }
+    
+        alert("The file has been successfully updated")
+    })   
+}
+</script>
+        
     </body>
 
     </html>
