@@ -4,78 +4,105 @@
     <meta charset="utf-8">
     <title>ECharts</title>
     <!-- including ECharts file -->
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../node_modules/echarts/dist/echarts.min.js"></script>
     <link rel="stylesheet" href="results.css">
 </head>
 <body>
     <!-- prepare a DOM container with width and height -->
-    <div id="main" style="width: 600px;height:400px;"></div>
-    <script type="text/javascript">
+    <div id="main" class="container-fluid" style="width: 600px;height:400px;"></div>
+
+</body>
+<script type="text/javascript">
+    var fs = require('fs')
+    //regex to extract numbers
+    var regex = /[+-]?((\.\d+)|(\d+(\.\d+)?)([eE][+-]?\d+)?)/g;
+    //save filepath
+    var filepath = "C:\\GHG-SE\\GHG-SE-FD\\RZWQM.DAT";
+    var resultFilepath = "C:\\GHG-SE\\Analysis\\GHG-SE-FD.ana"
+
+    // var content = "This is the new content of the file";
+    let data = fs.readFileSync(filepath).toString().split("\n");
+    let resultData = fs.readFileSync(resultFilepath).toString().split("\n");
+
+    //global variables
+    let N2O = [];
+    let NxO = [];
+    let CO2 = [];
+    let yearDay = [];
+
+    $( document ).ready(function() {
+        readData();
+        drawGraph();
+        console.log(N2O);
+        console.log(CO2);
+        console.log(NxO);;
+});
+
+    function writeToLocal(data){
+        fs.writeFile("C:\\GHG-SE\\GHG-SE-FD\\RZWQM.DAT",data.join("\n"), function(err){
+            if (err) return console.log(err);
+        })
+    }
+
+    function readData(){
+        //data.splice(974,2,"0  0  0  0.0  0.0  20.0  0.0  0")
+        //console.log(data);
+        resultData.splice(0,23);
+       
+        //writeToLocal(data);
+
+        //should take in argument
+        for(let i = 0; i < resultData.length; i++ ){
+            let oneData = resultData[i];
+            let numbers;
+            let resultArray = []
+            while (numbers = regex.exec(oneData)) {
+                resultArray.push(numbers[0]);
+            }
+            N2O.push(resultArray[102]);
+            NxO.push(resultArray[103]);
+            CO2.push(resultArray[77]);
+            yearDay.push(resultArray[0]);
+        } 
+}
         // based on prepared DOM, initialize echarts instance
+    function drawGraph(){
+        //initialize the chart
         var myChart = echarts.init(document.getElementById('main'));
 
-        var xAxisData = [];
-var data1 = [];
-var data2 = [];
-for (var i = 0; i < 100; i++) {
-    xAxisData.push('Good Price' + i);
-    data1.push((Math.sin(i / 5) * (i / 5 -10) + i / 6) * 5);
-    data2.push((Math.cos(i / 5) * (i / 5 -10) + i / 6) * 5);
-}
-
-option = {
-    title: {
-        text: 'Example'
-    },
-    legend: {
-        data: ['bar', 'bar2'],
-        align: 'left'
-    },
-    toolbox: {
-        // y: 'bottom',
-        feature: {
-            magicType: {
-                type: ['stack', 'tiled']
+        var option = {
+            title: {
+                text: 'GHG Emission'
             },
-            dataView: {},
-            saveAsImage: {
-                pixelRatio: 2
-            }
-        }
-    },
-    tooltip: {},
-    xAxis: {
-        data: xAxisData,
-        silent: false,
-        splitLine: {
-            show: false
-        }
-    },
-    yAxis: {
-    },
-    series: [{
-        name: 'bar',
-        type: 'bar',
-        data: data1,
-        animationDelay: function (idx) {
-            return idx * 10;
-        }
-    }, {
-        name: 'bar2',
-        type: 'bar',
-        data: data2,
-        animationDelay: function (idx) {
-            return idx * 10 + 100;
-        }
-    }],
-    animationEasing: 'elasticOut',
-    animationDelayUpdate: function (idx) {
-        return idx * 5;
-    }
-};
+            tooltip: {},
+            legend: {
+                data:['N2O','NxO']
+            },
+            xAxis: {
+                data:yearDay, 
+                type: 'category',
+                boundaryGap:false,
+            },
+            yAxis: {type:'value'},
+            series: [{
+                name: 'N2O',
+                type: 'line',
+                stack: 'total',
+                data: N2O
+            },{
+                name: 'NxO',
+                type: 'line',
+                stack: 'total',
+                data: NxO
+            }]
+        };
 
         // use configuration item and data specified to show chart
         myChart.setOption(option);
+    }
+    
     </script>
-</body>
 </html>

@@ -5,25 +5,54 @@
 
 <body>
 <div class="calculate-button" align = "center" id="calculate-button">
-        <button type="button" class="btn btn-danger btn-rounded" onclick="testWriteToFile()">Calculate</button>
+        <button type="button" class="btn btn-danger btn-rounded" onclick="readData()">Calculate</button>
       </div>
         </div>
 
 <script>
-   var fs = require('fs')
-      var filepath = "D:\\testing\\test.txt";
-      var content = "This is the new content of the file";
+    var fs = require('fs')
+    //regex to extract numbers
+    var regex = /[+-]?((\.\d+)|(\d+(\.\d+)?)([eE][+-]?\d+)?)/g;
+    //save filepath
+    var filepath = "C:\\GHG-SE\\GHG-SE-FD\\RZWQM.DAT";
+    var resultFilepath = "C:\\GHG-SE\\Analysis\\GHG-SE-FD.ana"
 
-       function testWriteToFile(){
-    fs.writeFile(filepath, content, (err) =>{
-        if(err){
-            alert("An error has occured" + err.message);
-            console.log(err);
-            return;
-        }
-    
-        alert("The file has been successfully updated")
-    })   
+    // var content = "This is the new content of the file";
+    let data = fs.readFileSync(filepath).toString().split("\n");
+    let resultData = fs.readFileSync(resultFilepath).toString().split("\n");
+
+    function writeToLocal(data){
+        fs.writeFile("C:\\GHG-SE\\GHG-SE-FD\\RZWQM.DAT",data.join("\n"), function(err){
+            if (err) return console.log(err);
+        })
+    }
+
+    function readData(){
+        //data.splice(974,2,"0  0  0  0.0  0.0  20.0  0.0  0")
+        //console.log(data);
+        resultData.splice(0,23);
+       
+        //writeToLocal(data);
+
+        //should take in argument
+        let N2O = [];
+        let NxO = [];
+        let CO2 = [];
+        let yearDay = [];
+        for(let i = 0; i < resultData.length; i++ ){
+            let oneData = resultData[i];
+            let numbers;
+            let resultArray = []
+            while (numbers = regex.exec(oneData)) {
+                resultArray.push(numbers[0]);
+            }
+            N2O.push(resultArray[102]);
+            NxO.push(resultArray[103]);
+            CO2.push(resultArray[77]);
+            yearDay.push(resultArray[0]);
+        } 
+        console.log(N2O);
+        console.log(NxO);
 }
 </script>
         
