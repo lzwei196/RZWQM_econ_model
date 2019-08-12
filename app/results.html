@@ -16,10 +16,16 @@
 
 </body>
 <script type="text/javascript">
-    var fs = require('fs')
+    //loading up dependecies
+    var app = require('electron').remote; 
+    var dialog = app.dialog;
+    var path = require('path');
+    var fs = require('fs');
+
     //regex to extract numbers
     var regex = /[+-]?((\.\d+)|(\d+(\.\d+)?)([eE][+-]?\d+)?)/g;
     //save filepath
+    parentPath = path.dirname();
     var filepath = "C:\\GHG-SE\\GHG-SE-FD\\RZWQM.DAT";
     var resultFilepath = "C:\\GHG-SE\\Analysis\\GHG-SE-FD.ana"
 
@@ -33,13 +39,14 @@
     let CO2 = [];
     let yearDay = [];
 
+    //load the page when the DOM is ready
     $( document ).ready(function() {
         readData();
         drawGraph();
         console.log(N2O);
         console.log(CO2);
         console.log(NxO);;
-});
+    });
 
     function writeToLocal(data){
         fs.writeFile("C:\\GHG-SE\\GHG-SE-FD\\RZWQM.DAT",data.join("\n"), function(err){
