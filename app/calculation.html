@@ -5,7 +5,7 @@
 
 <body>
 <div class="calculate-button" align = "center" id="calculate-button">
-        <button type="button" class="btn btn-danger btn-rounded" onclick="readData()">Calculate</button>
+        <button type="button" class="btn btn-danger btn-rounded" onclick="writeRzwqm()">Calculate</button>
       </div>
         </div>
 
@@ -16,7 +16,14 @@
     var fs = require('fs');
     const plugin = require('./js/plugin.js');
 
-    
+    function readRzwqm(){
+      plugin.readRzwqm();
+    }
+
+    function writeRzwqm(){
+      plugin.writeRzwqm();
+    }
+
     function readData(){
       plugin.readData();
     }

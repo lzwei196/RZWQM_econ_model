@@ -16,8 +16,28 @@ function chooseFilePath(title){
     fileFinalName = dialog.showOpenDialog({'title':title});
     return fileFinalName[0];
   };
+
+function locateTheRzwqm(){
+    let filePath = chooseFilePath("Please locate the Rzwqm.DAT file.");
+    let resultData = fs.readFileSync(filePath).toString().split("\n");
+    return {"data":resultData,"path":filePath};
+  }
   
 module.exports = {
+      readRzwqm:function readRzwqm(){
+      let filePath = chooseFilePath("Please locate the Rzwqm.DAT file.");
+      let resultData = fs.readFileSync(filePath).toString().split("\n");
+      return {"data":resultData,"path":filePath};
+    },
+      writeRzwqm:function writeRzwqm(){
+      let filePath = locateTheRzwqm().path;
+      let fileData = locateTheRzwqm().data;
+      fileData.push("test");  
+      console.log(fileData);
+      fs.writeFile(filePath,fileData.join("\n"), function(err){
+          if (err) return console.log(err);
+      })
+    },
     chooseFilePath:function chooseFilePath(title){
         fileFinalName = dialog.showOpenDialog({'title':title});
         return fileFinalName[0];
@@ -29,7 +49,6 @@ module.exports = {
     
          //let data = fs.readFileSync(filepath).toString().split("\n");
          let resultData = fs.readFileSync(resultFilepath).toString().split("\n");
-         //data.splice(974,2,"0  0  0  0.0  0.0  20.0  0.0  0")
          //console.log(data);
          resultData.splice(0,23);
          //writeToLocal(data);

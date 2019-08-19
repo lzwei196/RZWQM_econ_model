@@ -15,14 +15,14 @@ module.exports = {
     priceScraper:function priceScraper(){
     rp(options)
     .then(function (html) {
-        // REQUEST SUCCEEDED: DO SOMETHING
+        // REQUEST SUCCEEDED
         const $ = cheerio.load(html);
         const price = $('.push-data');
         return price; 
     })
     .catch(function (err) {
-        // REQUEST FAILED: ERROR OF SOME KIND
-        console.log(err);
+        // REQUEST FAILED: print the error
+        console.log(err)
     });
 }
 }
