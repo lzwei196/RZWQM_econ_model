@@ -12,11 +12,13 @@
     })
 }
 
+//pop up a dialog window for user to locate the file path
 function chooseFilePath(title){
     fileFinalName = dialog.showOpenDialog({'title':title});
     return fileFinalName[0];
   };
-
+  
+//
 function locateTheRzwqm(){
     let filePath = chooseFilePath("Please locate the Rzwqm.DAT file.");
     let resultData = fs.readFileSync(filePath).toString().split("\n");

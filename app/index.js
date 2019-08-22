@@ -1,6 +1,5 @@
 const electron = require("electron")
 const BrowserWindow = electron.remote.BrowserWindow
-
 const calculateButton = document.getElementById("calculate-button")
 
 calculateButton.addEventListener('click', function(event){

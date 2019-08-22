@@ -4,20 +4,26 @@
   "description": "econ model Gui",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "postinstall": "install-app-deps"
   },
   "repository": "https://github.com/lzwei196/econModelElectron.git",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "bootstrap-select": "^1.13.10",
     "cheerio": "^1.0.0-rc.3",
+    "datepicker-bootstrap": "^1.9.13",
     "echarts": "^4.2.1",
+    "electron-builder": "^21.2.0",
+    "idb": "^4.0.4",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
     "puppeteer": "^1.19.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "tether": "^1.4.6"
+    "sqlite3": "^4.1.0",
+    "tether": "^1.4.6",
+    "trilogy": "^2.0.2"
   },
   "devDependencies": {
     "electron": "^5.0.6"
