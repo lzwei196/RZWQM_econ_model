@@ -12,7 +12,7 @@
           <div class="col-sm-6">
                 <label for="inputGroupSelect01">Choose the timing of irrigation</label>
               <select class="custom-select" id="inputGroupSelect01">
-                <option selected>timeing for irrigation</option>
+                <option selected>timing for irrigation</option>
                 <option value="1">specific dates</option>
                 <option value="2">Fixed interval</option>
                 <option value="3">ET deficit</option>
@@ -23,9 +23,37 @@
       
 
             <div class="form-group">
-                <div class='col-sm-6'>
+                <div class='col-sm-9'>
               <label for="numberOfIrrigationOprations">Number of irrigation oprations</label>
-              <input class="form-control" id="numberOfIrrigationOprations" placeholder="Enter the number of irrigation oprations, numbers only.">
+              <input class="form-control" id="numberOfIrrigationOprations" type="text" placeholder="Enter the number of irrigation oprations, numbers only.">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-6">
+                  <label for="subirrigationDepth">Subirrigation Depth</label>
+                <input class="form-control" id='subirrigationDepth' type="text" placeholder="Enter the subirrigation depth.(cm) "
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-10">
+                  <label for="minDaysIrri">Minimum Days between irrigations</label>
+                <input class="form-control" id='minDaysIrri' type="text" placeholder="Enter the minimum days between irrigation. (for interval or specific, set to 0)"
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-6">
+                  <label for="sprinkerRate">Sprinker Rate</label>
+                <input class="form-control" id='sprinkerRate' type="text" placeholder="Enter the Sprinkler rate.(cm/hr)"
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-9">
+                  <label for="maxDepth">Maximum Depth of irrigation</label>
+                <input class="form-control" id='maxDepth' type="text" placeholder="Enter the maximum depth of irrigation to be apllied during the season.(cm)"
               </div>
             </div>
 
@@ -33,6 +61,7 @@
                 <div class='col-sm-6'>
               <label for="typeOfIrrigation">type of irrigation</label>
                 <select class="form-control" id="typeOfIrrigation">
+                   <option selected>type of irrigation</option>
                    <option value="1">sprinkler</option>
                    <option value="2">flood</option>
                    <option value="3">furrow</option>
@@ -49,19 +78,44 @@
             </div>
           </div>
 
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+          <div class="form-group">
+            <div class='col-sm-6'>
+          <label for="latestIrrigationDate">Please choose the latest date of the irrigation</label>
+              <input type="text" id='latestIrrigationDate' width="276" class="form-control" value="02/16/2013">
+        </div>
+      </div>
+            <button type="button" class="btn btn-primary" onclick="sendObject()">Submit</button>
           </form>
 
         </div>
 
           <script type="text/javascript">
+
+          //create the method detail object and save it in ss
+          function sendObject(){
+          let subirrigationPojo = require('./js/pojo.js').subirrigation
+          let ss = require('./js/sessionStorage').methodDetail
+          let subirrigation = new subirrigationPojo(
+            $('#inputGroupSelect01').val(),
+            $('#numberOfIrrigationOprations').val(),
+            $('#subirrigationDepth').val(),
+            $('#minDaysIrri').val(),
+            $('#sprinkerRate').val(),
+            $('#maxDepth').val(),
+            $('#typeOfIrrigation').val(),
+            $('#earlyIrrigationDate').val(),
+            $('#latestIrrigationDate').val()
+          )
+          ss(subirrigation);
+          }
+          
             $(function () {
                 $('#earlyIrrigationDate').datepicker();
             });
+            $(function () {
+                $('#latestIrrigationDate').datepicker();
+            });
+
         </script>
 
     </body>

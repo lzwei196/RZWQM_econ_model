@@ -2,6 +2,8 @@ body, html {
     font-family: Consolas,monaco,"Ubuntu Mono",courier,monospace!important;
     color: #ABB2BF;
     background: #282C34;
+    overflow-y: auto;
+    overflow-x: auto;
 }
 
 #titlebar {

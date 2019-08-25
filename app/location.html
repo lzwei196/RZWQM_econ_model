@@ -9,10 +9,8 @@
       <h2>1.Choose the location</h2>
         <div class="col-sm-6">
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="inputGroupSelect01">Location  </label>
-            </div>
-            <select class="custom-select" id="inputGroupSelect01">
+            <label class="input-group-text" for="chooseLocation">Location  </label>
+            <select class="custom-select" id="chooseLocation">
               <option selected>Choose Location</option>
               <option value="1">Montreal</option>
               <option value="2">St Emmanuel</option>
@@ -26,10 +24,8 @@
         <h2>2.Choose the project</h2>
           <div class="col-sm-6">
           <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">project   </label>
-              </div>
-              <select class="custom-select" id="inputGroupSelect01">
+                <label class="input-group-text" for="chooseProject">project   </label>
+              <select class="custom-select" id="chooseProject">
                 <option selected>Choose project</option>
                 <option value="1">Montreal</option>
                 <option value="2">St Emmanuel</option>
@@ -38,5 +34,28 @@
             </div>
       </div>
 
+      <script>
+         $('#chooseLocation').change(function(){
+            let ssLocation = require('./js/sessionStorage').location
+            let location = $('#chooseLocation').val();
+            ssLocation(location);
+        })
+
+        if(sessionStorage.getItem('location')){
+          $('#chooseLocation').val(sessionStorage.getItem('location'));
+        }
+
+        $('#chooseProject').change(function(){
+            let ssProject = require('./js/sessionStorage').project
+            let project = $('#chooseProject').val();
+            ssProject(project);
+        })
+
+        if(sessionStorage.getItem('project')){
+          $('#chooseProject').val(sessionStorage.getItem('project'));
+        }
+
+        </script>
+
     </body>
-</html>
+</html>   

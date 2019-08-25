@@ -2,12 +2,8 @@ var connect = require('trilogy').connect;
 
 const db = connect('database.db', { client: 'sqlite3' })
 
-async function createT(){
-    const theModel = await db.model('subirrigation', {
-        earlyDate: String,
-        endDate: String,
-        irrigationTiming: Number
-      })
+async function createModel(nameOfTheColumn,schema,db){
+    const theModel = await db.model(nameOfTheColumn,schema)
 
     //await db.model('subirrigation')
     theModel.create({
@@ -17,7 +13,11 @@ async function createT(){
     })
 }
 
+async function find(){
+
+}
+
 module.exports = {
-    dbJS:db,
-    create:createT()
+    db:db,
+    create:createModel
 }
