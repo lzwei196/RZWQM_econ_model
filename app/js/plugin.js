@@ -42,10 +42,12 @@ module.exports = {
       let locate = locateTheRzwqm();
       let filePath = locate.path;
       let fileData = locate.data;
-      const update = require('./updatePojo').subirrigation(fileData);         
-   //   fs.writeFile(filePath,fileData.join("\n"), function(err){
-    //      if (err) return console.log(err);
-    //  })
+      let update = require('./updatePojo').subirrigation(fileData);
+      console.log(update)         
+      fs.writeFile(filePath,update.join("\n"), function(err){
+          if (err) return console.log(err);
+          console.log('success')
+      })
     },
 
     chooseFilePath:function chooseFilePath(title){

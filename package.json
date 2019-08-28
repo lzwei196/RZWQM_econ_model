@@ -13,6 +13,7 @@
     "bootstrap-select": "^1.13.10",
     "cheerio": "^1.0.0-rc.3",
     "compass": "^0.1.1",
+    "dateformat": "^3.0.3",
     "datepicker-bootstrap": "^1.9.13",
     "echarts": "^4.2.1",
     "electron-builder": "^21.2.0",

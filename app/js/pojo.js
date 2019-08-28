@@ -1,6 +1,6 @@
 module.exports = {
     subirrigation : class subirrigation{
-        constructor(timingOfIrrigation, numberOfIrrigation,subDepth,minDays,sRate,maxDepth,typeOfR,earlyDate,latestDate){
+        constructor(timingOfIrrigation, numberOfIrrigation,subDepth,minDays,sRate,maxDepth,typeOfR,datePojo){
             this.timingOfIrrigation = timingOfIrrigation;
             this.numberOfIrrigation = numberOfIrrigation;
             this.subDepth = subDepth;
@@ -8,8 +8,7 @@ module.exports = {
             this.sRate = sRate;
             this.maxDepth = maxDepth;
             this.typeOfR = typeOfR;
-            this.earlyDate = earlyDate;
-            this.latestDate = latestDate;
+            this.datePojo = datePojo;
         }
     }
 }
