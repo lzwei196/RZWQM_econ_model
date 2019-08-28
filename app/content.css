@@ -115,3 +115,8 @@ h2{
         align-items: center;
         justify-content: center;
 }
+.table{
+  color: #ABB2BF;
+    table-layout : fixed;
+}
+button.edit { background:none;border:none; }

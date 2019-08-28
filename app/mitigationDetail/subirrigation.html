@@ -71,20 +71,34 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class='col-sm-6'>
-              <label for="earlyIrrigationDate">Please choose the eariliest date of early irrigation</label>
-                  <input type="text" id='earlyIrrigationDate' width="276" class="form-control" value="02/16/2012">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class='col-sm-6'>
-          <label for="latestIrrigationDate">Please choose the latest date of the irrigation</label>
-              <input type="text" id='latestIrrigationDate' width="276" class="form-control" value="02/16/2013">
-        </div>
       </div>
-            <button type="button" class="btn btn-primary" onclick="sendObject()">Submit</button>
+  <br>
+      <div class="col-sm-9">
+      <div id="table" class="table table-dark">
+          <table class="table">
+            <thead>
+              <tr>
+                  <th>Date(YY/MM/DD)</th>
+                  <th>Irrigation Amount</th>
+                  <th>
+                  <button type="button" id="add" class="edit">Add</button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="finalValue">  
+              <tr>
+                  <td contenteditable="true">2012/02/02</td>
+                  <td contenteditable="true">Test</td>
+                  <td>
+                      <button type="button" id="delete" onclick="deleteTheRow()" class="edit">Delete</button>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>          
+      </div>        
+
+            <button type="button" class="btn btn-primary" onclick="getTheValue()">Submit</button>
           </form>
 
         </div>
@@ -102,19 +116,38 @@
             $('#minDaysIrri').val(),
             $('#sprinkerRate').val(),
             $('#maxDepth').val(),
-            $('#typeOfIrrigation').val(),
-            $('#earlyIrrigationDate').val(),
-            $('#latestIrrigationDate').val()
+            $('#typeOfIrrigation').val()
           )
           ss(subirrigation);
           }
           
-            $(function () {
-                $('#earlyIrrigationDate').datepicker();
+            $('#add').click(function(){
+              $('#table tbody').append(
+                '<tr>'+
+                  '<td contenteditable="true">2012/02/02</td>'+
+                  '<td contenteditable="true">Test</td>'+
+                  '<td>'+
+                      '  <button type="button" id="delete" onclick="deleteTheRow()" class="edit">Delete</button>'+
+                  '</td>'+
+              '</tr>'                                 
+              )
             });
-            $(function () {
-                $('#latestIrrigationDate').datepicker();
-            });
+
+            function deleteTheRow(){
+              $('#delete').parents('tr').remove();
+            }
+
+            function getTheValue(){
+             let rows = $('#table tbody').find('tr').each(function(){
+               $(this).find('td').each(function(){
+                let value = $(this).text()
+                console.log(value)
+               }
+               )
+               
+             })
+             console.log(rows)
+            }
 
         </script>
 
