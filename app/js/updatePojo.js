@@ -10,10 +10,37 @@ function extractNumbers(string){
     console.log(numbers)
     return numbers;
 }
-function dateConvertion(dateString){
-    let date = new Date(dateString)
-    let dateStringUpdate = dateFormat(earlyDate, 'dd mm yyyy' )
+function dateConvertion(date){
+    let dateStringUpdate = dateFormat(date, 'dd mm yyyy' )
     return dateStringUpdate;
+}
+
+function earlyDate(dateArray){
+    let earlyDate = dateArray[0];
+    dateArray.forEach(function(item,index){
+        if(index < dateArray.length -1){
+            if(earlyDate.getTime() < dateArray[index + 1].getTime()){
+            return;
+        } else{
+            earlyDate = dateArray[index + 1]
+        }
+    }
+    })
+    return earlyDate;
+}
+
+function latestDate(dateArray){
+    let latestDate = dateArray[0];
+    dateArray.forEach(function(item,index){
+        if(index < dateArray.length -1){
+            if(latestDate.getTime() > dateArray[index + 1].getTime()){
+            return;
+        } else{
+            latestDate = dateArray[index + 1]
+        }
+    }
+    })
+    return latestDate;
 }
 
 function generalInfo(generalInfoD, numberOfIrrigation){
@@ -27,15 +54,40 @@ function generalInfo(generalInfoD, numberOfIrrigation){
 function specifiedInfo(ssPojo){
     let dataArray = ssPojo['datePojo'];
     let dateArray = dataArray.map(function(item){
-        return item[0];
+        let date = new Date(item[0]);
+        return date;
     })
-    console.log(dateArray)
+    //getting the latest and early date of irrigation
+    let latestD = latestDate(dateArray);
+    let earlyD = earlyDate(dateArray);
+    let latestDateString = dateConvertion(latestD);
+    let earlyDateString = dateConvertion(earlyD)
+
+    let numOfPractice = dateArray.length;
+
+    let irriArray = dataArray.map(function(item){
+        return item[1];
+    })
+
+    let irriArrayString = irriArray.join('  ')
+
+    let dateArrayString = dateArray.map(function(item){
+        return dateConvertion(item);
+    })
+    //pul all the date together
     let specifiedInfoUpdate = (1 + '  ' 
                                  + ssPojo['typeOfR'] + '  '
                                  + ssPojo['timingOfIrrigation'] + '  '
                                  + ssPojo['timingOfIrrigation'] + ' '
-                                 + ssPojo[''])
-}
+                                 + earlyDateString + ' '
+                                 + latestDateString + ' '
+                                 + ssPojo['minDays'] + ' '
+                                 + ssPojo['maxDepth'] + '  '
+                                 + ssPojo['sRate'] + '  ')
+    
+    return {specifiedInfoUpdate, numOfPractice, irriArrayString, dateArrayString};
+    }
+
 
 module.exports = {
     subirrigation: function subirrigation(datData){
@@ -57,7 +109,13 @@ module.exports = {
 
         //updating the general info into the dat array
         newData.splice(lineNum,numToSplice,generalInfoUpdated);
-        specifiedInfo(ssPojo,'2012/02/02')
+        newData.push(specifiedInfo(ssPojo).specifiedInfoUpdate);
+        newData.push(specifiedInfo(ssPojo).numOfPractice);
+        specifiedInfo(ssPojo).dateArrayString.forEach(function(item){
+            newData.push(item)
+        })
+        newData.push(specifiedInfo(ssPojo).irriArrayString);
+
         //console.log(newData)
         return newData;
     }
