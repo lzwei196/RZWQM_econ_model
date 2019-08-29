@@ -66,30 +66,36 @@
 
             </div>
             <br>
-            <div class="col-sm-9">
-              <div id="table" class="table table-dark">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Date(YY/MM/DD)</th>
-                      <th>Irrigation Amount</th>
-                      <th>
-                        <button type="button" id="add" class="edit">Add</button>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody id="finalValue">
-                    <tr>
-                      <td contenteditable="true">2012/02/02</td>
-                      <td contenteditable="true">Test</td>
-                      <td>
-                        <button type="button" id="delete" onclick="deleteTheRow()" class="edit">Delete</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+
+            <div id="irrigationTable">
+
+              <div id="table1" class="col-sm-9">
+                <div class="table table-dark">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Date(YY/MM/DD)</th>
+                        <th>Irrigation Amount</th>
+                        <th>
+                          <button type="button" id="add" class="addButton">Add</button>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td contenteditable="true">2012/02/02</td>
+                        <td contenteditable="true">0.0</td>
+                        <td>
+                          <button type="button" id="delete" class="deleteButton">Delete</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
+
             </div>
+
 
             <button type="button" class="btn btn-primary" onclick="sendObject()">Submit</button>
     </form>
@@ -115,28 +121,29 @@
       ss(subirrigation);
     }
 
-    $('#add').click(function () {
-      $('#table tbody').append(
+    $("#irrigationTable").on('click', '.addButton', function () {
+      // console.log($(this).parent().parent().parent().next('tbody'))
+      $(this).parent().parent().parent().next('tbody').append(
         '<tr>' +
         '<td contenteditable="true">2012/02/02</td>' +
-        '<td contenteditable="true">Test</td>' +
+        '<td contenteditable="true">0.0</td>' +
         '<td>' +
-        '  <button type="button" id="delete" onclick="deleteTheRow()" class="edit">Delete</button>' +
+        '<button type="button" id="delete" class="deleteButton">Delete</button>' +
         '</td>' +
         '</tr>'
-      )
-    });
+      );
+    })
 
-    function deleteTheRow() {
-      $('#delete').parents('tr').remove();
-    }
+    $("#irrigationTable").on("click", ".deleteButton", function () {
+      $(this).closest("tr").remove();
+    });
 
     function getTheValue() {
       let allDatePojo = [];
-      let rows = $('#table tbody').find('tr').each(function () {
+      let rows = $('#table1 tbody').find('tr').each(function () {
         let datePojo = [];
-        $(this).find('td').each(function(index) {
-          if(index == 0 || index == 1){
+        $(this).find('td').each(function (index) {
+          if (index == 0 || index == 1) {
             let value = $(this).text()
             datePojo.push(value);
           }
