@@ -29,17 +29,20 @@
       plugin.readData();
     }
 
-    var exec = require('child_process').exec;
-    function execute(){
-      let stringHere = "C:\\RZWQM2\\projects\\GHG-SE\\GHG-SE-FD\\RZWQMrelease.exe";
-      console.log(stringHere)
-    exec(stringHere, function(err, stdout, stderr){ 
-        if (err) {
-          console.log(err)
-    // node couldn't execute the command
-        return;
-      }
 
+    function execute(){
+      var locate = plugin.locateTheReleaseFile()
+      const exec = require('child_process').exec;
+      let stringHere = 'start RZWQMrelease.exe'
+      console.log(stringHere)
+
+      //let stringHere = "C:\\RZWQM2\\projects\\GHG-SE\\GHG-SE-FD\\RZWQMrelease.exe";
+      exec(stringHere,{cwd:locate} ,function(err, stdout, stderr){ 
+        if (err) {
+          alert(err)
+          console.log(err)
+        }
+    // node couldn't execute the command
   // the *entire* stdout and stderr (buffered)
      console.log(`stdout: ${stdout}`);
      console.log(`stderr: ${stderr}`);

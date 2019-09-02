@@ -14,7 +14,7 @@
 
 //pop up a dialog window for user to locate the file path
 function chooseFilePath(title){
-    fileFinalName = dialog.showOpenDialog({'title':title});
+    fileFinalName = dialog.showOpenDialog({'title':title, properties: ['openDirectory']});
     return fileFinalName[0];
   };
   
@@ -36,6 +36,11 @@ module.exports = {
       let resultData = fs.readFileSync(filePath).toString().split("\n");
       return {"data":resultData,"path":filePath};
     },
+
+      locateTheReleaseFile: function locateTheReleaseFile(){
+        let filePath = chooseFilePath("Please locate the folder that contains the RzwqmRelease.exe file.");
+        return filePath;
+      },
 
   //take in the data and the parameters that needed to be updated in the .dat file
       writeRzwqm:function writeRzwqm(){  
