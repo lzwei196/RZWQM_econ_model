@@ -13,10 +13,15 @@
 }
 
 //pop up a dialog window for user to locate the file path
-function chooseFilePath(title){
-    fileFinalName = dialog.showOpenDialog({'title':title, properties: ['openDirectory']});
+  function chooseFilePath(title){
+    fileFinalName = dialog.showOpenDialog({'title':title, properties: ['openFile']});
     return fileFinalName[0];
   };
+
+  function chooseDirectoryPath(title){
+    fileFinalName = dialog.showOpenDialog({'title':title, properties: ['openDirectory']});
+    return fileFinalName[0];
+  };  
   
 //locate the filepath, read the .dat file, then return both the path of the file as well as the data
 function locateTheRzwqm(){
@@ -38,7 +43,7 @@ module.exports = {
     },
 
       locateTheReleaseFile: function locateTheReleaseFile(){
-        let filePath = chooseFilePath("Please locate the folder that contains the RzwqmRelease.exe file.");
+        let filePath = chooseDirectoryPath("Please locate the folder that contains the RzwqmRelease.exe file.");
         return filePath;
       },
 
@@ -71,10 +76,10 @@ module.exports = {
          resultData.splice(0,23);
          //writeToLocal(data);
          //should take in argument
-         let N2O = [];
-         let NxO = [];
-         let CO2 = [];
-         let yearDay = [];
+         //let N2O = [];
+         //let NxO = [];
+         //let CO2 = [];
+         //let yearDay = [];
          for(let i = 0; i < resultData.length; i++ ){
              let oneData = resultData[i];
              let numbers;
@@ -82,14 +87,14 @@ module.exports = {
              while (numbers = regex.exec(oneData)) {
                  resultArray.push(numbers[0]);
              }
-             N2O.push(Number(resultArray[102]));
-             NxO.push(Number(resultArray[103]));
-             CO2.push(Number(resultArray[77]));
+             N2O.push({"N2O":Number(resultArray[100])});
+             NxO.push(Number(resultArray[101]));
+             CO2.push({"CO2":Number(resultArray[77])});
              yearDay.push(resultArray[0]);
          } 
-         console.log('N20' + N2O);
-         console.log('Nx0' + NxO);
-         console.log('CO2' + CO2);
-         console.log('Date' + yearDay);
+         console.log('N20:  ' + N2O);
+         console.log('Nx0:  ' + NxO);
+         console.log('CO2:  ' + CO2);
+         console.log('Date:  ' + yearDay);
     }
 }

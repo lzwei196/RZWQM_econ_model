@@ -16,6 +16,9 @@
 </head>
 
 <body>
+        <div class="export-button" align = "right" id="export-button">
+                <button type="button" class="btn btn-danger btn-rounded" onclick="">Export to CSV</button>
+              </div>
     <!-- prepare a DOM container with width and height -->
     <div id="main" class="container-fluid" style="width: 600px;height:400px;"></div>
 
@@ -24,13 +27,12 @@
     //loading up dependecies
     var app = require('electron').remote;
     var dialog = app.dialog;
-    var path = require('path');
+    //var path = require('path');
     var fs = require('fs');
 
     //regex to extract numbers
     var regex = /[+-]?((\.\d+)|(\d+(\.\d+)?)([eE][+-]?\d+)?)/g;
     //save filepath
-    parentPath = path.dirname();
     var filepath = "C:\\GHG-SE\\GHG-SE-FD\\RZWQM.DAT";
     var resultFilepath = "C:\\GHG-SE\\Analysis\\GHG-SE-FD.ana"
 
@@ -39,18 +41,26 @@
     let resultData = fs.readFileSync(resultFilepath).toString().split("\n");
 
     //global variables
+    var xlsx = require('xlsx');
     let N2O = [];
     let NxO = [];
     let CO2 = [];
     let yearDay = [];
+    let readData = require('./js/plugin').readData()
 
     //load the page when the DOM is ready
     $(document).ready(function () {
-        readData();
         drawGraph();
         console.log(N2O);
         console.log(CO2);
-        console.log(NxO);;
+
+        let data = N2O;
+        console.log(data)
+        let newWB = xlsx.utils.book_new();
+        let newWS = xlsx.utils.json_to_sheet(data)
+        xlsx.utils.book_append_sheet(newWB,newWS,"DATA")
+
+        xlsx.writeFile(newWB,"newDataFile.xlsx")
     });
 
     function writeToLocal(data) {
@@ -59,27 +69,6 @@
         })
     }
 
-    function readData() {
-        //data.splice(974,2,"0  0  0  0.0  0.0  20.0  0.0  0")
-        //console.log(data);
-        resultData.splice(0, 23);
-
-        //writeToLocal(data);
-
-        //should take in argument
-        for (let i = 0; i < resultData.length; i++) {
-            let oneData = resultData[i];
-            let numbers;
-            let resultArray = []
-            while (numbers = regex.exec(oneData)) {
-                resultArray.push(numbers[0]);
-            }
-            N2O.push(resultArray[102]);
-            NxO.push(resultArray[103]);
-            CO2.push(resultArray[77]);
-            yearDay.push(resultArray[0]);
-        }
-    }
     // based on prepared DOM, initialize echarts instance
     function drawGraph() {
         //initialize the chart

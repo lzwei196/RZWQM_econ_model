@@ -19,6 +19,7 @@
     "electron-builder": "^21.2.0",
     "idb": "^4.0.4",
     "jquery": "^3.4.1",
+    "json2csv": "^4.5.2",
     "node-cmd": "^3.0.0",
     "popper.js": "^1.15.0",
     "puppeteer": "^1.19.0",
@@ -26,7 +27,8 @@
     "request-promise": "^4.2.4",
     "sqlite3": "^4.1.0",
     "tether": "^1.4.6",
-    "trilogy": "^2.0.2"
+    "trilogy": "^2.0.2",
+    "xlsx": "^0.15.1"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.10.2",
