@@ -14,7 +14,7 @@
     var app = require('electron').remote; 
     var dialog = require('electron').remote.dialog;
     var fs = require('fs');
-    const plugin = require('./js/plugin.js');
+    var plugin = require('./js/plugin.js');
 
     function readRzwqm(){
       plugin.readRzwqm();
@@ -44,8 +44,6 @@
         }
     // node couldn't execute the command
   // the *entire* stdout and stderr (buffered)
-     console.log(`stdout: ${stdout}`);
-     console.log(`stderr: ${stderr}`);
      });
 };
 

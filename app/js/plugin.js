@@ -27,6 +27,7 @@
 function locateTheRzwqm(){
     let filePath = chooseFilePath("Please locate the Rzwqm.DAT file.");
     let resultData = fs.readFileSync(filePath).toString().split("\n");
+    //use the map function to go through the data and trim each element in the array
     let trimData = resultData.map(function(item){
       return item.trim()
     })
@@ -80,7 +81,7 @@ module.exports = {
          //let NxO = [];
          //let CO2 = [];
          //let yearDay = [];
-         for(let i = 0; i < resultData.length; i++ ){
+         for(let i = 0; i < resultData.length-1; i++ ){
              let oneData = resultData[i];
              let numbers;
              let resultArray = []
@@ -91,6 +92,7 @@ module.exports = {
              NxO.push(Number(resultArray[101]));
              CO2.push({"CO2":Number(resultArray[77])});
              yearDay.push(resultArray[0]);
+             excel.push({"N2O":Number(resultArray[100]),"CO2":Number(resultArray[77])})
          } 
          console.log('N20:  ' + N2O);
          console.log('Nx0:  ' + NxO);
