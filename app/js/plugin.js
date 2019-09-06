@@ -50,9 +50,14 @@ module.exports = {
 
   //take in the data and the parameters that needed to be updated in the .dat file
       writeRzwqm:function writeRzwqm(){  
+      //find the location of the rzwqm file, also reading the data from it
       let locate = locateTheRzwqm();
+
+      //two varibales that should be returned from calling the function
       let filePath = locate.path;
       let fileData = locate.data;
+      //call the specific function:subirrigation in the updatePojo JS file
+      //the function takes in the original file data and updates it with the user input from the frontend 
       let update = require('./updatePojo').subirrigation(fileData);
       console.log(update)         
       fs.writeFile(filePath,update.join("\n"), function(err){
