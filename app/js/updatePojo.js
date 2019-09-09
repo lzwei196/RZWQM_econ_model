@@ -10,7 +10,13 @@ function extractNumbers(string){
     console.log(numbers)
     return numbers;
 }
+
 function dateConvertion(date){
+    let dateStringUpdate = dateFormat(date, 'dd  mm  yyyy' )
+    return dateStringUpdate;
+}
+
+function dateConvertionOneSpace(date){
     let dateStringUpdate = dateFormat(date, 'dd mm yyyy' )
     return dateStringUpdate;
 }
@@ -44,8 +50,8 @@ function latestDate(dateArray){
 }
 
 function generalInfo(generalInfoD, numberOfIrrigation){
-    console.log(generalInfoD)
-    console.log('number of irrigation:  ' + numberOfIrrigation)
+    //console.log(generalInfoD)
+    //console.log('number of irrigation:  ' + numberOfIrrigation)
     generalInfoD.splice(0,1,numberOfIrrigation)
     let generalInfoUpdated = generalInfoD.join('  ')
     return generalInfoUpdated
@@ -60,8 +66,8 @@ function specifiedInfo(ssPojo){
     //getting the latest and early date of irrigation
     let latestD = latestDate(dateArray);
     let earlyD = earlyDate(dateArray);
-    let latestDateString = dateConvertion(latestD);
-    let earlyDateString = dateConvertion(earlyD)
+    let latestDateString = dateConvertionOneSpace(latestD);
+    let earlyDateString = dateConvertionOneSpace(earlyD)
 
     let numOfPractice = dateArray.length;
 
@@ -84,7 +90,6 @@ function specifiedInfo(ssPojo){
                                  + ssPojo['minDays'] + ' '
                                  + ssPojo['maxDepth'] + '  '
                                  + ssPojo['sRate'] + '  ')
-    
     return {specifiedInfoUpdate, numOfPractice, irriArrayString, dateArrayString};
     }
 
@@ -109,11 +114,17 @@ module.exports = {
 
         //updating the general info into the dat array
         newData.splice(lineNum,numToSplice,generalInfoUpdated);
+        //update the second line of the array, with specfic info for the opration
         newData.push(specifiedInfo(ssPojo).specifiedInfoUpdate);
+        //update the number of practice
         newData.push(specifiedInfo(ssPojo).numOfPractice);
+        //update the specific date for each practice
         specifiedInfo(ssPojo).dateArrayString.forEach(function(item){
             newData.push(item)
         })
+        //update the number of practice
+        newData.push(specifiedInfo(ssPojo).numOfPractice);
+        //update the value of irri for each practice
         newData.push(specifiedInfo(ssPojo).irriArrayString);
 
         //console.log(newData)
