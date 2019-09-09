@@ -104,6 +104,7 @@
   </div>
 
   <script type="text/javascript">
+    var tableNumber = 0
     //create the method detail object and save it in ss
     function sendObject() {
       let subirrigationPojo = require('./js/pojo.js').subirrigation
@@ -122,6 +123,7 @@
       ss(subirrigation);
     }
 
+    //add row when clicked
     $("#irrigationTable").on('click', '.addButton', function () {
       // console.log($(this).parent().parent().parent().next('tbody'))
       $(this).parent().parent().parent().next('tbody').append(
@@ -135,10 +137,16 @@
       );
     })
 
+    //delete row when clicked
     $("#irrigationTable").on("click", ".deleteButton", function () {
       $(this).closest("tr").remove();
     });
 
+    //create a div for each table after each click
+    //add the id of div following the tableNumber
+    function addOpreationTable(){
+      tableNumber = tableNumber + 1;
+    }
     //retrive the value from the table input
     function getTheValue() {
       let allDatePojo = [];
