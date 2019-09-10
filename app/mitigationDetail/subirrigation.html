@@ -69,32 +69,12 @@
 
             <!--The table for inserting the specific irrigation information for each practice in each opration-->
             <div id="irrigationTable">
-
-              <div id="table1" class="col-sm-9">
-                <div class="table table-dark">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Date(YY/MM/DD)</th>
-                        <th>Irrigation Amount</th>
-                        <th>
-                          <button type="button" id="add" class="addButton">Add</button>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td contenteditable="true">2012/02/02</td>
-                        <td contenteditable="true">0.0</td>
-                        <td>
-                          <button type="button" id="delete" class="deleteButton">Delete</button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+              <button type="button" class="btn btn-primary" onclick="addOpreationTable()">Add Irrigation Detail</button>
+              <br>
+              <br>
+              <!--fill in the irrigation table-->
               </div>
-
+            </div>
             </div>
 
 
@@ -110,6 +90,7 @@
       let subirrigationPojo = require('./js/pojo.js').subirrigation
       let ss = require('./js/sessionStorage').methodDetail
       let datePojo = getTheValue();
+      console.log(datePojo)
       let subirrigation = new subirrigationPojo(
         $('#inputGroupSelect01').val(),
         $('#numberOfIrrigationOprations').val(),
@@ -146,11 +127,45 @@
     //add the id of div following the tableNumber
     function addOpreationTable(){
       tableNumber = tableNumber + 1;
+      $("#irrigationTable").append('<div id='+ tableNumber + ' class="col-sm-9">'+
+        '<div class="table table-dark">'+
+            '<table>'+
+                    '<thead>'+
+                      '<tr>'+
+                        '<td>'+
+                        'Opreation: '+ tableNumber +
+                          '</td>'+
+                        '</tr>'+
+                     '<tr>'+
+                       '<th>Date(YY/MM/DD)</th>'+
+                        '<th>Irrigation Amount</th>'+
+                        '<th>'+
+                        '<button type="button" id="add" class="addButton">Add</button>'+
+                        '</th>'+
+                      '</tr>'+
+                    '</thead>'+
+                    '<tbody>'+
+                      '<tr>'+
+                        '<td contenteditable="true">2012/02/02</td>'+
+                        '<td contenteditable="true">0.0</td>'+
+                        '<td>'+
+                          '<button type="button" id="delete" class="deleteButton">Delete</button>'+
+                        '</td>'+
+                      '</tr>'+
+                    '</tbody>'+
+                  '</table>'+
+        '</div>'+
+        '</div>')
     }
     //retrive the value from the table input
     function getTheValue() {
-      let allDatePojo = [];
-      let rows = $('#table1 tbody').find('tr').each(function () {
+      var finalData = [];
+      for( var i = 1; i <= tableNumber; i++){
+        let allDatePojo = [];
+        //stringify the integer
+        let stringOfNum = i.toString();
+        let num = '#'+stringOfNum + ' tbody'
+        let rows = $(num).find('tr').each(function () {
         let datePojo = [];
         $(this).find('td').each(function (index) {
           if (index == 0 || index == 1) {
@@ -158,9 +173,11 @@
             datePojo.push(value);
           }
         })
-        allDatePojo.push(datePojo);
-      })
-      return allDatePojo;
+          allDatePojo.push(datePojo);
+        })
+        finalData.push({[stringOfNum]: allDatePojo})
+      }
+      return finalData
     }
   </script>
 </body>

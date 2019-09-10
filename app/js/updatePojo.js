@@ -5,9 +5,9 @@ var regex = /[+-]?((\.\d+)|(\d+(\.\d+)?)([eE][+-]?\d+)?)/g;
 
 //function to extract the numbers from a string
 function extractNumbers(string){
-    console.log(string)
+    //console.log(string)
     let numbers = string.match(regex).map(Number);
-    console.log(numbers)
+    //console.log(numbers)
     return numbers;
 }
 
@@ -58,17 +58,20 @@ function generalInfo(generalInfoD, numberOfIrrigation){
 }
 
 function specifiedInfo(ssPojo){
+    //the oprationNumber starts at 1
     let dataArray = ssPojo['datePojo'];
-    let dateArray = dataArray.map(function(item){
-        let date = new Date(item[0]);
-        return date;
-    })
-    //getting the latest and early date of irrigation
+    let processedData = []
+    for(var i = 1; i <= dataArray.length; i++){
+        var dateArrayData = dataArray[i-1]
+        let dateArray = dateArrayData[i.toString()].map(function(item){
+            let date = new Date(item[0]);
+            return date;
+        })
+       
     let latestD = latestDate(dateArray);
     let earlyD = earlyDate(dateArray);
     let latestDateString = dateConvertionOneSpace(latestD);
     let earlyDateString = dateConvertionOneSpace(earlyD)
-
     let numOfPractice = dateArray.length;
 
     let irriArray = dataArray.map(function(item){
@@ -80,7 +83,7 @@ function specifiedInfo(ssPojo){
     let dateArrayString = dateArray.map(function(item){
         return dateConvertion(item);
     })
-    //pul all the date together
+    //pul all the data together
     let specifiedInfoUpdate = (1 + '  ' 
                                  + ssPojo['typeOfR'] + '  '
                                  + ssPojo['timingOfIrrigation'] + '  '
@@ -90,13 +93,16 @@ function specifiedInfo(ssPojo){
                                  + ssPojo['minDays'] + ' '
                                  + ssPojo['maxDepth'] + '  '
                                  + ssPojo['sRate'] + '  ')
-    return {specifiedInfoUpdate, numOfPractice, irriArrayString, dateArrayString};
+    processedData.push({[i.toString()]:{specifiedInfoUpdate, numOfPractice, irriArrayString, dateArrayString}})
+    console.log(processedData);
+    }
     }
 
 
 module.exports = {
     subirrigation: function subirrigation(datData){
         let ssPojo = JSON.parse(sessionStorage.getItem('methodDetail'));
+        console.log(ssPojo)
         //default value of parameters, no subirrigation
         const defaultVal = '0  0  0  0.0  0.0  20.0  0.0  0'
         //to update the parameters in the dat file, it's necessary to locate the the line number of the designated parameters
@@ -108,7 +114,7 @@ module.exports = {
         //onsole.log("num    " + lineNum + 'splice    ' + numToSplice);
         let newData = datData;
         let generalInfoUpdated = generalInfo(extractNumbers(datData[lineNum]),ssPojo['numberOfIrrigation']);
-        
+        specifiedInfo(ssPojo);
         //to reset
         //newData.splice(lineNum,numToSplice,defaultVal);
 
