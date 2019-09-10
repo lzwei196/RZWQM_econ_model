@@ -67,9 +67,10 @@ function specifiedInfo(ssPojo){
             let date = new Date(item[0]);
             return date;
         })
-       
+    //passing in the date object to find the early and lastest date of the practice
     let latestD = latestDate(dateArray);
     let earlyD = earlyDate(dateArray);
+    //convert the date
     let latestDateString = dateConvertionOneSpace(latestD);
     let earlyDateString = dateConvertionOneSpace(earlyD)
     let numOfPractice = dateArray.length;
@@ -77,7 +78,7 @@ function specifiedInfo(ssPojo){
     let irriArray = dataArray.map(function(item){
         return item[1];
     })
-
+    console.log(irriArray)
     let irriArrayString = irriArray.join('  ')
 
     let dateArrayString = dateArray.map(function(item){
