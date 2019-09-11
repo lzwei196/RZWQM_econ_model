@@ -60,25 +60,29 @@ function generalInfo(generalInfoD, numberOfIrrigation){
 function specifiedInfo(ssPojo){
     //the oprationNumber starts at 1
     let dataArray = ssPojo['datePojo'];
-    let processedData = []
+    let processedData = [];
     for(var i = 1; i <= dataArray.length; i++){
         var dateArrayData = dataArray[i-1]
-        let dateArray = dateArrayData[i.toString()].map(function(item){
+        //convert the datestring to date
+        var dateArray = dateArrayData[i.toString()].map(function(item){
             let date = new Date(item[0]);
             return date;
         })
     //passing in the date object to find the early and lastest date of the practice
     let latestD = latestDate(dateArray);
     let earlyD = earlyDate(dateArray);
+
     //convert the date
     let latestDateString = dateConvertionOneSpace(latestD);
-    let earlyDateString = dateConvertionOneSpace(earlyD)
+    let earlyDateString = dateConvertionOneSpace(earlyD);
+
     let numOfPractice = dateArray.length;
 
-    let irriArray = dataArray.map(function(item){
+    //the irrigation amount of each practice
+    let irriArray = dateArrayData[i.toString()].map(function(item){
         return item[1];
     })
-    console.log(irriArray)
+
     let irriArrayString = irriArray.join('  ')
 
     let dateArrayString = dateArray.map(function(item){
@@ -94,16 +98,18 @@ function specifiedInfo(ssPojo){
                                  + ssPojo['minDays'] + ' '
                                  + ssPojo['maxDepth'] + '  '
                                  + ssPojo['sRate'] + '  ')
-    processedData.push({[i.toString()]:{specifiedInfoUpdate, numOfPractice, irriArrayString, dateArrayString}})
-    console.log(processedData);
+                                 
+    //push all the data into the array
+    processedData.push({specifiedInfoUpdate,numOfPractice,irriArrayString,dateArrayString})
     }
-    }
+
+    return processedData;
+}
 
 
 module.exports = {
     subirrigation: function subirrigation(datData){
         let ssPojo = JSON.parse(sessionStorage.getItem('methodDetail'));
-        console.log(ssPojo)
         //default value of parameters, no subirrigation
         const defaultVal = '0  0  0  0.0  0.0  20.0  0.0  0'
         //to update the parameters in the dat file, it's necessary to locate the the line number of the designated parameters
@@ -115,26 +121,28 @@ module.exports = {
         //onsole.log("num    " + lineNum + 'splice    ' + numToSplice);
         let newData = datData;
         let generalInfoUpdated = generalInfo(extractNumbers(datData[lineNum]),ssPojo['numberOfIrrigation']);
-        specifiedInfo(ssPojo);
         //to reset
         //newData.splice(lineNum,numToSplice,defaultVal);
-
+        var updatedData = specifiedInfo(ssPojo);
         //updating the general info into the dat array
         newData.splice(lineNum,numToSplice,generalInfoUpdated);
-        //update the second line of the array, with specfic info for the opration
-        newData.push(specifiedInfo(ssPojo).specifiedInfoUpdate);
-        //update the number of practice
-        newData.push(specifiedInfo(ssPojo).numOfPractice);
-        //update the specific date for each practice
-        specifiedInfo(ssPojo).dateArrayString.forEach(function(item){
-            newData.push(item)
-        })
-        //update the number of practice
-        newData.push(specifiedInfo(ssPojo).numOfPractice);
-        //update the value of irri for each practice
-        newData.push(specifiedInfo(ssPojo).irriArrayString);
 
-        //console.log(newData)
+        //iterate through all the irrigation data and push each of them into the newData file
+        updatedData.forEach(function(element){
+            //update the specific info for the opration, one line
+            newData.push(element['specifiedInfoUpdate']);
+            //update the number of practice
+            newData.push(element['numOfPractice'].toString());
+            //update the specific date for each practice
+            element['dateArrayString'].forEach(function(item){
+                newData.push(item)
+            })
+            //update the number of practice
+            newData.push(element['numOfPractice'].toString());
+            //update the value of irri for each practice
+            newData.push(element['irriArrayString']);
+        })
+        console.log(newData)
         return newData;
     }
 }

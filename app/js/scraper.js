@@ -11,18 +11,19 @@ const options = {
     }
 }
 
-module.exports = {
-    priceScraper:function priceScraper(){
     rp(options)
     .then(function (html) {
-        // REQUEST SUCCEEDED
-        const $ = cheerio.load(html);
-        const price = $('.push-data');
-        return price; 
+    // REQUEST SUCCEEDED
+    const $ = cheerio.load(html);
+    var price = $('.push-data').text();
+    return price;
     })
     .catch(function (err) {
-        // REQUEST FAILED: print the error
-        console.log(err)
-    });
-}
-}
+    // REQUEST FAILED: print the error
+});
+
+
+module.exports = {
+      priceScraper:price
+    }
+
