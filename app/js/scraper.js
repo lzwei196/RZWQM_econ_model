@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 const url = {
              'Europe from Markets insider':'https://markets.businessinsider.com/commodities/co2-european-emission-allowances'
 }
-
+var ss = require('./sessionStorage').carbonTradePrice;
 const options = {
     uri:url["Europe from Markets insider"],
     headers:{
@@ -11,19 +11,22 @@ const options = {
     }
 }
 
-    rp(options)
-    .then(function (html) {
-    // REQUEST SUCCEEDED
-    const $ = cheerio.load(html);
-    var price = $('.push-data').text();
-    return price;
-    })
-    .catch(function (err) {
-    // REQUEST FAILED: print the error
-});
 
 
 module.exports = {
-      priceScraper:price
+      priceScraper: function priceScraper(){
+        rp(options)
+        .then(function (html) {
+        // REQUEST SUCCEEDED
+        const $ = cheerio.load(html);
+        var price = $('.push-data').text();
+        ss(price)
+        console.log(price)
+        return price;
+        })
+        .catch(function (err) {
+        // REQUEST FAILED: print the error
+    });
+    }
     }
 

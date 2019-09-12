@@ -10,5 +10,8 @@ module.exports = {
     },
     methodDetail : function methodDetail(methodDetail){
         sessionStorage.setItem('methodDetail',JSON.stringify(methodDetail))
+    },
+    carbonTradePrice : function carbonTradePrice(carbonTradePrice){
+        sessionStorage.setItem('carbonTradePrice',JSON.stringify(carbonTradePrice))
     }
 }
