@@ -1,6 +1,7 @@
 body, html {
     font-family: Consolas,monaco,"Ubuntu Mono",courier,monospace!important;
-    color: #ABB2BF;
+    font-size: small;
+    color: rgb(216, 216, 216);
     background: #282C34;
     overflow-y: auto;
     overflow-x: auto;
@@ -41,7 +42,7 @@ body, html {
   right: 0;
   height: 100%;
   font-family: "Segoe MDL2 Assets";
-  font-size: 10px;
+  font-size: small;
 }
 #window-controls .button {
   grid-row: 1 / span 1;
@@ -109,6 +110,7 @@ h2{
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: small;
       }
 #calculate-button{
     display: flex;
@@ -117,6 +119,7 @@ h2{
 }
 .table{
   color: #ABB2BF;
+  font-size: small;
     table-layout : fixed;
 }
 button.edit { background:none;border:none; }

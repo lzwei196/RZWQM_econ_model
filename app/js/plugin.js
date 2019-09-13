@@ -24,34 +24,39 @@
   };  
   
 //locate the filepath, read the .dat file, then return both the path of the file as well as the data
-function locateTheRzwqm(){
-    let filePath = chooseFilePath("Please locate the Rzwqm.DAT file.");
-    let resultData = fs.readFileSync(filePath).toString().split("\n");
+function locateTheRzwqm(projectDirectory){
+    let RZWQMDir = projectDirectory + '\\RZWQM.DAT';
+    console.log(RZWQMDir)
+    let resultData = fs.readFileSync(RZWQMDir).toString().split("\n");
     //use the map function to go through the data and trim each element in the array
     let trimData = resultData.map(function(item){
       return item.trim()
     })
 
-    return {"data":trimData,"path":filePath};
+    return {"data":trimData,"path":RZWQMDir};
   }
   
 module.exports = {
   //locate the filepath, read the .dat file, then return both the path of the file as well as the data
-      locateTheRzwqm:function locateTheRzwqm(){
-      let filePath = chooseFilePath("Please locate the Rzwqm.DAT file.");
-      let resultData = fs.readFileSync(filePath).toString().split("\n");
-      return {"data":resultData,"path":filePath};
+      locateTheRzwqm:function locateTheRzwqm(projectDirectory){
+      let RZWQMDir = projectDirectory + '\\RZWQM.DAT';
+      console.log(RZWQMDir)
+      let resultData = fs.readFileSync(RZWQMDir).toString().split("\n");
+      return {"data":resultData,"path":RZWQMDir};
     },
 
       locateTheReleaseFile: function locateTheReleaseFile(){
-        let filePath = chooseDirectoryPath("Please locate the folder that contains the RzwqmRelease.exe file.");
+        let filePath = chooseDirectoryPath("Please locate the project file.");
+        var ss = require('./sessionStorage').projectDirectory
+        ss(filePath)
         return filePath;
       },
 
   //take in the data and the parameters that needed to be updated in the .dat file
-      writeRzwqm:function writeRzwqm(){  
+      writeRzwqm:function writeRzwqm(){
+      var ProjectDir = JSON.parse(sessionStorage.getItem('projectDirectory'));
       //find the location of the rzwqm file, also reading the data from it
-      let locate = locateTheRzwqm();
+      let locate = locateTheRzwqm(ProjectDir);
 
       //two varibales that should be returned from calling the function
       let filePath = locate.path;
@@ -82,10 +87,11 @@ module.exports = {
          resultData.splice(0,23);
          //writeToLocal(data);
          //should take in argument
-         //let N2O = [];
-         //let NxO = [];
-         //let CO2 = [];
-         //let yearDay = [];
+         let N2O = [];
+         let NxO = [];
+         let CO2 = [];
+         let yearDay = [];
+         let data = [];
          for(let i = 0; i < resultData.length-1; i++ ){
              let oneData = resultData[i];
              let numbers;
@@ -93,15 +99,17 @@ module.exports = {
              while (numbers = regex.exec(oneData)) {
                  resultArray.push(numbers[0]);
              }
-             N2O.push({"N2O":Number(resultArray[100])});
+             N2O.push(Number(resultArray[100]));
              NxO.push(Number(resultArray[101]));
-             CO2.push({"CO2":Number(resultArray[77])});
+             CO2.push(Number(resultArray[77]));
              yearDay.push(resultArray[0]);
-             excel.push({"N2O":Number(resultArray[100]),"CO2":Number(resultArray[77])})
+             data.push({"N2O":Number(resultArray[100]),"CO2":Number(resultArray[77])})
          } 
          console.log('N20:  ' + N2O);
          console.log('Nx0:  ' + NxO);
          console.log('CO2:  ' + CO2);
          console.log('Date:  ' + yearDay);
+         console.log(data)
+         return data;
     }
 }

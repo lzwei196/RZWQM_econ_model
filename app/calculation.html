@@ -8,7 +8,7 @@
   
   </div>
 <div class="calculate-button" align = "center" id="calculate-button">
-        <button type="button" class="btn btn-danger btn-rounded" onclick="scraperFn()">Calculate</button>
+        <button type="button" class="btn btn-danger btn-rounded" onclick="execute()">Calculate</button>
       </div>
         </div>
 
@@ -33,16 +33,16 @@
     }
 
     function scraperFn(){
-      console.log(scraper())
     }
 
     function execute(){
-      writeRzwqm();
+      //writeRzwqm();
       let locate = plugin.locateTheReleaseFile();
+      writeRzwqm();
       const exec = require('child_process').exec;
       let stringHere = 'start RZWQMrelease.exe';
-
       //let stringHere = "C:\\RZWQM2\\projects\\GHG-SE\\GHG-SE-FD\\RZWQMrelease.exe";
+      //And run the application from the current folder
       exec(stringHere,{cwd:locate} ,function(err, stdout, stderr){ 
         if (err) {
           alert(err)
@@ -50,6 +50,7 @@
         }
     // node couldn't execute the command
   // the *entire* stdout and stderr (buffered)
+      readData();
      });
 };
 

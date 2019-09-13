@@ -13,5 +13,8 @@ module.exports = {
     },
     carbonTradePrice : function carbonTradePrice(carbonTradePrice){
         sessionStorage.setItem('carbonTradePrice',JSON.stringify(carbonTradePrice))
+    },
+    projectDirectory : function projectDirectory(projectDirectory){
+        sessionStorage.setItem('projectDirectory',JSON.stringify(projectDirectory))
     }
 }
