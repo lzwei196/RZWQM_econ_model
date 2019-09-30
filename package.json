@@ -20,6 +20,7 @@
     "idb": "^4.0.4",
     "jquery": "^3.4.1",
     "json2csv": "^4.5.2",
+    "mathjs": "^6.2.2",
     "node-cmd": "^3.0.0",
     "popper.js": "^1.15.0",
     "puppeteer": "^1.19.0",

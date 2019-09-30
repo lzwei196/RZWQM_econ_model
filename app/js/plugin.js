@@ -90,6 +90,7 @@ module.exports = {
          let N2O = [];
          let NxO = [];
          let CO2 = [];
+         let yield = [];
          let yearDay = [];
          let data = [];
          for(let i = 0; i < resultData.length-1; i++ ){
@@ -102,6 +103,7 @@ module.exports = {
              N2O.push(Number(resultArray[100]));
              NxO.push(Number(resultArray[101]));
              CO2.push(Number(resultArray[77]));
+             yield.push(Number(resultArray[43]))
              yearDay.push(resultArray[0]);
              data.push({"N2O":Number(resultArray[100]),"CO2":Number(resultArray[77])})
          } 
