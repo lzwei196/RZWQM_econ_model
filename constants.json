@@ -1,14 +1,11 @@
-[
 {"subrirrigation":{"fixed":
 				  [{"pipe":2076.56998},
 				   {"deepwell":280.8},
 				   {"pump":1005.35},
-				   {"control":215.075}]}
-				   },
-{"free-drainage":{"fixed":
+				   {"control":215.075}]},
+"free-drainage":{"fixed":
 				  [{"pipe":2076.56998},
 				   {"deepwell":0},
 				   {"pump":0},
-				   {"control":0}]}
-				   }		   
-]
+				   {"control":0}]} 
+}

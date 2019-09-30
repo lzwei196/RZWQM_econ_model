@@ -5,12 +5,24 @@
 
 <body>
   <div id = 'carbonPrice'>
-  
   </div>
-<div class="calculate-button" align = "center" id="calculate-button">
-        <button type="button" class="btn btn-danger btn-rounded" onclick="execute()">Calculate</button>
+      <div class="calculate-button" align = "center" id="calculate-button">
+        <button type="button" class="btn btn-danger btn-rounded" onclick="execute()">Commence Simulation</button>
       </div>
-        </div>
+
+      <br>
+      <br>
+
+      <div class="calculate-button" align = "center" id="nsb-button">
+        <button type="button" class="btn btn-danger btn-rounded" onclick="nsbCalc()">Commence Economical analysis</button>
+      </div>
+
+      <br>
+      <br>
+
+      <div>
+        <h3 class="nsb-price" align = "center" >Net Social Benefit$：</h3>
+      </div>
 
 <script>
   //loading up the required depenency variable
@@ -18,6 +30,9 @@
     var dialog = require('electron').remote.dialog;
     var fs = require('fs');
     var plugin = require('./js/plugin.js');
+
+    var constantRaw = fs.readFileSync("constants.json")
+    var constant = JSON.parse(constantRaw)
 
     function readRzwqm(){
       plugin.readRzwqm();
@@ -53,6 +68,35 @@
       readData();
      });
 };
+
+    function nsbCalc(){
+      var output = plugin.readData();
+      var yieldRaw = output.yield;
+      //console.log(yieldRaw)
+      let yield = [];
+      var revenue = 0;
+      //taking out the final yield with the the number of the day
+      yieldRaw.forEach(function(element,index){
+        if(element != 0 && yieldRaw[index+1] == 0){
+          yield.push(element)
+        }
+      });
+      //get the revenue from corn
+      yield.forEach(function(element){
+        revenue += 193.54*4.2*(element/1000);
+      })
+      
+      //if the choice is subirrigation:
+      var costConstant = constant["subrirrigation"]["fixed"];
+      var fixedCost = 0;
+      costConstant.forEach(function(element){
+        fixedCost = fixedCost + 4.2*(Object.values(element)[0])
+      })
+      
+      var nsb = revenue - fixedCost;
+      console.log(fixedCost)
+
+    }
 
 </script>
         

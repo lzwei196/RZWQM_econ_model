@@ -32,7 +32,6 @@ function locateTheRzwqm(projectDirectory){
     let trimData = resultData.map(function(item){
       return item.trim()
     })
-
     return {"data":trimData,"path":RZWQMDir};
   }
   
@@ -105,13 +104,8 @@ module.exports = {
              CO2.push(Number(resultArray[77]));
              yield.push(Number(resultArray[43]))
              yearDay.push(resultArray[0]);
-             data.push({"N2O":Number(resultArray[100]),"CO2":Number(resultArray[77])})
-         } 
-         console.log('N20:  ' + N2O);
-         console.log('Nx0:  ' + NxO);
-         console.log('CO2:  ' + CO2);
-         console.log('Date:  ' + yearDay);
-         console.log(data)
-         return data;
+             data.push({"N2O":N2O,"CO2":CO2,"yield":yield})
+         }      
+         return {yield:yield,N2O:N2O,CO2:CO2};
     }
 }
