@@ -14,7 +14,7 @@
       <br>
 
       <div class="calculate-button" align = "center" id="nsb-button">
-        <button type="button" class="btn btn-danger btn-rounded" onclick="nsbCalc()">Commence Economical analysis</button>
+        <button type="button" class="btn btn-danger btn-rounded" onclick="scraperFn()">Commence Economical analysis</button>
       </div>
 
       <br>
@@ -30,6 +30,7 @@
     var dialog = require('electron').remote.dialog;
     var fs = require('fs');
     var plugin = require('./js/plugin.js');
+    var cropPrice = require('./js/scraper.js').commodityPrice;
 
     var constantRaw = fs.readFileSync("constants.json")
     var constant = JSON.parse(constantRaw)
@@ -48,6 +49,8 @@
     }
 
     function scraperFn(){
+      cropPrice('TFGRAIN/CORN.json');
+      console.log('test')
     }
 
     function execute(){
@@ -70,6 +73,7 @@
 };
 
     function nsbCalc(){
+      //read data from the output
       var output = plugin.readData();
       var yieldRaw = output.yield;
       //console.log(yieldRaw)
@@ -81,6 +85,7 @@
           yield.push(element)
         }
       });
+      console.log(yieldRaw)
       //get the revenue from corn
       yield.forEach(function(element){
         revenue += 193.54*4.2*(element/1000);
@@ -92,9 +97,9 @@
       costConstant.forEach(function(element){
         fixedCost = fixedCost + 4.2*(Object.values(element)[0])
       })
-      
+
       var nsb = revenue - fixedCost;
-      console.log(fixedCost)
+
 
     }
 

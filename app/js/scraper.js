@@ -1,7 +1,8 @@
 const rp = require('request-promise');
 const cheerio = require('cheerio');
 const url = {
-             'Europe from Markets insider':'https://markets.businessinsider.com/commodities/co2-european-emission-allowances'
+             'Europe from Markets insider':'https://markets.businessinsider.com/commodities/co2-european-emission-allowances',
+             'commodity':'https://www.quandl.com/api/v3/datasets/'
 }
 var ss = require('./sessionStorage').carbonTradePrice;
 const options = {
@@ -27,6 +28,27 @@ module.exports = {
         .catch(function (err) {
         // REQUEST FAILED: print the error
     });
-    }
+    },
+     commodityPrice : function commodityPrice(cropApi){
+        console.log('sent')
+        var crop_url =  url['commodity'];
+        crop_url = crop_url + cropApi + '?limit=1&api_key=ytD8yEU6y_Ec7k81LETs'
+        const commodityOptions = {
+            uri:url,
+            headers:{
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
+            }
+        }
+        rp(commodityOptions)
+        //request succeeded
+        .then(function (price) {
+            // REQUEST SUCCEEDED
+            console.log(price)
+            return price;
+            })
+            .catch(function (err) {
+            // REQUEST FAILED: print the error
+        });
+     }
     }
 
