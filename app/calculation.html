@@ -14,7 +14,7 @@
       <br>
 
       <div class="calculate-button" align = "center" id="nsb-button">
-        <button type="button" class="btn btn-danger btn-rounded" onclick="scraperFn()">Commence Economical analysis</button>
+        <button type="button" class="btn btn-danger btn-rounded" onclick="nsbCalc()">Commence Economical analysis</button>
       </div>
 
       <br>
@@ -49,14 +49,18 @@
     }
 
     function scraperFn(){
-      cropPrice('TFGRAIN/CORN.json');
-      console.log('test')
+     cropPrice('TFGRAIN/CORN.json').then(function(crop_price){
+       var crop_current_price = (crop_price['dataset']['data'])[0][1];
+     })
+     return crop_current_price;
     }
 
     function execute(){
       //writeRzwqm();
       let locate = plugin.locateTheReleaseFile();
-      writeRzwqm();
+      plugin.cropInfo()
+      console.log(locate)
+      //writeRzwqm();
       const exec = require('child_process').exec;
       let stringHere = 'start RZWQMrelease.exe';
       //let stringHere = "C:\\RZWQM2\\projects\\GHG-SE\\GHG-SE-FD\\RZWQMrelease.exe";
@@ -68,7 +72,6 @@
         }
     // node couldn't execute the command
   // the *entire* stdout and stderr (buffered)
-      readData();
      });
 };
 
@@ -85,17 +88,17 @@
           yield.push(element)
         }
       });
-      console.log(yieldRaw)
+      console.log(yield)
       //get the revenue from corn
       yield.forEach(function(element){
-        revenue += 193.54*4.2*(element/1000);
+        revenue += 193.54*(element/1000);
       })
       
       //if the choice is subirrigation:
       var costConstant = constant["subrirrigation"]["fixed"];
       var fixedCost = 0;
       costConstant.forEach(function(element){
-        fixedCost = fixedCost + 4.2*(Object.values(element)[0])
+        fixedCost = fixedCost + (Object.values(element)[0])
       })
 
       var nsb = revenue - fixedCost;

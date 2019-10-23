@@ -51,12 +51,15 @@ module.exports = {
         return filePath;
       },
 
+      cropInfo: function cropInfo(data){
+        console.log(data)
+      },
+
   //take in the data and the parameters that needed to be updated in the .dat file
       writeRzwqm:function writeRzwqm(){
       var ProjectDir = JSON.parse(sessionStorage.getItem('projectDirectory'));
       //find the location of the rzwqm file, also reading the data from it
       let locate = locateTheRzwqm(ProjectDir);
-
       //two varibales that should be returned from calling the function
       let filePath = locate.path;
       let fileData = locate.data;

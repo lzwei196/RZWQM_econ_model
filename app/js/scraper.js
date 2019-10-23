@@ -30,25 +30,16 @@ module.exports = {
     });
     },
      commodityPrice : function commodityPrice(cropApi){
-        console.log('sent')
         var crop_url =  url['commodity'];
         crop_url = crop_url + cropApi + '?limit=1&api_key=ytD8yEU6y_Ec7k81LETs'
+        console.log(crop_url)
         const commodityOptions = {
-            uri:url,
-            headers:{
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
-            }
+            uri:crop_url,
+            json: true
         }
-        rp(commodityOptions)
-        //request succeeded
-        .then(function (price) {
-            // REQUEST SUCCEEDED
-            console.log(price)
-            return price;
-            })
-            .catch(function (err) {
-            // REQUEST FAILED: print the error
-        });
-     }
-    }
-
+        return rp(commodityOptions)
+        .then(function(response){
+            return response
+        })
+}
+}

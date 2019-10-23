@@ -16,5 +16,8 @@ module.exports = {
     },
     projectDirectory : function projectDirectory(projectDirectory){
         sessionStorage.setItem('projectDirectory',JSON.stringify(projectDirectory))
+    },
+    cropsWithPrice : function cropsWithPrice(cropsWithPrice){
+        sessionStorage.setItem('cropWithPrice',JSON.stringify(cropsWithPrice))
     }
 }
