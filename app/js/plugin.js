@@ -41,7 +41,10 @@ module.exports = {
       let RZWQMDir = projectDirectory + '\\RZWQM.DAT';
       console.log(RZWQMDir)
       let resultData = fs.readFileSync(RZWQMDir).toString().split("\n");
-      return {"data":resultData,"path":RZWQMDir};
+      let trimData = resultData.map(function(item){
+        return item.trim()
+      })
+      return {"data":trimData,"path":RZWQMDir};
     },
 
       locateTheReleaseFile: function locateTheReleaseFile(){

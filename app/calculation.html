@@ -14,7 +14,7 @@
       <br>
 
       <div class="calculate-button" align = "center" id="nsb-button">
-        <button type="button" class="btn btn-danger btn-rounded" onclick="nsbCalc()">Commence Economical analysis</button>
+        <button type="button" class="btn btn-danger btn-rounded" onclick="cropInfo()">Commence Economical analysis</button>
       </div>
 
       <br>
@@ -55,9 +55,31 @@
      return crop_current_price;
     }
 
+    function cropInfo(){
+      let locateReleaseFile = plugin.locateTheReleaseFile();
+      var ProjectDir = JSON.parse(sessionStorage.getItem('projectDirectory'));
+      //find the location of the rzwqm file, also reading the data from it
+      let locate = plugin.locateTheRzwqm(ProjectDir);
+      //two varibales that should be returned from calling the function
+      let filePath = locate.path;
+      let fileData = locate.data;
+      var beginLine = fileData.indexOf('=        below as the reference number.')+3;
+      var endLine = fileData.indexOf('=     SITE SPECIFIC PARAMETERS')-2;
+      var cropArray = [];
+      for(var i = beginLine;i<=endLine;i++ ){
+        if(i == beginLine){
+          cropArray.push(fileData[i]);
+        }else{
+          var splited = fileData[i].split(/(\s+)/);
+          cropArray.push(splited[2])
+        }
+      }
+      console.log(cropArray);
+
+    }
+
     function execute(){
       //writeRzwqm();
-      let locate = plugin.locateTheReleaseFile();
       plugin.cropInfo()
       console.log(locate)
       //writeRzwqm();
