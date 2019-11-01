@@ -10,29 +10,29 @@
   "repository": "https://github.com/lzwei196/econModelElectron.git",
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "bootstrap-select": "^1.13.10",
+    "bootstrap-select": "^1.13.12",
     "cheerio": "^1.0.0-rc.3",
     "compass": "^0.1.1",
     "dateformat": "^3.0.3",
     "datepicker-bootstrap": "^1.9.13",
-    "echarts": "^4.2.1",
+    "echarts": "^4.4.0",
     "electron-builder": "^21.2.0",
-    "idb": "^4.0.4",
+    "idb": "^4.0.5",
     "jquery": "^3.4.1",
-    "json2csv": "^4.5.2",
-    "mathjs": "^6.2.2",
+    "json2csv": "^4.5.4",
+    "mathjs": "^6.2.3",
     "node-cmd": "^3.0.0",
-    "popper.js": "^1.15.0",
-    "puppeteer": "^1.19.0",
+    "popper.js": "^1.16.0",
+    "puppeteer": "^1.20.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "sqlite3": "^4.1.0",
-    "tether": "^1.4.6",
+    "tether": "^1.4.7",
     "trilogy": "^2.0.2",
     "xlsx": "^0.15.1"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.10.2",
-    "electron": "^5.0.6"
+    "@fortawesome/fontawesome-free": "^5.11.2",
+    "electron": "^5.0.11"
   }
 }
