@@ -32,7 +32,6 @@ module.exports = {
      commodityPrice : function commodityPrice(cropApi){
         var crop_url =  url['commodity'];
         crop_url = crop_url + cropApi + '?limit=1&api_key=ytD8yEU6y_Ec7k81LETs'
-        console.log(crop_url)
         const commodityOptions = {
             uri:crop_url,
             json: true

@@ -7,7 +7,7 @@
   <div id = 'carbonPrice'>
   </div>
       <div class="calculate-button" align = "center" id="calculate-button">
-        <button type="button" class="btn btn-danger btn-rounded" onclick="execute()">Commence Simulation</button>
+        <button type="button" class="btn btn-danger btn-rounded" onclick="nsbCalc()">Commence Simulation</button>
       </div>
 
       <br>
@@ -50,9 +50,9 @@
 
     function scraperFn(){
      cropPrice('TFGRAIN/CORN.json').then(function(crop_price){
-       var crop_current_price = (crop_price['dataset']['data'])[0][1];
+       let crop_current_price = (crop_price['dataset']['data'])[0][1];
+       return crop_current_price;
      })
-     return crop_current_price;
     }
 
     function cropInfo(){
@@ -74,8 +74,8 @@
           cropArray.push(splited[2])
         }
       }
-      
 
+      return cropArray
     }
 
     function execute(){
@@ -104,27 +104,28 @@
       //console.log(yieldRaw)
       let yield = [];
       var revenue = 0;
+
       //taking out the final yield with the the number of the day
       yieldRaw.forEach(function(element,index){
         if(element != 0 && yieldRaw[index+1] == 0){
           yield.push(element)
         }
-      });
-      console.log(yield)
+      });   
+      
+      console.log(yield)   
       //get the revenue from corn
       yield.forEach(function(element){
         revenue += 193.54*(element/1000);
       })
-      
+
       //if the choice is subirrigation:
       var costConstant = constant["subrirrigation"]["fixed"];
       var fixedCost = 0;
       costConstant.forEach(function(element){
         fixedCost = fixedCost + (Object.values(element)[0])
-      })
+        })
 
       var nsb = revenue - fixedCost;
-
 
     }
 
