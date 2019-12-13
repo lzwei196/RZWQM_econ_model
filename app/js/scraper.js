@@ -29,16 +29,14 @@ module.exports = {
         // REQUEST FAILED: print the error
     });
     },
-     commodityPrice : function commodityPrice(cropApi){
+     commodityPrice : async function commodityPrice(cropApi){
         var crop_url =  url['commodity'];
         crop_url = crop_url + cropApi + '?limit=1&api_key=ytD8yEU6y_Ec7k81LETs'
         const commodityOptions = {
             uri:crop_url,
             json: true
         }
-        return rp(commodityOptions)
-        .then(function(response){
-            return response
-        })
+        const response = await rp(commodityOptions);
+        return response;
 }
 }
