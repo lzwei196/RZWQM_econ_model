@@ -1,32 +1,33 @@
 <html>
-        <head>
-            <link rel="stylesheet" href="content.css">
-        </head>
+
+<head>
+  <link rel="stylesheet" href="content.css">
+</head>
 
 <body>
-  <div id = 'carbonPrice'>
+  <div id='carbonPrice'>
   </div>
-      <div class="calculate-button" align = "center" id="calculate-button">
-        <button type="button" class="btn btn-danger btn-rounded" onclick="scraperFn()">Commence Simulation</button>
-      </div>
+  <div class="calculate-button" align="center" id="calculate-button">
+    <button type="button" class="btn btn-danger btn-rounded" onclick="execute()">Commence RZWQM Simulation</button>
+  </div>
 
-      <br>
-      <br>
+  <br>
+  <br>
 
-      <div class="calculate-button" align = "center" id="nsb-button">
-        <button type="button" class="btn btn-danger btn-rounded" onclick="nsbCalc()">Commence Economical analysis</button>
-      </div>
+  <div class="calculate-button" align="center" id="nsb-button">
+    <button type="button" class="btn btn-danger btn-rounded" onclick="nsbCalc()">Commence Economical analysis</button>
+  </div>
 
-      <br>
-      <br>
+  <br>
+  <br>
 
-      <div>
-        <h3 class="nsb-price" align = "center" >Net Social Benefit$：</h3>
-      </div>
+  <div>
+    <h3 class="nsb-price" align="center">Net Social Benefit$：</h3>
+  </div>
 
-<script>
-  //loading up the required depenency variable
-    var app = require('electron').remote; 
+  <script>
+    //loading up the required depenency variable
+    var app = require('electron').remote;
     var dialog = require('electron').remote.dialog;
     var fs = require('fs');
     var ss_plant = require('./js/sessionStorage').plant
@@ -34,91 +35,106 @@
     var plugin = require('./js/plugin.js');
     var cropPrice = require('./js/scraper.js').commodityPrice;
     var crop_json = require('./crops.json');
+    const bushel_tonne_exchange = require('./bushel_tonne_exchange.json');
     var constantRaw = fs.readFileSync("constants.json");
     var constant = JSON.parse(constantRaw);
+    const currency_rate_CAD = JSON.parse(sessionStorage.getItem('currency_rate'))['CAD']
 
-    function readRzwqm(){
+    function readRzwqm() {
       plugin.readRzwqm();
     }
 
     //user would help to locate the Rzwqm.DAT file first, then with the choice they made, execute the simulation.
-    function writeRzwqm(){
+    function writeRzwqm() {
       plugin.writeRzwqm();
     }
 
-    function readData(){
+    function readData() {
       plugin.readData();
     }
-    
-    async function scraperFn(){
-      cropInfo();
+
+    async function scraperFn() {
+      //cropInfo();
       let all_crop_price = [];
-      var plant_date =  JSON.parse(sessionStorage.getItem('plant_date'))
-        for(i=0; i<plant_date.length; i++){
-          var crop_name = Object.values(plant_date[i])[0];
-          var crop_date = Object.keys(plant_date[i])[0];
-            if(crop_json.hasOwnProperty(crop_name)){
-              var the_crop_price = await cropPrice(crop_json[crop_name]);
-              var price = the_crop_price["dataset"]["data"][0][1];
-              all_crop_price.push({[crop_date]:{price:price, crop:crop_name}});
+      var plant_date = JSON.parse(sessionStorage.getItem('plant_date'))
+      for (i = 0; i < plant_date.length; i++) {
+        var crop_name = Object.values(plant_date[i])[0];
+        var crop_date = Object.keys(plant_date[i])[0];
+        if (crop_json.hasOwnProperty(crop_name)) {
+          var the_crop_price = await cropPrice(crop_json[crop_name]);
+          var price = the_crop_price["dataset"]["data"][0][1];
+          all_crop_price.push({
+            [crop_date]: {
+              price: price,
+              crop: crop_name
             }
+          });
         }
-        console.log(all_crop_price)
-        ss_crop_price(all_crop_price);
+      }
+      ss_crop_price(all_crop_price);
     }
-   
-    function cropInfo(){
+
+    function cropInfo() {
       let locateReleaseFile = plugin.locateTheReleaseFile();
       var ProjectDir = JSON.parse(sessionStorage.getItem('projectDirectory'));
       //find the location of the rzwqm file, also reading the data from it
-      let locate = plugin.locateTheRzwqm(ProjectDir);
+      locate = plugin.locateTheRzwqm(ProjectDir);
       //two varibales that should be returned from calling the function
       let filePath = locate.path;
       let fileData = locate.data;
-      var beginLine = fileData.indexOf('=        below as the reference number.')+3;
-      var endLine = fileData.indexOf('=     SITE SPECIFIC PARAMETERS')-2;
-      var begin_plant_line = fileData.indexOf('=    5       planting window in days after plant date (# of days) [0-45]') + 3;
-      var end_plant_line = fileData.indexOf('==               M A N U R E   M A N A G E M E N T                    ==') - 3;
+      console.log(filePath)
+      var beginLine = fileData.indexOf('=        below as the reference number.') + 3;
+      var endLine = fileData.indexOf('=     SITE SPECIFIC PARAMETERS') - 2;
+      var begin_plant_line = fileData.indexOf(
+        '=    5       planting window in days after plant date (# of days) [0-45]') + 3;
+      var end_plant_line = fileData.indexOf(
+        '==               M A N U R E   M A N A G E M E N T                    ==') - 3;
       var cropArray = [];
       var plant_date = [];
-      
-      for(var i = beginLine;i<=endLine;i++ ){
-        if(i == beginLine){
+
+      for (var i = beginLine; i <= endLine; i++) {
+        if (i == beginLine) {
           cropArray.push(fileData[i]);
-        }else{
+        } else {
           var splited = fileData[i].split(/(\s+)/);
           cropArray.push(splited[2])
         }
+        return filePath
       }
 
-      for(i = begin_plant_line; i <= end_plant_line; i = i + 3){
-          splited = fileData[i].split(/(\s+)/);
-          plant_date.push({[splited[6]]:cropArray[splited[0]]});
-        }
-      ss_plant(plant_date) 
+      for (i = begin_plant_line; i <= end_plant_line; i = i + 3) {
+        splited = fileData[i].split(/(\s+)/);
+        plant_date.push({
+          [splited[6]]: cropArray[splited[0]]
+        });
+      }
+      ss_plant(plant_date)
     }
 
-    function execute(){
+    function execute() {
+      let filepath = cropInfo();
       //writeRzwqm();
-      plugin.cropInfo()
-      console.log(locate)
+      //scraperFn();
       //writeRzwqm();
       const exec = require('child_process').exec;
       let stringHere = 'start RZWQMrelease.exe';
       //let stringHere = "C:\\RZWQM2\\projects\\GHG-SE\\GHG-SE-FD\\RZWQMrelease.exe";
       //And run the application from the current folder
-      exec(stringHere,{cwd:locate} ,function(err, stdout, stderr){ 
+      exec("cd desktop", {
+        // cwd: "C:\GHG-SE\GHG-SE-FD"
+      }, function (err, stdout, stderr) {
         if (err) {
           alert(err)
           console.log(err)
         }
-    // node couldn't execute the command
-  // the *entire* stdout and stderr (buffered)
-     });
-};
+        // node couldn't execute the command
+        // the *entire* stdout and stderr (buffered)
+      });
+    };
 
-    function nsbCalc(){
-      var crop_final_price =  JSON.parse(sessionStorage.getItem('cropWithPrice'))
+    function nsbCalc() {
+
+      var crop_final_price = JSON.parse(sessionStorage.getItem('cropWithPrice'))
       //read data from the output
       var output = plugin.readData();
       var yieldRaw = output.yield;
@@ -127,31 +143,32 @@
       var revenue = 0;
       let i = 0;
       //taking out the final yield with the the number of the day
-      yieldRaw.forEach(function(element,index){
-        if(element != 0 && yieldRaw[index+1] == 0){
-          yield.push(element);
+      yieldRaw.forEach(function (element, index) {
+        if (element != 0 && yieldRaw[index + 1] == 0) {
+          yield.push(element * 4.2);
         }
       })
-      //get the revenue from corn
-      yield.forEach(function(element){
-        revenue = revenue + element * Object.values(crop_final_price[i])[0]['price'];
+      yield.forEach(function (element) {
+        revenue = revenue + element / 1000 *
+          Object.values(crop_final_price[i])[0]['price'] *
+          currency_rate_CAD *
+          bushel_tonne_exchange[Object.values(crop_final_price[i])[0]['crop']]
         i = i + 1;
       })
-      console.log('revenue:' + revenue)
-      //console.log(revenue)
-      //if the choice is subirrigation:
+      console.log(revenue)
       var costConstant = constant["subrirrigation"]["fixed"];
+      var variable_cost = constant["general_variable_cost"]
       var fixedCost = 0;
-      costConstant.forEach(function(element){
+      costConstant.forEach(function (element) {
         fixedCost = fixedCost + (Object.values(element)[0])
-        })
+      })
 
-      var nsb = revenue - fixedCost;
-
+      var total_cost = fixedCost + 10.37 * (variable_cost['seed_price']['corn'])
+      var nsb = revenue - total_cost;
+      console.log(nsb)
     }
+  </script>
 
-</script>
-        
-    </body>
+</body>
 
-    </html>
+</html>
