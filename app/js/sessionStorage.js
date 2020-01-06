@@ -19,5 +19,8 @@ module.exports = {
     },
     cropsWithPrice : function cropsWithPrice(cropsWithPrice){
         sessionStorage.setItem('cropWithPrice',JSON.stringify(cropsWithPrice))
+    },
+    plant : function plant(plant){
+        sessionStorage.setItem('plant_date',JSON.stringify(plant))
     }
 }

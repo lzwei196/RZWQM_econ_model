@@ -14,7 +14,7 @@
       <br>
 
       <div class="calculate-button" align = "center" id="nsb-button">
-        <button type="button" class="btn btn-danger btn-rounded" onclick="cropInfo()">Commence Economical analysis</button>
+        <button type="button" class="btn btn-danger btn-rounded" onclick="nsbCalc()">Commence Economical analysis</button>
       </div>
 
       <br>
@@ -29,13 +29,13 @@
     var app = require('electron').remote; 
     var dialog = require('electron').remote.dialog;
     var fs = require('fs');
+    var ss_plant = require('./js/sessionStorage').plant
+    var ss_crop_price = require('./js/sessionStorage').cropsWithPrice
     var plugin = require('./js/plugin.js');
     var cropPrice = require('./js/scraper.js').commodityPrice;
-
-    var constantRaw = fs.readFileSync("constants.json")
-    var constant = JSON.parse(constantRaw)
-    var all_crop_price = [];
-
+    var crop_json = require('./crops.json');
+    var constantRaw = fs.readFileSync("constants.json");
+    var constant = JSON.parse(constantRaw);
 
     function readRzwqm(){
       plugin.readRzwqm();
@@ -51,11 +51,20 @@
     }
     
     async function scraperFn(){
-      let crops = cropInfo();
-      
-      all_crop_price = await cropPrice('TFGRAIN/CORN.json')
-      var price = all_crop_price["dataset"]["data"][0][1]
-      return price
+      cropInfo();
+      let all_crop_price = [];
+      var plant_date =  JSON.parse(sessionStorage.getItem('plant_date'))
+        for(i=0; i<plant_date.length; i++){
+          var crop_name = Object.values(plant_date[i])[0];
+          var crop_date = Object.keys(plant_date[i])[0];
+            if(crop_json.hasOwnProperty(crop_name)){
+              var the_crop_price = await cropPrice(crop_json[crop_name]);
+              var price = the_crop_price["dataset"]["data"][0][1];
+              all_crop_price.push({[crop_date]:{price:price, crop:crop_name}});
+            }
+        }
+        console.log(all_crop_price)
+        ss_crop_price(all_crop_price);
     }
    
     function cropInfo(){
@@ -68,7 +77,11 @@
       let fileData = locate.data;
       var beginLine = fileData.indexOf('=        below as the reference number.')+3;
       var endLine = fileData.indexOf('=     SITE SPECIFIC PARAMETERS')-2;
+      var begin_plant_line = fileData.indexOf('=    5       planting window in days after plant date (# of days) [0-45]') + 3;
+      var end_plant_line = fileData.indexOf('==               M A N U R E   M A N A G E M E N T                    ==') - 3;
       var cropArray = [];
+      var plant_date = [];
+      
       for(var i = beginLine;i<=endLine;i++ ){
         if(i == beginLine){
           cropArray.push(fileData[i]);
@@ -78,7 +91,11 @@
         }
       }
 
-      return cropArray
+      for(i = begin_plant_line; i <= end_plant_line; i = i + 3){
+          splited = fileData[i].split(/(\s+)/);
+          plant_date.push({[splited[6]]:cropArray[splited[0]]});
+        }
+      ss_plant(plant_date) 
     }
 
     function execute(){
@@ -101,26 +118,27 @@
 };
 
     function nsbCalc(){
+      var crop_final_price =  JSON.parse(sessionStorage.getItem('cropWithPrice'))
       //read data from the output
       var output = plugin.readData();
       var yieldRaw = output.yield;
       //console.log(yieldRaw)
       let yield = [];
       var revenue = 0;
-
+      let i = 0;
       //taking out the final yield with the the number of the day
       yieldRaw.forEach(function(element,index){
         if(element != 0 && yieldRaw[index+1] == 0){
-          yield.push(element)
+          yield.push(element);
         }
-      });   
-      
-      console.log(yield)   
+      })
       //get the revenue from corn
       yield.forEach(function(element){
-        revenue += 193.54*(element/1000);
+        revenue = revenue + element * Object.values(crop_final_price[i])[0]['price'];
+        i = i + 1;
       })
-
+      console.log('revenue:' + revenue)
+      //console.log(revenue)
       //if the choice is subirrigation:
       var costConstant = constant["subrirrigation"]["fixed"];
       var fixedCost = 0;
