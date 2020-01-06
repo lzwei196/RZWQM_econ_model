@@ -126,10 +126,11 @@
       let yield = [];
       var revenue = 0;
       let i = 0;
+
       //taking out the final yield with the the number of the day
       yieldRaw.forEach(function(element,index){
         if(element != 0 && yieldRaw[index+1] == 0){
-          yield.push(element);
+          yield.push(element/1000);
         }
       })
       //get the revenue from corn
@@ -137,8 +138,8 @@
         revenue = revenue + element * Object.values(crop_final_price[i])[0]['price'];
         i = i + 1;
       })
-      console.log('revenue:' + revenue)
-      //console.log(revenue)
+      console.log('revenue: ' + revenue)
+
       //if the choice is subirrigation:
       var costConstant = constant["subrirrigation"]["fixed"];
       var fixedCost = 0;
