@@ -1,11 +1,43 @@
-{"subrirrigation":{"fixed":
-				  [{"pipe":2076.56998},
-				   {"deepwell":280.8},
-				   {"pump":1005.35},
-				   {"control":215.075}]},
-"free-drainage":{"fixed":
-				  [{"pipe":2076.56998},
-				   {"deepwell":0},
-				   {"pump":0},
-				   {"control":0}]} 
+{
+	"subrirrigation": {
+		"fixed": [{
+				"pipe": 10467.10
+			},
+			{
+				"deepwell": 5615.35
+			},
+			{
+				"pump": 4021.40
+			},
+			{
+				"control_stucture": 860.30
+			}
+		]
+	},
+	"free-drainage": {
+		"fixed": [{
+				"pipe": 10467.10
+			},
+			{
+				"deepwell": 0
+			},
+			{
+				"pump": 0
+			},
+			{
+				"control": 0
+			}
+		]
+	},
+	"general_variable_cost": {
+		"seed_price": {
+			"corn": 118.62
+		},
+		"fertilizer_price": {
+			"NPK": 170.04
+		},
+		"labour_cost": {
+			"labour_per_hour": 12.50
+		}
+	}
 }

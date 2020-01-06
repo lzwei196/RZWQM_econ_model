@@ -1,119 +1,131 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link href="../node_modules/datepicker-bootstrap/css/core.css" rel="stylesheet" type="text/css">
-    <link href="../node_modules/datepicker-bootstrap/css/datepicker.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="index.css">
-    <title>Economical Model</title>
-  </head>
 
-  <body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link href="../node_modules/datepicker-bootstrap/css/core.css" rel="stylesheet" type="text/css">
+  <link href="../node_modules/datepicker-bootstrap/css/datepicker.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="index.css">
+  <title>Economical Model</title>
+</head>
 
-    <!-- navagation bar -->
-      <header id="titlebar">        
-          <div id="drag-region">
-              <div id="window-title">
-                  <span>Economial Model</span>
-                </div>
-          </div>
-          <div id="window-controls">
-              <div class="button" id="min-button">
-                <span>&#xE921;</span>
-              </div>
-              <div class="button" id="max-button">
-                <span>&#xE922;</span>
-              </div>
-              <div class="button" id="restore-button">
-                <span>&#xE923;</span>
-              </div>
-              <div class="button" id="close-button">
-                <span>&#xE8BB;</span>
-      </header>
+<body>
 
-      <!--sideNav Bar-->
-      <div class="nav js-nav">
-          <header class="nav-header">
-            <img src ="images/mcgill_logo.png" width="120px" height="90px"/>
-            <h3 class="nav-title">Economical <strong>Modelling</strong></h3>
-          </header>
+  <!-- navagation bar -->
+  <header id="titlebar">
+    <div id="drag-region">
+      <div id="window-title">
+        <span>Economial Model</span>
+      </div>
+    </div>
+    <div id="window-controls">
+      <div class="button" id="min-button">
+        <span>&#xE921;</span>
+      </div>
+      <div class="button" id="max-button">
+        <span>&#xE922;</span>
+      </div>
+      <div class="button" id="restore-button">
+        <span>&#xE923;</span>
+      </div>
+      <div class="button" id="close-button">
+        <span>&#xE8BB;</span>
+  </header>
 
-          <div class="nav-item steps">
-              <button type="button" id="location"  class="nav-button" onclick="load_location()">Location </button>
-              <br>
-              <br>
-              <button type="button" id="mitigation-method"  class="nav-button" onclick="load_mitigation()">Mitigation Method </button>
-              <br>
-              <br>
-              <button type="button" id="method-details"  class="nav-button" onclick="load_detailedInfo()">Method Details </button>
-              <br>
-              <br>
-              <button type="button" id="calculate"  class="nav-button" onclick="load_calculation()">Calculate </button>
-              <br>
-              <br>
-              <button type="button" id="result" class="nav-button" onclick="load_result()">Result </button>
-            </div>
-          </div>
-  
-          <!--main content-->
-      <div class="main" id = "content" ></div>
-  </body>
-   
+  <!--sideNav Bar-->
+  <div class="nav js-nav">
+    <header class="nav-header">
+      <img src="images/mcgill_logo.png" width="120px" height="90px" />
+      <h3 class="nav-title">Economical <strong>Modelling</strong></h3>
+    </header>
 
-    <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
-    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../node_modules/datepicker-bootstrap/js/core.js"></script>
-    <script src="../node_modules/datepicker-bootstrap/js/datepicker.js"></script>
-    <script type="text/javascript" src="index.js"></script>
+    <div class="nav-item steps">
+      <button type="button" id="location" class="nav-button" onclick="load_location()">Location </button>
+      <br>
+      <br>
+      <button type="button" id="mitigation-method" class="nav-button" onclick="load_mitigation()">Mitigation Method
+      </button>
+      <br>
+      <br>
+      <button type="button" id="method-details" class="nav-button" onclick="load_detailedInfo()">Method Details
+      </button>
+      <br>
+      <br>
+      <button type="button" id="calculate" class="nav-button" onclick="load_calculation()">Calculate </button>
+      <br>
+      <br>
+      <button type="button" id="result" class="nav-button" onclick="load_result()">Result </button>
+    </div>
+  </div>
 
-    <script>
-    var scraper = require('./js/scraper.js').priceScraper;
-    document.addEventListener("DOMContentLoaded", function() {
-      scraper();
-      window.setInterval(scraper,100000)
-    });
+  <!--main content-->
+  <div class="main" id="content"></div>
+</body>
 
-     /* let database = require('../app/js/DB.js')
-      let schema = {
-        earlyDate:String,
-        endDate:String,
-        irrigationTiming:Number
-      }
 
-      let create = database.create('subirrigation',schema,database.db)*/
+<!-- You can also require other files to run in this process -->
+<script src="./renderer.js"></script>
+<script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"
+  onload="window.$ = window.jQuery = module.exports;"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../node_modules/datepicker-bootstrap/js/core.js"></script>
+<script src="../node_modules/datepicker-bootstrap/js/datepicker.js"></script>
+<script type="text/javascript" src="index.js"></script>
 
-      function load_location() {
-        $("#content").empty();
-        $('#content').load("location.html");
-}
-      function load_mitigation(){
-        $("#content").empty();
-        $('#content').load("mitigation.html");
-      }
-      function load_detailedInfo(){
-        $("#content").empty();
-        $('#content').load("method_details.html");
-      }
-      function load_calculation(){
-        $("#content").empty();
-        $('#content').load("calculation.html");
-      }
-      function load_result(){
-        $("#content").empty();
-        $('#content').load("results.html");
-      }
-      $( document ).ready(function() {
-        $("#content").empty();
-        $('#content').load("location.html");
-});
+<script>
+  var scraper = require('./js/scraper.js').priceScraper;
+  var currency_rate = require('./js/scraper.js').currency_rate;
+  document.addEventListener("DOMContentLoaded", function () {
     scraper();
-    </script>
+    currency_rate('USD');
+    window.setInterval(scraper, 100000)
+  });
 
-        
-      </body>
+  /* let database = require('../app/js/DB.js')
+   let schema = {
+     earlyDate:String,
+     endDate:String,
+     irrigationTiming:Number
+   }
+
+   let create = database.create('subirrigation',schema,database.db)*/
+
+  function load_location() {
+    $("#content").empty();
+    $('#content').load("location.html");
+  }
+
+  function load_mitigation() {
+    $("#content").empty();
+    $('#content').load("mitigation.html");
+  }
+
+  function load_detailedInfo() {
+    $("#content").empty();
+    $('#content').load("method_details.html");
+  }
+
+  function load_calculation() {
+    $("#content").empty();
+    $('#content').load("calculation.html");
+  }
+
+  function load_result() {
+    $("#content").empty();
+    $('#content').load("results.html");
+  }
+  $(document).ready(function () {
+    $("#content").empty();
+    $('#content').load("location.html");
+  });
+  scraper();
+</script>
+
+
+</body>
+
 </html>
