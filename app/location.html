@@ -1,61 +1,45 @@
 <html>
-  <head>
-      <link rel="stylesheet" href="content.css">
-  </head>
+
+<head>
+  <link rel="stylesheet" href="content.css">
+</head>
+
 <body>
-  
-    <!-- location-options dropdown menu-->
-    <div class="content-options" align="center">
-      <h2>1.Choose the location</h2>
-        <div class="col-sm-6">
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="chooseLocation">Location  </label>
-            <select class="custom-select" id="chooseLocation">
-              <option selected>Choose Location</option>
-              <option value="1">Montreal</option>
-              <option value="2">St Emmanuel</option>
-            </select>
-          </div>
-          </div>
-    </div>
 
-    <!-- choose the project -->
-    <div class="content-options" align="center">
-        <h2>2.Choose the project</h2>
-          <div class="col-sm-6">
-          <div class="input-group mb-3">
-                <label class="input-group-text" for="chooseProject">project   </label>
-              <select class="custom-select" id="chooseProject">
-                <option selected>Choose project</option>
-                <option value="1">Montreal</option>
-                <option value="2">St Emmanuel</option>
-              </select>
-            </div>
-            </div>
-      </div>
+  <!-- location-options dropdown menu-->
+  <div class="content-options" align="center">
+    <button type="button" class="btn btn-primary btn-rounded" onclick="locate_Rzwqm_folder()">Select The Rzwqm project
+      folder</button>
+  </div>
 
-      <script>
-         $('#chooseLocation').change(function(){
-            let ssLocation = require('./js/sessionStorage').location
-            let location = $('#chooseLocation').val();
-            ssLocation(location);
-        })
+  <script>
+    var plugin = require('./js/plugin.js');
 
-        if(sessionStorage.getItem('location')){
-          $('#chooseLocation').val(sessionStorage.getItem('location'));
-        }
+    function locate_Rzwqm_folder() {
+      let locateReleaseFile = plugin.locateTheReleaseFile();
+    }
 
-        $('#chooseProject').change(function(){
-            let ssProject = require('./js/sessionStorage').project
-            let project = $('#chooseProject').val();
-            ssProject(project);
-        })
+    `$('#chooseLocation').change(function () {
+      let ssLocation = require('./js/sessionStorage').location
+      let location = $('#chooseLocation').val();
+      ssLocation(location);
+    })
 
-        if(sessionStorage.getItem('project')){
-          $('#chooseProject').val(sessionStorage.getItem('project'));
-        }
+    if (sessionStorage.getItem('location')) {
+      $('#chooseLocation').val(sessionStorage.getItem('location'));
+    }
 
-        </script>
+    $('#chooseProject').change(function () {
+      let ssProject = require('./js/sessionStorage').project
+      let project = $('#chooseProject').val();
+      ssProject(project);
+    })
 
-    </body>
-</html>   
+    if (sessionStorage.getItem('project')) {
+      $('#chooseProject').val(sessionStorage.getItem('project'));
+    }`
+  </script>
+
+</body>
+
+</html>
