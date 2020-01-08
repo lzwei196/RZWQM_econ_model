@@ -1,45 +1,35 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="content.css">
+  <link rel="stylesheet" href="content.css" />
 </head>
 
 <body>
-
   <!-- location-options dropdown menu-->
   <div class="content-options" align="center">
-    <button type="button" class="btn btn-primary btn-rounded" onclick="locate_Rzwqm_folder()">Select The Rzwqm project
-      folder</button>
+    <button type="button" class="btn btn-primary btn-rounded" onclick="locate_Rzwqm_folder()">
+      Select The Rzwqm project folder
+    </button>
+
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md m-auto">
+          <div class="form-group">
+            <input type="text" id="search" class="form-control form-control-lg" placeholder="Enter the city name">
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script>
-    var plugin = require('./js/plugin.js');
+    var plugin = require("./js/plugin.js");
 
     function locate_Rzwqm_folder() {
       let locateReleaseFile = plugin.locateTheReleaseFile();
     }
-
-    `$('#chooseLocation').change(function () {
-      let ssLocation = require('./js/sessionStorage').location
-      let location = $('#chooseLocation').val();
-      ssLocation(location);
-    })
-
-    if (sessionStorage.getItem('location')) {
-      $('#chooseLocation').val(sessionStorage.getItem('location'));
-    }
-
-    $('#chooseProject').change(function () {
-      let ssProject = require('./js/sessionStorage').project
-      let project = $('#chooseProject').val();
-      ssProject(project);
-    })
-
-    if (sessionStorage.getItem('project')) {
-      $('#chooseProject').val(sessionStorage.getItem('project'));
-    }`
   </script>
-
 </body>
 
 </html>
