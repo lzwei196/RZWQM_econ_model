@@ -1,44 +1,69 @@
 <html>
+  <head>
+    <link rel="stylesheet" href="content.css" />
+  </head>
 
-<head>
-  <link rel="stylesheet" href="content.css">
-</head>
-
-<body>
-  <!-- location-options dropdown menu-->
-  <div class="content-options" align="center">
-    <button type="button" class="btn btn-primary btn-rounded" onclick="locate_Rzwqm_folder()">
-      Select The Rzwqm project folder</button>
-    <br>
-    <br>
-    <br>
-    <div class="container-fluid">
-      <form>
-        <div class="row justify-content-center">
-          <div class="form-row">
-            <div class="col-auto">
-              <label for="country">Country</label>
-              <input type="text" class="form-control" placeholder="Country" id="country">
-            </div>
-            <div class="col-auto">
-              <label for="city">City</label>
-              <input type="text" class="form-control" placeholder="City" id="city">
+  <body>
+    <!-- location-options dropdown menu-->
+    <div class="content-options" align="center">
+      <button
+        type="button"
+        class="btn btn-primary btn-rounded"
+        onclick="locate_Rzwqm_folder()"
+      >
+        Select The Rzwqm project folder
+      </button>
+      <br />
+      <br />
+      <br />
+      <div class="container-fluid">
+        <form>
+          <div class="row justify-content-center">
+            <div class="form-row">
+              <div class="col-auto">
+                <label for="country">Country</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Country"
+                  id="country"
+                />
+              </div>
+              <div class="col-auto">
+                <label for="city">City</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="City"
+                  id="city"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </form>
+          <br />
+          <div class="row justify-content-center">
+            <div class="col-auto">
+              <label for="altitude_longitude"
+                >Pleas enter the altitude_longitude if applicable</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="0.0000,0.0000"
+                id="altitude_longitude"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
 
+    <script>
+      var plugin = require("./js/plugin.js");
 
-  <script>
-    var plugin = require("./js/plugin.js");
-
-
-    function locate_Rzwqm_folder() {
-      let locateReleaseFile = plugin.locateTheReleaseFile();
-    }
-  </script>
-</body>
-
+      function locate_Rzwqm_folder() {
+        let locateReleaseFile = plugin.locateTheReleaseFile();
+      }
+    </script>
+  </body>
 </html>
