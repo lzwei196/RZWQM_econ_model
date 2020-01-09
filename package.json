@@ -13,6 +13,7 @@
     "bootstrap": "^4.3.1",
     "bootstrap-select": "^1.13.12",
     "cheerio": "^1.0.0-rc.3",
+    "cities.json": "^1.1.5",
     "compass": "^0.1.1",
     "dateformat": "^3.0.3",
     "datepicker-bootstrap": "^1.9.13",

@@ -1,21 +1,23 @@
-body, html {
-    font-family: Consolas,monaco,"Ubuntu Mono",courier,monospace!important;
-    font-size: small;
-    color: rgb(216, 216, 216);
-    background: #282C34;
-    overflow-y: auto;
-    overflow-x: auto;
+body,
+html {
+  font-family: Consolas, monaco, "Ubuntu Mono", courier, monospace !important;
+  font-size: small;
+  color: rgb(216, 216, 216);
+  background: #282C34;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 #titlebar {
   display: block;
   position: fixed;
   height: 32px;
-  width: calc(100% - 2px); /*Compensate for body 1px border*/
+  width: calc(100% - 2px);
+  /*Compensate for body 1px border*/
   background: #23272a;
 }
 
-#titlebar{
+#titlebar {
   padding: 4px;
 }
 
@@ -25,7 +27,7 @@ body, html {
   -webkit-app-region: drag;
 }
 
-.container-fluid h1{
+.container-fluid h1 {
   padding-top: 32px;
   margin-top: 32px;
   overflow-y: auto;
@@ -34,6 +36,7 @@ body, html {
 #titlebar {
   color: #FFF;
 }
+
 #window-controls {
   display: grid;
   grid-template-columns: repeat(3, 46px);
@@ -44,6 +47,7 @@ body, html {
   font-family: "Segoe MDL2 Assets";
   font-size: small;
 }
+
 #window-controls .button {
   grid-row: 1 / span 1;
   display: flex;
@@ -52,37 +56,48 @@ body, html {
   width: 100%;
   height: 100%;
 }
+
 #window-controls #min-button {
   grid-column: 1;
 }
-#window-controls #max-button, #window-controls #restore-button {
+
+#window-controls #max-button,
+#window-controls #restore-button {
   grid-column: 2;
 }
+
 #window-controls #close-button {
   grid-column: 3;
 }
+
 #window-controls {
   -webkit-app-region: no-drag;
 }
+
 #window-controls .button {
   user-select: none;
   cursor: default;
   color: #BBB;
 }
+
 #window-controls .button:hover {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   color: #FFF;
 }
+
 #window-controls #close-button:hover {
   background: #E81123;
 }
+
 #window-controls #restore-button {
   display: none;
 }
+
 #titlebar #drag-region {
   display: grid;
   grid-template-columns: auto 138px;
 }
+
 #window-title {
   grid-column: 1;
   display: flex;
@@ -91,36 +106,36 @@ body, html {
   margin-left: 8px;
   overflow-x: hidden;
 }
+
 #window-title span {
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.5;
 }
 
-h2{
+h2 {
   font-size: medium
 }
 
-.calculate-button{
+.calculate-button {
   padding-top: 40px;
 }
 
-#content-options
-    {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: small;
-      }
-#calculate-button{
-    display: flex;
-        align-items: center;
-        justify-content: center;
+.content-options {
+  padding-top: 100px;
+  align-items: center;
+  justify-content: center;
+  font-size: small;
 }
 
-.table{
+#calculate-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table {
   color: #ABB2BF;
   font-size: small;
-    table-layout : fixed;
+  table-layout: fixed;
 }
-button.edit { background:none;border:none; }
