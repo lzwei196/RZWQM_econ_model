@@ -45,11 +45,7 @@
       <button type="button" id="Project File" class="nav-button" onclick="load_location()">Choose Project</button>
       <br>
       <br>
-      <button type="button" id="mitigation-method" class="nav-button" onclick="load_mitigation()">Choose BMP
-      </button>
-      <br>
-      <br>
-      <button type="button" id="method-details" class="nav-button" onclick="load_detailedInfo()">Method Details
+      <button type="button" id="method-details" class="nav-button" onclick="load_detailedInfo()">Project Details
       </button>
       <br>
       <br>
@@ -97,11 +93,6 @@
   function load_location() {
     $("#content").empty();
     $('#content').load("location.html");
-  }
-
-  function load_mitigation() {
-    $("#content").empty();
-    $('#content').load("mitigation.html");
   }
 
   function load_detailedInfo() {

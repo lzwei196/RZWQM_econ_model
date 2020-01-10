@@ -1,16 +1,40 @@
 <html>
-        <head>
-            <link rel="stylesheet" href="content.css">
-        </head>
-      <body>
-          <div class="main" id = "content" ></div>
 
-          <script type="text/javascript">
-       
-            $(function () {
-              $('#content').load("../app/mitigationDetail/subirrigation.html");
-            });
-        </script>
+<head>
+  <link rel="stylesheet" href="content.css">
+  <div align="center">
+    <h2>Project Detail</h2>
+  </div>
+</head>
 
-    </body>
+<body>
+  <div class="container-fluid" id="project-detail-head" align="center">
+    <div class="col-auto">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-primary" onclick="subirrigation()">Irrigation</button>
+        <button type="button" class="btn btn-primary" onclick="drainage()">Drainage</button>
+        <!-- <button type="button" class="btn btn-primary">Crops</button>
+        <button type="button" class="btn btn-primary">Fertilization</button>-->
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid" id="project-detail">
+  </div>
+
+  <script type="text/javascript">
+    $(function () {
+      $('#project-detail').load("../app/mitigationDetail/subirrigation.html");
+    });
+
+    function subirrigation() {
+      $('#project-detail').load("../app/mitigationDetail/subirrigation.html");
+    };
+
+    function drainage() {
+      $('#project-detail').load("../app/mitigationDetail/Drainage.html");
+    }
+  </script>
+
+</body>
+
 </html>

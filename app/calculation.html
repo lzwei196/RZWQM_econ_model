@@ -99,7 +99,6 @@
           var splited = fileData[i].split(/(\s+)/);
           cropArray.push(splited[2])
         }
-        return filePath
       }
 
       for (i = begin_plant_line; i <= end_plant_line; i = i + 3) {
@@ -108,13 +107,14 @@
           [splited[6]]: cropArray[splited[0]]
         });
       }
+
       ss_plant(plant_date)
     }
 
     function execute() {
-      let filepath = cropInfo();
+      cropInfo();
       //writeRzwqm()chr;
-      //scraperFn();
+      scraperFn();
       //writeRzwqm();
       const exec = require('child_process').exec;
       let stringHere = 'start RZWQMrelease.exe';

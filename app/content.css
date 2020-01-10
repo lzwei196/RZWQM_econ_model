@@ -122,7 +122,6 @@ h2 {
 }
 
 .content-options {
-  padding-top: 100px;
   align-items: center;
   justify-content: center;
   font-size: small;
@@ -138,4 +137,15 @@ h2 {
   color: #ABB2BF;
   font-size: small;
   table-layout: fixed;
+}
+
+#content-options-location {
+  padding-top: 60px;
+  align-items: center;
+  justify-content: center;
+  font-size: small;
+}
+
+#project-detail-head {
+  padding-top: 20px;
 }
