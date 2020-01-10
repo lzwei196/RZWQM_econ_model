@@ -1,0 +1,109 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="content.css">
+</head>
+
+<body>
+    <div class="content-options" align="center">
+        <br>
+        <form>
+            <div class="form-group">
+                <div class="col-4">
+                    <label for="drain-present">Drains present?</label>
+                    <select class="form-control" id="drain-present">
+                        <option selected>Yes or No?</option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </select>
+                </div>
+                <br>
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <labal for="depth">Depth from surface to drain(cm)</labal>
+                        <input type="text" class="form-control" placeholder="0.0 cm" id="depth">
+                    </div>
+                </div>
+                <br>
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <labal for="spacing">Drain spacing(cm)</labal>
+                        <input type="text" class="form-control" placeholder="0.0 cm" id="spacing">
+                    </div>
+                </div>
+                <br>
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <labal for="radius">Radius of drain(cm)</labal>
+                        <input type="text" class="form-control" placeholder="0.0 cm" id="radius">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <br>
+        <div id="headGate">
+            <button type="button" class="btn btn-primary" onclick="addHeadGate()">Headgate usage</button>
+            <br>
+            <br>
+            <br>
+        </div>
+    </div>
+
+</body>>
+
+<script type="text/javascript">
+    $("#headGate").on('click', '.addButton', function () {
+        // console.log($(this).parent().parent().parent().next('tbody'))
+        $(this).parent().parent().parent().next('tbody').append(
+            '<tr>' +
+            '<td contenteditable="true">2012/02/02</td>' +
+            '<td contenteditable="true">0.0</td>' +
+            '<td>' +
+            '<button type="button" id="delete" class="deleteButton">Delete</button>' +
+            '</td>' +
+            '</tr>'
+        );
+    })
+
+    //delete row when clicked
+    $("#headGate").on("click", ".deleteButton", function () {
+        $(this).closest("tr").remove();
+    });
+
+    //create a div for each table after each click
+    //add the id of div following the tableNumber
+    function addHeadGate() {
+        tableNumber = tableNumber + 1;
+        $("#headGate").append('<div id=' + tableNumber + ' class="col-sm-9">' +
+            '<div class="table table-dark">' +
+            '<table>' +
+            '<thead>' +
+            '<tr>' +
+            '<td>' +
+            'Opreation: ' + tableNumber +
+            '</td>' +
+            '</tr>' +
+            '<tr>' +
+            '<th>Date(YY/MM/DD)</th>' +
+            '<th>Headgate depth</th>' +
+            '<th>' +
+            '<button type="button" id="add" class="addButton">Add</button>' +
+            '</th>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody>' +
+            '<tr>' +
+            '<td contenteditable="true">2012/02/02</td>' +
+            '<td contenteditable="true">0.0</td>' +
+            '<td>' +
+            '<button type="button" id="delete" class="deleteButton">Delete</button>' +
+            '</td>' +
+            '</tr>' +
+            '</tbody>' +
+            '</table>' +
+            '</div>' +
+            '</div>')
+    }
+</script>
+
+</html>

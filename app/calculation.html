@@ -21,8 +21,8 @@
   <br>
   <br>
 
-  <div>
-    <h3 class="nsb-price" align="center">Net Social Benefit$：</h3>
+  <div id="revenue">
+    <h3 class="nsb-price" align="center">Net Social Benefit(CAD)：</h3>
   </div>
 
   <script>
@@ -99,7 +99,6 @@
           var splited = fileData[i].split(/(\s+)/);
           cropArray.push(splited[2])
         }
-        return filePath
       }
 
       for (i = begin_plant_line; i <= end_plant_line; i = i + 3) {
@@ -108,13 +107,14 @@
           [splited[6]]: cropArray[splited[0]]
         });
       }
+
       ss_plant(plant_date)
     }
 
     function execute() {
-      let filepath = cropInfo();
+      cropInfo();
       //writeRzwqm()chr;
-      //scraperFn();
+      scraperFn();
       //writeRzwqm();
       const exec = require('child_process').exec;
       let stringHere = 'start RZWQMrelease.exe';
@@ -168,6 +168,11 @@
       var total_cost = fixedCost + 10.37 * (variable_cost['seed_price']['corn'])
       var nsb = revenue - total_cost;
       console.log(nsb)
+      display_result(nsb)
+    }
+
+    function display_result(result) {
+      $("#revenue").append('<h3 align="center" >' + result + '</h3>')
     }
   </script>
 

@@ -1,37 +1,40 @@
 <html>
-        <head>
-            <link rel="stylesheet" href="content.css">
-        </head>
 
-      <body>
+<head>
+  <link rel="stylesheet" href="content.css">
+</head>
+
+<body>
   <!-- mitigation methods options -->
-   <div class="content-options" align="center">
-        <h2>Choose the mitigation methods</h2>
-          <div class="col-sm-6">
-          <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <label class="input-group-text" for="mitigation">mitigation</label>
-              </div>
-              <select class="custom-select" id="mitigation">
-                <option selected>Choose mitigation</option>
-                <option value="1">Controlled Drainage</option>
-                <option value="2">Controlled Drainage + Subsurface-irrigation</option>
-              </select>
-            </div>
-            </div>
+  <div class="content-options" align="center">
+    <h2>Choose the mitigation methods</h2>
+    <div class="col-sm-6">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="mitigation">Practice</label>
+        </div>
+        <select class="custom-select" id="mitigation">
+          <option selected>Choose Best management practice</option>
+          <option value="1">Controlled Drainage</option>
+          <option value="2">Controlled Drainage + Subsurface-irrigation</option>
+          <option value="3">Free Drainage></option>
+        </select>
       </div>
+    </div>
+  </div>
 
 
-      <script>
-               $('#mitigation').change(function(){
-            let ssMitigation = require('./js/sessionStorage').mitigationMethod
-            let mitigation = $('#mitigation').val();
-            ssMitigation(mitigation);
-        })
+  <script>
+    $('#mitigation').change(function () {
+      let ssMitigation = require('./js/sessionStorage').mitigationMethod
+      let mitigation = $('#mitigation').val();
+      ssMitigation(mitigation);
+    })
 
-        if(sessionStorage.getItem('mitigation')){
-          $('#mitigation').val(sessionStorage.getItem('mitigation'));
-        }
-        </script>
-    </body>
+    if (sessionStorage.getItem('mitigation')) {
+      $('#mitigation').val(sessionStorage.getItem('mitigation'));
+    }
+  </script>
+</body>
+
 </html>

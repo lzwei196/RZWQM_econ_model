@@ -7,7 +7,6 @@
 <body>
   <!-- mitigation methods options -->
   <div class="content-options" align="center">
-    <h2>Method Detail</h2>
     <br>
     <form>
       <div class="form-group">
@@ -18,7 +17,7 @@
             <option value="1">specific dates</option>
             <option value="2">Fixed interval</option>
             <option value="3">ET deficit</option>
-            <option value="3">root zone deplete</option>
+            <option value="4">root zone deplete</option>
           </select>
         </div>
       </div>
@@ -73,12 +72,12 @@
               <br>
               <br>
               <!--fill in the irrigation table-->
-              </div>
             </div>
-            </div>
+          </div>
+        </div>
 
 
-            <button type="button" class="btn btn-primary" onclick="sendObject()">Submit</button>
+        <button type="button" class="btn btn-primary" onclick="sendObject()">Submit</button>
     </form>
 
   </div>
@@ -124,57 +123,60 @@
 
     //create a div for each table after each click
     //add the id of div following the tableNumber
-    function addOpreationTable(){
+    function addOpreationTable() {
       tableNumber = tableNumber + 1;
-      $("#irrigationTable").append('<div id='+ tableNumber + ' class="col-sm-9">'+
-        '<div class="table table-dark">'+
-            '<table>'+
-                    '<thead>'+
-                      '<tr>'+
-                        '<td>'+
-                        'Opreation: '+ tableNumber +
-                          '</td>'+
-                        '</tr>'+
-                     '<tr>'+
-                       '<th>Date(YY/MM/DD)</th>'+
-                        '<th>Irrigation Amount</th>'+
-                        '<th>'+
-                        '<button type="button" id="add" class="addButton">Add</button>'+
-                        '</th>'+
-                      '</tr>'+
-                    '</thead>'+
-                    '<tbody>'+
-                      '<tr>'+
-                        '<td contenteditable="true">2012/02/02</td>'+
-                        '<td contenteditable="true">0.0</td>'+
-                        '<td>'+
-                          '<button type="button" id="delete" class="deleteButton">Delete</button>'+
-                        '</td>'+
-                      '</tr>'+
-                    '</tbody>'+
-                  '</table>'+
-        '</div>'+
+      $("#irrigationTable").append('<div id=' + tableNumber + ' class="col-sm-9">' +
+        '<div class="table table-dark">' +
+        '<table>' +
+        '<thead>' +
+        '<tr>' +
+        '<td>' +
+        'Opreation: ' + tableNumber +
+        '</td>' +
+        '</tr>' +
+        '<tr>' +
+        '<th>Date(YY/MM/DD)</th>' +
+        '<th>Irrigation Amount</th>' +
+        '<th>' +
+        '<button type="button" id="add" class="addButton">Add</button>' +
+        '</th>' +
+        '</tr>' +
+        '</thead>' +
+        '<tbody>' +
+        '<tr>' +
+        '<td contenteditable="true">2012/02/02</td>' +
+        '<td contenteditable="true">0.0</td>' +
+        '<td>' +
+        '<button type="button" id="delete" class="deleteButton">Delete</button>' +
+        '</td>' +
+        '</tr>' +
+        '</tbody>' +
+        '</table>' +
+        '</div>' +
         '</div>')
     }
+
     //retrive the value from the table input
     function getTheValue() {
       var finalData = [];
-      for( var i = 1; i <= tableNumber; i++){
+      for (var i = 1; i <= tableNumber; i++) {
         let allDatePojo = [];
         //stringify the integer
         let stringOfNum = i.toString();
-        let num = '#'+stringOfNum + ' tbody'
+        let num = '#' + stringOfNum + ' tbody'
         let rows = $(num).find('tr').each(function () {
-        let datePojo = [];
-        $(this).find('td').each(function (index) {
-          if (index == 0 || index == 1) {
-            let value = $(this).text()
-            datePojo.push(value);
-          }
-        })
+          let datePojo = [];
+          $(this).find('td').each(function (index) {
+            if (index == 0 || index == 1) {
+              let value = $(this).text()
+              datePojo.push(value);
+            }
+          })
           allDatePojo.push(datePojo);
         })
-        finalData.push({[stringOfNum]: allDatePojo})
+        finalData.push({
+          [stringOfNum]: allDatePojo
+        })
       }
       return finalData
     }
