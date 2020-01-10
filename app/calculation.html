@@ -21,8 +21,8 @@
   <br>
   <br>
 
-  <div>
-    <h3 class="nsb-price" align="center">Net Social Benefit$：</h3>
+  <div id="revenue">
+    <h3 class="nsb-price" align="center">Net Social Benefit(CAD)：</h3>
   </div>
 
   <script>
@@ -168,6 +168,11 @@
       var total_cost = fixedCost + 10.37 * (variable_cost['seed_price']['corn'])
       var nsb = revenue - total_cost;
       console.log(nsb)
+      display_result(nsb)
+    }
+
+    function display_result(result) {
+      $("#revenue").append('<h3 align="center" >' + result + '</h3>')
     }
   </script>
 
