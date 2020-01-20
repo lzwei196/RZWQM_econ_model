@@ -10,31 +10,31 @@
   "repository": "https://github.com/lzwei196/econModelElectron.git",
   "dependencies": {
     "all-the-cities": "^3.0.0",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^4.4.1",
     "bootstrap-select": "^1.13.12",
     "cheerio": "^1.0.0-rc.3",
     "cities.json": "^1.1.5",
     "compass": "^0.1.1",
     "dateformat": "^3.0.3",
     "datepicker-bootstrap": "^1.9.13",
-    "echarts": "^4.4.0",
-    "electron-builder": "^21.2.0",
-    "idb": "^4.0.5",
+    "echarts": "^4.6.0",
+    "electron-builder": "^22.2.0",
+    "idb": "^5.0.0",
     "jquery": "^3.4.1",
     "json2csv": "^4.5.4",
-    "mathjs": "^6.2.3",
+    "mathjs": "^6.5.0",
     "node-cmd": "^3.0.0",
     "popper.js": "^1.16.0",
-    "puppeteer": "^1.20.0",
+    "puppeteer": "^2.0.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.4",
-    "sqlite3": "^4.1.0",
+    "request-promise": "^4.2.5",
+    "sqlite3": "^4.1.1",
     "tether": "^1.4.7",
     "trilogy": "^2.0.2",
-    "xlsx": "^0.15.1"
+    "xlsx": "^0.15.4"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.11.2",
-    "electron": "^5.0.11"
+    "@fortawesome/fontawesome-free": "^5.12.0",
+    "electron": "^7.1.9"
   }
 }
