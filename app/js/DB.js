@@ -1,23 +1,11 @@
-var connect = require('trilogy').connect;
+var connect = require("trilogy").connect;
 
-const db = connect('database.db', { client: 'sqlite3' })
-
-async function createModel(nameOfTheColumn,schema,db){
-    const theModel = await db.model(nameOfTheColumn,schema)
-
-    //await db.model('subirrigation')
-    theModel.create({
-        earlyDate:'111',
-        endDate:'222',
-        irrigationTiming:1
-    })
-}
-
-async function find(){
-
+async function check() {
+  const db = connect("database.db", { client: "sql.js" });
+  const theModel = await db.hasModel("user");
+  console.log(theModel);
 }
 
 module.exports = {
-    db:db,
-    create:createModel
-}
+  create: check
+};
