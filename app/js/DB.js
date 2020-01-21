@@ -1,9 +1,17 @@
 var connect = require("trilogy").connect;
+const db = connect("database.db", {
+  client: "sqlite3"
+});
 
 async function check() {
-  const db = connect("database.db", { client: "sql.js" });
-  const theModel = await db.hasModel("user");
-  console.log(theModel);
+  const project = await db.model("project", {
+    name: String,
+    date: String,
+    location: String
+  });
+
+  const result = await project.find();
+  console.log(result);
 }
 
 module.exports = {
