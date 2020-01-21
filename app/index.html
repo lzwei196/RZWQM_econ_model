@@ -80,7 +80,7 @@
     currency_rate('USD');
     window.setInterval(scraper, 100000)
   });
-
+  const db = require('./js/DB.js').db;
   var db_method = require('./js/DB.js').create;
   //var db = require('./js/DB.js').db;
 
@@ -106,7 +106,7 @@
   $(document).ready(function () {
     $("#content").empty();
     $('#content').load("location.html");
-    db_method();
+    db_method(db);
   });
   scraper();
 

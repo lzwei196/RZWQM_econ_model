@@ -1,19 +1,17 @@
 var connect = require("trilogy").connect;
+
+async function load_model(db, table_name, schema) {
+  const model = await db.model(table_name, schema);
+  return model;
+}
+
+async function write_to_table(model, value) {}
+
 const db = connect("database.db", {
   client: "sqlite3"
 });
 
-async function check() {
-  const project = await db.model("project", {
-    name: String,
-    date: String,
-    location: String
-  });
-
-  const result = await project.find();
-  console.log(result);
-}
-
 module.exports = {
-  create: check
+  create: load_model,
+  db: db
 };
