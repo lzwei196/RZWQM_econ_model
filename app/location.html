@@ -87,7 +87,7 @@
 
     <script>
       var plugin = require("./js/plugin.js");
-      const project_model = require("../db_models/project.json");
+      //const project = require("./js/model_schemes.js").Project;
 
       $("#mitigation").change(function() {
         let ssMitigation = require("./js/sessionStorage").mitigationMethod;
@@ -104,8 +104,13 @@
       function locate_Rzwqm_folder() {
         let locateReleaseFile = plugin.locateTheReleaseFile();
       }
-      let project_val = new Object();
+      /*let project_val = new project(
+        $("#country"),
+        $("#city"),
+        $("#altitude_longitude")
+      );
       project_val.name = $("#mitigation");
+      */
     </script>
   </body>
 </html>
