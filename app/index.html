@@ -84,8 +84,6 @@
     currency_rate('USD');
     window.setInterval(scraper, 100000)
   });
-  const db = require('./js/DB.js').db;
-  var db_method = require('./js/DB.js').create;
   //var db = require('./js/DB.js').db;
 
   function load_location() {
@@ -116,7 +114,6 @@
   $(document).ready(function () {
     $("#content").empty();
     $('#content').load("choose_project.html");
-    db_method(db);
   });
   scraper();
 </script>
