@@ -7,5 +7,5 @@ class Project {
 }
 
 module.exports = {
-  Project: Project
+  project: Project
 };

@@ -1,6 +1,8 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, Menu } = require("electron");
 const path = require("path");
+const ipc = require("electron").ipcMain;
+s;
 
 const template = [
   {
@@ -64,6 +66,8 @@ app.on("activate", function() {
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow();
 });
+
+ipc.on("reply", (event, message) => console.log(message));
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

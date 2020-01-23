@@ -12,6 +12,6 @@ const db = connect("database.db", {
 });
 
 module.exports = {
-  create: load_model,
+  load_model: load_model,
   db: db
 };
