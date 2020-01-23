@@ -1,35 +1,50 @@
 <html>
-  <head>
-    <link rel="stylesheet" href="content.css" />
-  </head>
 
-  <head>
-    <link rel="stylesheet" href="content.css" />
-  </head>
+<head>
+  <link rel="stylesheet" href="content.css" />
+</head>
 
-  <body>
-    <!-- location-options dropdown menu-->
-    <div class="content-options" align="center" id="content-options-location">
-      <div class="container-fluid">
-        <br />
-        <br />
-        <h2>Choose project from databse</h2>
-        <br />
-        <button
-          type="button"
-          class="btn btn-primary btn-rounded"
-          id="Rzwqm_folder"
-          onclick="locate_Rzwqm_folder()"
-        >
-          Select Project
-        </button>
-        <h2>If there is no existing project, please create one:</h2>
-      </div>
+<head>
+  <link rel="stylesheet" href="content.css" />
+</head>
+
+<body>
+  <!-- location-options dropdown menu-->
+  <div class="content-options" align="center" id="content-options-location">
+    <div class="container-fluid">
+      <br />
+      <br />
+      <h2>Choose project from databse</h2>
+      <br />
+      <button type="button" class="btn btn-primary btn-rounded" id="select_project_button" onclick="select_window()">
+        Select Project
+      </button>
+      <br />
+      <br />
+      <h2>Or Create New Project:</h2>
+      <br>
+      <button type="button" class="btn btn-primary btn-rounded" id="create_project_button">
+        Create New Project
+      </button>
     </div>
+  </div>
 
-    <script>
-      var plugin = require("./js/plugin.js");
-      const project = require("./js/model_schemes.js").Project;
-    </script>
-  </body>
+  <script>
+    var plugin = require("./js/plugin.js");
+    const project = require("./js/model_schemes.js").Project;
+
+    function select_window() {
+      let win = new BrowserWindow({
+        width: 400,
+        height: 200
+      })
+      win.on('close', function () {
+        win = null
+      })
+      win.loadURL(path.join('file://', __dirname, 'select_project.html'))
+      win.show()
+    }
+  </script>
+</body>
+
 </html>
