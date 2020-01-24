@@ -1,68 +1,62 @@
 <html>
-  <head>
-    <link rel="stylesheet" href="content.css" />
-  </head>
 
-  <head>
-    <link rel="stylesheet" href="content.css" />
-  </head>
+<head>
+  <link rel="stylesheet" href="content.css" />
+</head>
 
-  <body>
-    <!-- location-options dropdown menu-->
-    <div class="content-options" align="center" id="content-options-location">
-      <div class="container-fluid">
-        <br />
-        <br />
-        <h2>Choose project from databse</h2>
-        <br />
-        <button
-          type="button"
-          class="btn btn-primary btn-rounded"
-          id="select_project_button"
-          onclick="select_window()"
-        >
-          Select Project
-        </button>
-        <br />
-        <br />
-        <h2>Or Create New Project:</h2>
-        <br />
-        <button
-          type="button"
-          class="btn btn-primary btn-rounded"
-          id="create_project_button"
-        >
-          Create New Project
-        </button>
-      </div>
+<head>
+  <link rel="stylesheet" href="content.css" />
+</head>
+
+<body>
+  <!-- location-options dropdown menu-->
+  <div class="content-options" align="center" id="content-options-location">
+    <div class="container-fluid">
+      <br />
+      <br />
+      <h2>Choose project from databse</h2>
+      <br />
+      <button type="button" class="btn btn-primary btn-rounded" id="select_project_button" onclick="select_window()">
+        Select Project
+      </button>
+      <br />
+      <br />
+      <h2>Or Create New Project:</h2>
+      <br />
+      <button type="button" class="btn btn-primary btn-rounded" id="create_project_button">
+        Create New Project
+      </button>
     </div>
+  </div>
 
-    <script>
-      var plugin = require("./js/plugin.js");
-      const project = require("./js/model_schemes.js").project;
-      const project_model_class = new project("String", "String", "String");
-      const project_model_function = require("./js/db.js").load_model;
-      const project_model = project_model_function(
-        db,
-        "project",
-        project_model_class
-      );
+  <script>
+    var plugin = require("./js/plugin.js");
+    const project = require("./js/model_schemes.js").project;
+    const project_model_class = new project("String", "String", "String");
+    const project_model_function = require("./js/db.js").load_model;
+    const project_model = project_model_function(
+      db,
+      "project",
+      project_model_class
+    );
+    let win
 
-      function select_window() {
-        let win = new BrowserWindow({
-          width: 400,
-          height: 200,
-          webPreferences: {
-            nodeIntegration: true
-          }
-        });
-        win.on("close", function() {
-          win = null;
-        });
-        win.loadURL(path.join("file://", __dirname, "select_project.html"));
-        win.webContents.openDevTools();
-        win.show();
-      }
-    </script>
-  </body>
+    function select_window() {
+      win = new BrowserWindow({
+        width: 400,
+        height: 200,
+        webPreferences: {
+          nodeIntegration: true
+        }
+      });
+      win.on("close", function () {
+        win = null;
+      });
+      win.loadURL(path.join("file://", __dirname, "select_project.html"));
+      win.webContents.openDevTools();
+      win.show();
+    }
+  </script>
+</body>
+
 </html>

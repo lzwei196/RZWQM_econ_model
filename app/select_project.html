@@ -1,49 +1,69 @@
 <html>
-  <head>
+
+<head>
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="content.css" />
-    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  </head>
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"
+        onload="window.$ = window.jQuery = module.exports;"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
 
-  <body>
-    <div class="container-fluid" id="select-project-container"  align="center">
-    <h2>Current projects</h2>
-    <br />
-    <form>
-      <div class="form-group">
-            <label for="select-project-from-database">Choose from the existing projects</label>
-            <br>
-            <select class="form-control" id="select-project-from-database">
-                <option selected>projects in database</option>
-            </select>
-    </form>
-</div>
-  </body>
+<body>
+    <div class="container-fluid" id="select-project-container" align="center">
+        <h2>Current projects</h2>
+        <br />
+        <form>
+            <div class="form-group">
+                <label for="select-project-from-database">Choose from the existing projects</label>
+                <br>
+                <select class="form-control" id="select-project-from-database">
+                    <option selected>projects in database</option>
+                </select>
+        </form>
+        <br>
+        <button type="button" class="btn btn-primary btn-rounded" id="load_project_button"
+            onclick="send_project_name()">
+            Load
+        </button>
+    </div>
+</body>
 
-  <script>
+<script>
     const ipc = require('electron').ipcRenderer;
     var plugin = require("./js/plugin.js");
-      const db = require('./js/DB.js').db;
-      const project = require("./js/model_schemes.js").project;
-      const project_model_class = new project("String", "String", "String");
-      const project_model_function = require("./js/db.js").load_model;
-    ipc.send('reply','message')
+    const db = require('./js/DB.js').db;
+    const project = require("./js/model_schemes.js").project;
+    const project_model_class = new project("String", "String", "String");
+    const project_model_function = require("./js/db.js").load_model;
 
-  $('#select-project-container').ready( async function () {
-    const project_model = await project_model_function(
-          db,
-          "project",
-          project_model_class
+    ipc.on('main_reply_from_renderer', (event, message) => {
+        console.log(message)
+        if (message == 200) {
+            alert('load project successfully')
+            window.close()
+        } else {
+            alert('failed')
+        }
+    })
+
+    function send_project_name() {
+        ipc.send('reply', $("#select-project-from-database option:selected").text())
+    }
+
+    $('#select-project-container').ready(async function () {
+        const project_model = await project_model_function(
+            db,
+            "project",
+            project_model_class
         )
-    const project_query_results = await project_model.findIn('name')
-    project_query_results.forEach(element => {
-      $('#select-project-from-database').append('<option>' + element + '</option>')
+        const project_query_results = await project_model.findIn('name')
+        project_query_results.forEach(element => {
+            $('#select-project-from-database').append('<option>' + element + '</option>')
+        });
     });
-  });
-
-  </script>
+</script>
 
 </html>
