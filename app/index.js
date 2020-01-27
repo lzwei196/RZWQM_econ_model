@@ -15,3 +15,12 @@ ipc.on("messageFromMain", (event, message) => {
     win.webContents.send("main_reply_from_renderer", "400");
   }
 });
+
+ipc.on('messageFromMain_create', (event, message) => {
+  console.log(message)
+  if (message != null) {
+    win.webContents.send("main_reply_create", '200')
+  } else {
+    win.webContents.send('main_reply_create', '400')
+  }
+})

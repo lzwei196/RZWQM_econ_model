@@ -7,7 +7,7 @@
         onload="window.$ = window.jQuery = module.exports;"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
+        </script>
     <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 
@@ -17,14 +17,14 @@
         <br />
         <form>
             <div class="form-group">
-                <label for="select-project-from-database">Choose from the existing projects</label>
+                <label for="select-project-from-database">Create your project name below</label>
                 <br>
                 <input class="form-control" id="create_project_input" placeholder="Your project name">
         </form>
         <br>
         <button type="button" class="btn btn-primary btn-rounded" id="load_project_button"
-            onclick="send_project_name()">
-            Load
+            onclick="create_project_db()">
+            Create
         </button>
     </div>
 </body>
@@ -37,23 +37,33 @@
     const project_model_class = new project("String", "String", "String");
     const project_model_function = require("./js/db.js").load_model;
 
-    ipc.on('main_reply_from_renderer', (event, message) => {
+    ipc.on('main_reply_create', (event, message) => {
         console.log(message)
         if (message == 200) {
-            alert('load project successfully')
+            alert('created project successfully')
             window.close()
         } else {
-            alert('failed')
+            alert('create project failed')
         }
     })
 
-    function send_project_name() {
-        ipc.send('reply', $("#select-project-from-database option:selected").text())
+    function send_project_name(name) {
+        ipc.send('project_name', name)
     }
 
-    function create_project_db() {
+    async function create_project_db() {
         let project_name = $('#create_project_input').val();
+        let project_model = await project_model_function(db,
+            "project",
+            project_model_class);
 
+        const exist_boo = await project_model.findOne({ name: project_name });
+        if (exist_boo != null) {
+            alert('Project already existed')
+        } else {
+            const message_create = await project_model.create({ name: project_name })
+            send_project_name(project_name)
+        }
     }
 </script>
 

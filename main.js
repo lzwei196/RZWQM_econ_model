@@ -8,17 +8,17 @@ const path = require("path");
 const ipc = require("electron").ipcMain;
 
 const template = [{
-    label: "Start",
-    submenu: [{
-      role: "About"
-    }]
-  },
-  {
-    label: "Exit",
-    submenu: [{
-      role: "close"
-    }]
-  }
+  label: "Start",
+  submenu: [{
+    role: "About"
+  }]
+},
+{
+  label: "Exit",
+  submenu: [{
+    role: "close"
+  }]
+}
 ];
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -27,6 +27,10 @@ let mainWindow;
 
 ipc.on('reply', (event, message) => {
   mainWindow.webContents.send('messageFromMain', message);
+})
+
+ipc.on('project_name', (event, message) => {
+  mainWindow.webContents.send('messageFromMain_create', message);
 })
 
 function createWindow() {

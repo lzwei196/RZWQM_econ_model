@@ -16,14 +16,16 @@
       <br />
       <h2>Choose project from databse</h2>
       <br />
-      <button type="button" class="btn btn-primary btn-rounded" id="select_project_button" onclick="select_window()">
+      <button type="button" class="btn btn-primary btn-rounded" id="select_project_button"
+        onclick="select_window('select_project.html')">
         Select Project
       </button>
       <br />
       <br />
       <h2>Or Create New Project:</h2>
       <br />
-      <button type="button" class="btn btn-primary btn-rounded" id="create_project_button">
+      <button type="button" class="btn btn-primary btn-rounded" id="create_project_button"
+        onclick="select_window('create_project.html')">
         Create New Project
       </button>
     </div>
@@ -41,7 +43,7 @@
     );
     let win
 
-    function select_window() {
+    function select_window(address) {
       win = new BrowserWindow({
         width: 400,
         height: 200,
@@ -52,7 +54,7 @@
       win.on("close", function () {
         win = null;
       });
-      win.loadURL(path.join("file://", __dirname, "select_project.html"));
+      win.loadURL(path.join("file://", __dirname, address));
       win.webContents.openDevTools();
       win.show();
     }
