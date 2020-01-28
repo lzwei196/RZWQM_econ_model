@@ -42,5 +42,7 @@ const mitigation_method_variables = {
 }
 module.exports = {
   project: Project,
-  production_cost: production_cost
+  production_cost: production_cost,
+  fixed_cost_parts: fixed_cost_parts,
+  mitigation_method_variables: mitigation_method_variables
 };
