@@ -39,6 +39,7 @@ const fixed_cost_parts = {
 
 const mitigation_method_variables = {
   site: { type: String, unique: true, primary: true },
+  mitigation_methods: String
 }
 module.exports = {
   project: Project,
