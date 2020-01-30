@@ -29,7 +29,8 @@ const production_cost = {
 }
 
 const fixed_cost_parts = {
-  site: { type: String, unique: true, primary: true },
+  project: { type: String, unique: true, primary: true },
+  mitigation_practice_choice: String,
   pipe: Number,
   deep_well: Number,
   pump: Number,
@@ -37,13 +38,13 @@ const fixed_cost_parts = {
   drainage_preparation: Number,
 }
 
-const mitigation_method_variables = {
-  site: { type: String, unique: true, primary: true },
-  mitigation_methods: String
+const mitigation_choices = {
+  name: String
 }
+
 module.exports = {
   project: Project,
   production_cost: production_cost,
   fixed_cost_parts: fixed_cost_parts,
-  mitigation_method_variables: mitigation_method_variables
+  mitigation_method_variables: mitigation_choices
 };
