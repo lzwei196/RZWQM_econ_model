@@ -36,10 +36,10 @@
     var plugin = require('./js/plugin.js');
     var cropPrice = require('./js/scraper.js').commodityPrice;
     var crop_json = require('./crops.json');
-    const bushel_tonne_exchange = require('./bushel_tonne_exchange.json');
+    var bushel_tonne_exchange = require('./bushel_tonne_exchange.json');
     var constantRaw = fs.readFileSync("constants.json");
     var constant = JSON.parse(constantRaw);
-    const currency_rate_CAD = JSON.parse(sessionStorage.getItem('currency_rate'))['CAD']
+    var currency_rate_CAD = JSON.parse(sessionStorage.getItem('currency_rate'))['CAD']
 
     function readRzwqm() {
       plugin.readRzwqm();
@@ -112,9 +112,6 @@
     }
 
     function execute() {
-      cropInfo();
-      //writeRzwqm()chr;
-      scraperFn();
       //writeRzwqm();
       const exec = require('child_process').exec;
       let stringHere = 'start RZWQMrelease.exe';
@@ -133,12 +130,13 @@
         });
     };
 
-    function nsbCalc() {
+    async function nsbCalc() {
 
       var crop_final_price = JSON.parse(sessionStorage.getItem('cropWithPrice'))
       //read data from the output
-      var output = plugin.readData();
+      var output = await plugin.readData();
       var yieldRaw = output.yield;
+      console.log(output)
       //console.log(yieldRaw)
       let yield = [];
       var revenue = 0;
@@ -174,6 +172,12 @@
     function display_result(result) {
       $("#revenue").append('<h3 align="center" >' + result + '</h3>')
     }
+
+    $(document).ready(function () {
+      cropInfo();
+      //writeRzwqm()chr;
+      scraperFn();
+    })
   </script>
 
 </body>

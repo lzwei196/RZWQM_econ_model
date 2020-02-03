@@ -10,7 +10,8 @@ const project_general_info = {
   city: String,
   longitude: String,
   site: String,
-  mitigation_methods: String
+  mitigation_methods: String,
+  area: Number
 }
 
 const production_cost = {

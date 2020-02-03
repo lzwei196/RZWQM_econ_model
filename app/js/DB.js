@@ -6,7 +6,6 @@ async function load_model(db, table_name, schema) {
   return model;
 }
 
-async function write_to_table(model, value) {}
 
 const db = connect("database.db", {
   client: "sqlite3"

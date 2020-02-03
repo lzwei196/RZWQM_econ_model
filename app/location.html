@@ -37,6 +37,19 @@
         <div class="row justify-content-center">
           <div class="form-row">
             <div class="col-auto">
+              <h2>Name of the site</h2>
+              <input type="text" class="form-control" placeholder="" id="site" />
+            </div>
+            <div class="col-auto">
+              <h2>Area of the site (hectare)</h2>
+              <input type="text" class="form-control" placeholder="0" id="area" />
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row justify-content-center">
+          <div class="form-row">
+            <div class="col-auto">
               <h2>Enter altitude and longitude if applicable</h2>
               <input type="text" class="form-control" placeholder="0.000,0.000" id="altitude_longitude" />
             </div>
@@ -44,14 +57,13 @@
         </div>
       </form>
       <br />
-      <br />
-      <h2>Choose the Best Management Practice</h2>
+      <h2>Best Management Practice</h2>
       <div class="col-sm-6">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <label class="input-group-text" for="mitigation">mitigation</label>
           </div>
-          <select class="custom-select" id="mitigation">
+          <select class="custom-select" id="mitigation_methods">
             <option selected>Choose Best management practice</option>
             <option value="1">Controlled Drainage</option>
             <option value="2">Controlled Drainage + Subsurface-irrigation</option>
@@ -64,7 +76,7 @@
 
   <script>
     var plugin = require("./js/plugin.js");
-    const project_general_info = require("./js/model_schemes.js")
+    var project_general_info = require("./js/model_schemes.js")
       .project_general_info;
 
     $("#mitigation").change(function () {
@@ -83,17 +95,15 @@
       let locateReleaseFile = plugin.locateTheReleaseFile();
     }
 
-    $(document).ready(async function () {
-      var project_general_info_model = await project_model_function(
+    $(document).ready(
+      db_connection(
         db,
         "project_general_info",
-        project_general_info
-      );
-      var project_info_result = await project_general_info_model.findOne({
-        name: loaded_project_name
-      })
-      console.log(project_info_result)
-    })
+        project_general_info,
+        "name",
+        loaded_project_name
+      )
+    );
   </script>
 </body>
 
