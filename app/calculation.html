@@ -145,7 +145,7 @@
       //taking out the final yield with the the number of the day
       yieldRaw.forEach(function (element, index) {
         if (element != 0 && yieldRaw[index + 1] == 0) {
-          yield.push(element * 4.2);
+          yield.push(element);
         }
       })
       yield.forEach(function (element) {
@@ -155,15 +155,9 @@
           bushel_tonne_exchange[Object.values(crop_final_price[i])[0]['crop']]
         i = i + 1;
       })
-      console.log(revenue)
-      var costConstant = constant["subrirrigation"]["fixed"];
-      var variable_cost = constant["general_variable_cost"]
-      var fixedCost = 0;
-      costConstant.forEach(function (element) {
-        fixedCost = fixedCost + (Object.values(element)[0])
-      })
 
-      var total_cost = fixedCost + 10.37 * (variable_cost['seed_price']['corn'])
+      //connect to db to grab the production price
+      //depending on the mitigation method, the fixed cost is different
       var nsb = revenue - total_cost;
       console.log(nsb)
       display_result(nsb)
