@@ -1,13 +1,24 @@
 //all the parameters in per hectare
-class Project {
-  constructor(name, date, location) {
-    this.name = name;
-    this.date = date;
-    this.location = location;
-  }
+
+const project_general_info = {
+  name: {
+    type: String,
+    unique: true,
+    primary: true
+  },
+  country: String,
+  city: String,
+  longitude: String,
+  site: String,
+  mitigation_methods: String
 }
+
 const production_cost = {
-  caltivar_breed: { type: String, unique: true, primary: true },
+  caltivar_breed: {
+    type: String,
+    unique: true,
+    primary: true
+  },
   seed_price: Number,
   fertilizer_price: Number,
   spread_lime_price: Number,
@@ -29,7 +40,11 @@ const production_cost = {
 }
 
 const fixed_cost_parts = {
-  project: { type: String, unique: true, primary: true },
+  project: {
+    type: String,
+    unique: true,
+    primary: true
+  },
   mitigation_practice_choice: String,
   pipe: Number,
   deep_well: Number,
@@ -43,8 +58,8 @@ const mitigation_choices = {
 }
 
 module.exports = {
-  project: Project,
   production_cost: production_cost,
   fixed_cost_parts: fixed_cost_parts,
-  mitigation_method_variables: mitigation_choices
+  mitigation_method_variables: mitigation_choices,
+  project_general_info: project_general_info
 };

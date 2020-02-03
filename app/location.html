@@ -1,117 +1,100 @@
 <html>
-  <head>
-    <link rel="stylesheet" href="content.css" />
-  </head>
 
-  <head>
-    <link rel="stylesheet" href="content.css" />
-  </head>
+<head>
+  <link rel="stylesheet" href="content.css" />
+</head>
 
-  <body>
-    <!-- location-options dropdown menu-->
-    <div class="content-options" align="center" id="content-options-location">
-      <button
-        type="button"
-        class="btn btn-primary btn-rounded"
-        id="Rzwqm_folder"
-        onclick="locate_Rzwqm_folder()"
-      >
-        Select The Rzwqm project folder
-      </button>
-      <br />
-      <br />
-      <div class="container-fluid">
-        <form>
-          <div class="row justify-content-center">
-            <div class="form-row">
-              <div class="col-auto">
-                <h2>Country</h2>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Country"
-                  id="country"
-                />
-              </div>
-            </div>
-            <br />
-            <div class="row justify-content-center">
-              <div class="col-auto">
-                <h2>City</h2>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="City"
-                  id="city"
-                />
-              </div>
+<head>
+  <link rel="stylesheet" href="content.css" />
+</head>
+
+<body>
+  <!-- location-options dropdown menu-->
+  <div class="content-options" align="center" id="content-options-location">
+    <button type="button" class="btn btn-primary btn-rounded" id="Rzwqm_folder" onclick="locate_Rzwqm_folder()">
+      Select The Rzwqm project folder
+    </button>
+    <br />
+    <br />
+    <div class="container-fluid">
+      <form>
+        <div class="row justify-content-center">
+          <div class="form-row">
+            <div class="col-auto">
+              <h2>Country</h2>
+              <input type="text" class="form-control" placeholder="Country" id="country" />
             </div>
           </div>
           <br />
           <div class="row justify-content-center">
-            <div class="form-row">
-              <div class="col-auto">
-                <h2>Enter altitude and longitude if applicable</h2>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="0.000,0.000"
-                  id="altitude_longitude"
-                />
-              </div>
+            <div class="col-auto">
+              <h2>City</h2>
+              <input type="text" class="form-control" placeholder="City" id="city" />
             </div>
           </div>
-        </form>
+        </div>
         <br />
-        <br />
-        <h2>Choose the Best Management Practice</h2>
-        <div class="col-sm-6">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="mitigation"
-                >mitigation</label
-              >
+        <div class="row justify-content-center">
+          <div class="form-row">
+            <div class="col-auto">
+              <h2>Enter altitude and longitude if applicable</h2>
+              <input type="text" class="form-control" placeholder="0.000,0.000" id="altitude_longitude" />
             </div>
-            <select class="custom-select" id="mitigation">
-              <option selected>Choose Best management practice</option>
-              <option value="1">Controlled Drainage</option>
-              <option value="2"
-                >Controlled Drainage + Subsurface-irrigation</option
-              >
-              <option value="3">Free Drainage</option>
-            </select>
           </div>
+        </div>
+      </form>
+      <br />
+      <br />
+      <h2>Choose the Best Management Practice</h2>
+      <div class="col-sm-6">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="mitigation">mitigation</label>
+          </div>
+          <select class="custom-select" id="mitigation">
+            <option selected>Choose Best management practice</option>
+            <option value="1">Controlled Drainage</option>
+            <option value="2">Controlled Drainage + Subsurface-irrigation</option>
+            <option value="3">Free Drainage</option>
+          </select>
         </div>
       </div>
     </div>
+  </div>
 
-    <script>
-      var plugin = require("./js/plugin.js");
-      //const project = require("./js/model_schemes.js").Project;
+  <script>
+    var plugin = require("./js/plugin.js");
+    const project_general_info = require("./js/model_schemes.js")
+      .project_general_info;
 
-      $("#mitigation").change(function() {
-        let ssMitigation = require("./js/sessionStorage").mitigationMethod;
-        let mitigation = $("#mitigation").val();
-        ssMitigation(mitigation);
-      });
+    $("#mitigation").change(function () {
+      let ssMitigation = require("./js/sessionStorage").mitigationMethod;
+      let mitigation = $("#mitigation").val();
+      ssMitigation(mitigation);
+    });
 
-      if (sessionStorage.getItem("mitigation")) {
-        $("#mitigation").val(sessionStorage.getItem("mitigation"));
-      }
+    if (sessionStorage.getItem("mitigation")) {
+      $("#mitigation").val(sessionStorage.getItem("mitigation"));
+    }
 
-      var plugin = require("./js/plugin.js");
+    var plugin = require("./js/plugin.js");
 
-      function locate_Rzwqm_folder() {
-        let locateReleaseFile = plugin.locateTheReleaseFile();
-      }
+    function locate_Rzwqm_folder() {
+      let locateReleaseFile = plugin.locateTheReleaseFile();
+    }
 
-      /*let project_val = new project(
-            $("#country"),
-            $("#city"),
-            $("#altitude_longitude")
-          );
-          project_val.name = $("#mitigation");
-          */
-    </script>
-  </body>
+    $(document).ready(async function () {
+      var project_general_info_model = await project_model_function(
+        db,
+        "project_general_info",
+        project_general_info
+      );
+      var project_info_result = await project_general_info_model.findOne({
+        name: loaded_project_name
+      })
+      console.log(project_info_result)
+    })
+  </script>
+</body>
+
 </html>

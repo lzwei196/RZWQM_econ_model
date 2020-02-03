@@ -34,14 +34,11 @@
   <script>
     var plugin = require("./js/plugin.js");
     const project = require("./js/model_schemes.js").project;
-    const project_model_class = new project("String", "String", "String");
     const project_model_function = require("./js/db.js").load_model;
-    const project_model = project_model_function(
-      db,
-      "project",
-      project_model_class
-    );
+
     let win
+
+
 
     function select_window(address) {
       win = new BrowserWindow({

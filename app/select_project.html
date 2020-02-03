@@ -35,8 +35,7 @@
     const ipc = require('electron').ipcRenderer;
     var plugin = require("./js/plugin.js");
     const db = require('./js/DB.js').db;
-    const project = require("./js/model_schemes.js").project;
-    const project_model_class = new project("String", "String", "String");
+    const project_general_info = require("./js/model_schemes.js").project_general_info;
     const project_model_function = require("./js/db.js").load_model;
 
     ipc.on('main_reply_from_renderer', (event, message) => {
@@ -54,12 +53,12 @@
     }
 
     $('#select-project-container').ready(async function () {
-        const project_model = await project_model_function(
+        const project_general_info_model = await project_model_function(
             db,
-            "project",
-            project_model_class
+            "project_general_info",
+            project_general_info
         )
-        const project_query_results = await project_model.findIn('name')
+        const project_query_results = await project_general_info_model.findIn('name')
         project_query_results.forEach(element => {
             $('#select-project-from-database').append('<option>' + element + '</option>')
         });

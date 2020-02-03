@@ -7,7 +7,7 @@
         onload="window.$ = window.jQuery = module.exports;"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-        </script>
+    </script>
     <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 
@@ -33,8 +33,7 @@
     const ipc = require('electron').ipcRenderer;
     var plugin = require("./js/plugin.js");
     const db = require('./js/DB.js').db;
-    const project = require("./js/model_schemes.js").project;
-    const project_model_class = new project("String", "String", "String");
+    const project_general_info = require("./js/model_schemes.js").project_general_info;
     const project_model_function = require("./js/db.js").load_model;
 
     ipc.on('main_reply_create', (event, message) => {
@@ -53,15 +52,20 @@
 
     async function create_project_db() {
         let project_name = $('#create_project_input').val();
-        let project_model = await project_model_function(db,
-            "project",
-            project_model_class);
-
-        const exist_boo = await project_model.findOne({ name: project_name });
+        const project_general_info_model = await project_model_function(
+            db,
+            "project_general_info",
+            project_general_info
+        )
+        const exist_boo = await project_general_info_model.findOne({
+            name: project_name
+        });
         if (exist_boo != null) {
             alert('Project already existed')
         } else {
-            const message_create = await project_model.create({ name: project_name })
+            const message_create = await project_general_info_model.create({
+                name: project_name
+            })
             send_project_name(project_name)
         }
     }

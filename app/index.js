@@ -3,7 +3,6 @@ const BrowserWindow = electron.remote.BrowserWindow;
 const db = require("./js/DB.js").db;
 const path = require("path");
 const ipc = require("electron").ipcRenderer;
-
 let loaded_project_name = "";
 
 ipc.on("messageFromMain", (event, message) => {

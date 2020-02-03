@@ -80,6 +80,7 @@
   var scraper = require('./js/scraper.js').priceScraper;
   var currency_rate = require('./js/scraper.js').currency_rate;
   document.addEventListener("DOMContentLoaded", function () {
+
     scraper();
     currency_rate('USD');
     window.setInterval(scraper, 100000)
