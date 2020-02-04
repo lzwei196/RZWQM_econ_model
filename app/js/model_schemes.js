@@ -9,6 +9,7 @@ const project_general_info = {
   country: String,
   city: String,
   longitude: String,
+  duration: String,
   site: String,
   mitigation_methods: String,
   area: Number
@@ -20,6 +21,7 @@ const production_cost = {
     unique: true,
     primary: true
   },
+
   seed_price: Number,
   fertilizer_price: Number,
   spread_lime_price: Number,

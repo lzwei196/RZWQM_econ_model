@@ -9,15 +9,17 @@ var db_connection = async function (
   table_name,
   model_scheme,
   property,
-  value
+  value,
+  fill
 ) {
   var info_model = await project_model_function(db, table_name, model_scheme);
-  console.log(info_model);
   var info_result = await info_model.findOne({
     [property]: value
   });
   console.log(info_result);
-  fill_the_blank(info_result);
+  if (fill == 1) {
+    fill_the_blank(info_result);
+  }
 };
 
 var fill_the_blank = function (myObj) {
@@ -29,6 +31,13 @@ var fill_the_blank = function (myObj) {
     }
   });
 };
+
+var create_input_table = (object, table_name) => {
+  Object.keys(myObj).forEach(key => {
+    var input_div = '#' + table_name
+    var input_value = "<div class='col-auto'>" +
+  })
+}
 
 ipc.on("messageFromMain", (event, message) => {
   console.log(message);

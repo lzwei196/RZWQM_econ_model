@@ -4,10 +4,6 @@
   <link rel="stylesheet" href="content.css" />
 </head>
 
-<head>
-  <link rel="stylesheet" href="content.css" />
-</head>
-
 <body>
   <!-- location-options dropdown menu-->
   <div class="content-options" align="center" id="content-options-location">
@@ -55,6 +51,13 @@
             </div>
           </div>
         </div>
+        <br>
+        <div class="row justify-content-center">
+          <div class="col-auto">
+            <h2>Enter duration of the project(match the duration in rzwqm project)</h2>
+            <input type="text" class="form-control" placeholder="2012-2015" id="duration" />
+          </div>
+        </div>
       </form>
       <br />
       <h2>Best Management Practice</h2>
@@ -70,6 +73,12 @@
             <option value="3">Free Drainage</option>
           </select>
         </div>
+      </div>
+      <br>
+      <div class="row justify-content-center">
+        <button type="button" class="btn btn-primary btn-rounded" id="load_project_button">
+          Submit
+        </button>
       </div>
     </div>
   </div>
@@ -95,15 +104,7 @@
       let locateReleaseFile = plugin.locateTheReleaseFile();
     }
 
-    $(document).ready(
-      db_connection(
-        db,
-        "project_general_info",
-        project_general_info,
-        "name",
-        loaded_project_name
-      )
-    );
+    $(document).ready(db_connection(db, "project_general_info", project_general_info, "name", loaded_project_name, 1));
   </script>
 </body>
 

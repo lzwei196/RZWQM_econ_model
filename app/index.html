@@ -53,6 +53,10 @@
       </button>
       <br>
       <br>
+      <button type="button" id="cost-param" class="nav-button" onclick="load_param()">Cost param
+      </button>
+      <br>
+      <br>
       <button type="button" id="calculate" class="nav-button" onclick="load_calculation()">Calculate </button>
       <br>
       <br>
@@ -100,6 +104,11 @@
   function load_calculation() {
     $("#content").empty();
     $('#content').load("calculation.html");
+  }
+
+  function load_param() {
+    $("#content").empty();
+    $('#content').load("cost_param.html");
   }
 
   function choose_project() {
