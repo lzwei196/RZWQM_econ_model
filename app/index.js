@@ -13,16 +13,24 @@ var db_connection = async function (
   fill
 ) {
   var info_model = await project_model_function(db, table_name, model_scheme);
-  var info_result = await info_model.findOne({
-    [property]: value
-  });
+    var info_result = await info_model.findOne({
+      [property]: value})
+
   console.log(info_result);
-  if (fill == 1) {
+
+  if (fill === 1) {
     fill_the_blank(info_result);
-  } else if (fill == 0) {
+  } else if (fill === 0) {
     create_input_table(info_result, 'fixed_cost_parts')
   }
 };
+
+//need to adjust from array filter to object reduce, taking out the value thats not null, then assign the value to the corresponding field by using jquery
+  var find_required_results = (myObj)=>{
+    var filtered_myObj = myObj.filter((Obj)=>{
+      return Obj;
+    })
+  }
 
 var fill_the_blank = function (myObj) {
   Object.keys(myObj).forEach(key => {

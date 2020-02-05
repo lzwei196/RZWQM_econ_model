@@ -13,7 +13,14 @@ const project_general_info = {
   site: String,
   mitigation_methods: String,
   area: Number
-}
+};
+const expected_lifetime = {
+  name:{
+    type:String,
+    primary:true
+  },
+  year:Number
+};
 
 const production_cost = {
   caltivar_breed: {
@@ -40,7 +47,7 @@ const production_cost = {
   storage_and_vantilation_price: Number,
   transport_top_regional_center_price: Number,
   joint_plan: Number
-}
+};
 
 const fixed_cost_parts = {
   project: {
@@ -54,15 +61,16 @@ const fixed_cost_parts = {
   pump: Number,
   control_structure: Number,
   drainage_preparation: Number,
-}
+};
 
 const mitigation_choices = {
   name: String
-}
+};
 
 module.exports = {
   production_cost: production_cost,
   fixed_cost_parts: fixed_cost_parts,
   mitigation_method_variables: mitigation_choices,
-  project_general_info: project_general_info
+  project_general_info: project_general_info,
+  expected_lifetime:expected_lifetime
 };

@@ -7,13 +7,23 @@
 <body>
     <!-- location-options dropdown menu-->
     <div class="container-fluid" align="center" id="content-options-location">
+        <h2>All the prices are in $CAD/hectare</h2>
         <div class="form justify-content-center" id="fixed_cost_parts">
         </div>
+        <br>
+        <div class="row justify-content-center">
+            <button type="button" class="btn btn-primary btn-rounded" id="submit_cost_param_button">
+                Submit
+            </button>
     </div>
     <script type="text/javascript">
         var fixed_cost_parts = require("./js/model_schemes.js").fixed_cost_parts;
-        $(document).ready(db_connection(db, 'fixed_cost_parts', fixed_cost_parts, "project", loaded_project_name,
-            0))
+        var expected_lifetime = require("./js/model_schemes.js").expected_lifetime;
+        var loading_cost_and_expected_lifetime = () =>{
+            db_connection(db, 'fixed_cost_parts', fixed_cost_parts, "project", loaded_project_name, 0);
+            db_connection(db, 'expected_lifetime', expected_lifetime, "name")
+        }
+        $(document).ready(loading_cost_and_expected_lifetime())
     </script>
 </body>
 

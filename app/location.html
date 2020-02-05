@@ -64,7 +64,7 @@
       <div class="col-sm-6">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <label class="input-group-text" for="mitigation">mitigation</label>
+            <label class="input-group-text" for="mitigation_methods">mitigation</label>
           </div>
           <select class="custom-select" id="mitigation_methods">
             <option selected>Choose Best management practice</option>
@@ -97,8 +97,6 @@
     if (sessionStorage.getItem("mitigation")) {
       $("#mitigation").val(sessionStorage.getItem("mitigation"));
     }
-
-    var plugin = require("./js/plugin.js");
 
     function locate_Rzwqm_folder() {
       let locateReleaseFile = plugin.locateTheReleaseFile();
