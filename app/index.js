@@ -19,6 +19,8 @@ var db_connection = async function (
   console.log(info_result);
   if (fill == 1) {
     fill_the_blank(info_result);
+  } else if (fill == 0) {
+    create_input_table(info_result, 'fixed_cost_parts')
   }
 };
 
@@ -32,10 +34,18 @@ var fill_the_blank = function (myObj) {
   });
 };
 
-var create_input_table = (object, table_name) => {
+var create_input_table = (myObj, table_name) => {
   Object.keys(myObj).forEach(key => {
     var input_div = '#' + table_name
-    var input_value = "<div class='col-auto'>" +
+    var input_value = "<div class='col-6 col-md-4' id='" + key + "'>" +
+      "<br><h2>" + key + "</h2>"
+    "</div><br>"
+    $(input_div).append(input_value)
+    $("#" + key).append($('<input>', {
+      type: 'text',
+      class: 'form-control',
+      val: myObj[key]
+    }))
   })
 }
 
