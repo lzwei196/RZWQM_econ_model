@@ -7,6 +7,8 @@
 <body>
   <!-- location-options dropdown menu-->
   <div class="content-options" align="center" id="content-options-location">
+    <h3 id="name">Text</h3>
+    <br>
     <button type="button" class="btn btn-primary btn-rounded" id="Rzwqm_folder" onclick="locate_Rzwqm_folder()">
       Select The Rzwqm project folder
     </button>
@@ -68,9 +70,8 @@
           </div>
           <select class="custom-select" id="mitigation_methods">
             <option selected>Choose Best management practice</option>
-            <option value="1">Controlled Drainage</option>
-            <option value="2">Controlled Drainage + Subsurface-irrigation</option>
-            <option value="3">Free Drainage</option>
+            <option value="1">Controlled Drainage + Subsurface-irrigation</option>
+            <option value="2">Free Drainage</option>
           </select>
         </div>
       </div>
@@ -101,8 +102,23 @@
     function locate_Rzwqm_folder() {
       let locateReleaseFile = plugin.locateTheReleaseFile();
     }
-
-    $(document).ready(db_connection(db, "project_general_info", project_general_info, "name", loaded_project_name, 1));
+    var create_project_duration_array = (query_result) =>{
+      let project_duration = query_result['duration'].match(duration_year_regex)
+      let project_duration_diff = parseInt(project_duration[1])-parseInt(project_duration[0])
+      let project_duration_array = [];
+      let i = 0;
+      while(i< project_duration_diff+1){
+        project_duration_array.push(parseInt(project_duration[0]) + i)
+        i++
+      }
+      console.log(project_duration_array);
+      return project_duration_array;
+    }
+    $(document).ready(async function () {
+      document.getElementById('name').innerHTML = 'Current project: ' + loaded_project_name;
+      let query_result = await db_connection(db, "project_general_info", project_general_info, 'name', loaded_project_name, 1, 1);
+      var project_duation_array = create_project_duration_array(query_result);
+    });
   </script>
 </body>
 
