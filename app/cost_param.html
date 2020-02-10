@@ -20,11 +20,12 @@
         var fixed_cost_parts = require("./js/model_schemes.js").fixed_cost_parts;
         var expected_lifetime = require("./js/model_schemes.js").expected_lifetime;
         var loading_cost_and_expected_lifetime = () =>{
-            db_connection(db, 'fixed_cost_parts', fixed_cost_parts, "project", loaded_project_name, 0);
-            db_connection(db, 'expected_lifetime', expected_lifetime, "name")
+            db_connection(db, 'fixed_cost_parts', fixed_cost_parts, "project", loaded_project_name, 0, 1);
+            db_connection(db, 'expected_lifetime', expected_lifetime, name,null,2,0);
         }
         $(document).ready(loading_cost_and_expected_lifetime())
     </script>
+    </div>
 </body>
 
 </html>

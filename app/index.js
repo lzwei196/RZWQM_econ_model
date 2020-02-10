@@ -10,29 +10,52 @@ var db_connection = async function (
   model_scheme,
   property,
   value,
-  fill
+  fill,
+  findOneOrNot
 ) {
-  var info_model = await project_model_function(db, table_name, model_scheme);
-    var info_result = await info_model.findOne({
+  let info_model = await project_model_function(db, table_name, model_scheme);
+  let info_result = {};
+  let filtered_output_obj= {}
+  if (findOneOrNot === 1){
+     info_result = await info_model.findOne({
       [property]: value})
-
-  console.log(info_result);
+    filtered_output_obj = await filter_object_results(info_result)
+  }else {
+    info_result = await info_model.find(property)
+    filtered_output_obj = await filter_array_results(info_result)
+  }
 
   if (fill === 1) {
-    fill_the_blank(info_result);
+    fill_the_blank(filtered_output_obj);
   } else if (fill === 0) {
-    create_input_table(info_result, 'fixed_cost_parts')
+    create_input_table(filtered_output_obj, 'fixed_cost_parts')
+  }else if (fill === 2){
+    create_input_table(filtered_output_obj, 'fixed_cost_parts')
   }
 };
 
 //need to adjust from array filter to object reduce, taking out the value thats not null, then assign the value to the corresponding field by using jquery
-  var find_required_results = (myObj)=>{
-    var filtered_myObj = myObj.filter((Obj)=>{
-      return Obj;
+  var filter_array_results = (myObj)=>{
+    const filtered_output_obj = {};
+    myObj.forEach(element =>{
+      Object.keys(element).forEach(value =>{
+        filtered_output_obj[value] = element[value];
+      })
     })
+    return filtered_output_obj;
   }
 
-var fill_the_blank = function (myObj) {
+var filter_object_results = (myObj)=>{
+  const filtered_output_obj = {};
+  Object.keys(myObj).forEach(element =>{
+    if ((myObj[element]) != 0){
+      filtered_output_obj[element] = myObj[element];
+    }
+  })
+  return filtered_output_obj;
+}
+
+  var fill_the_blank = function (myObj) {
   Object.keys(myObj).forEach(key => {
     if (myObj[key] != null) {
       var field = "#" + key;
