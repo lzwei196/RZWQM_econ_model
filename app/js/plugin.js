@@ -29,7 +29,7 @@
     });
     console.log(fileFinalName)
     return fileFinalName[0];
-  };
+  }
 
   //locate the filepath, read the .dat file, then return both the path of the file as well as the data
   function locateTheRzwqm(projectDirectory) {
@@ -132,7 +132,6 @@
           "yield": yield
         })
       }
-      console.log(yield)
       return {
         yield: yield,
         N2O: N2O,

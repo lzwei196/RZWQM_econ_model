@@ -14,6 +14,7 @@ const project_general_info = {
   mitigation_methods: String,
   area: Number
 };
+
 const expected_lifetime = {
   name:{
     type:String,
@@ -63,6 +64,15 @@ const fixed_cost_parts = {
   drainage_preparation: Number,
 };
 
+const carbon_tax_cal_QC = {
+  year:{
+    type:Number,
+    unique:true,
+    primary:true
+  },
+  price:Number
+}
+
 const mitigation_choices = {
   name: String
 };
@@ -72,5 +82,6 @@ module.exports = {
   fixed_cost_parts: fixed_cost_parts,
   mitigation_method_variables: mitigation_choices,
   project_general_info: project_general_info,
-  expected_lifetime:expected_lifetime
+  expected_lifetime:expected_lifetime,
+  carbon_tax_cal_QC:carbon_tax_cal_QC
 };

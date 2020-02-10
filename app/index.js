@@ -4,8 +4,8 @@ const db = require("./js/DB.js").db;
 const path = require("path");
 const ipc = require("electron").ipcRenderer;
 let loaded_project_name = "";
-var db_connection = async function (
-  db,
+var model_scheme = require('./js/model_schemes')
+var db_connection = async function (db,
   table_name,
   model_scheme,
   property,
@@ -13,9 +13,10 @@ var db_connection = async function (
   fill
 ) {
   var info_model = await project_model_function(db, table_name, model_scheme);
-    var info_result = await info_model.findOne({
-      [property]: value})
-
+  console.log(info_model)
+  //var info_result = await info_model.findOne({
+    //  [property]: value})
+  var info_result = await info_model.find('year')
   console.log(info_result);
 
   if (fill === 1) {
@@ -53,8 +54,8 @@ var create_input_table = (myObj, table_name) => {
       type: 'text',
       class: 'form-control',
       val: myObj[key]
-    }))
-  })
+  }))
+})
 }
 
 ipc.on("messageFromMain", (event, message) => {

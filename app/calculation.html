@@ -82,7 +82,6 @@
       //two varibales that should be returned from calling the function
       let filePath = locate.path;
       let fileData = locate.data;
-      console.log(filePath)
       var beginLine = fileData.indexOf('=        below as the reference number.') + 3;
       var endLine = fileData.indexOf('=     SITE SPECIFIC PARAMETERS') - 2;
       var begin_plant_line = fileData.indexOf(
@@ -93,7 +92,7 @@
       var plant_date = [];
 
       for (var i = beginLine; i <= endLine; i++) {
-        if (i == beginLine) {
+        if (i === beginLine) {
           cropArray.push(fileData[i]);
         } else {
           var splited = fileData[i].split(/(\s+)/);
@@ -128,18 +127,18 @@
           // node couldn't execute the command
           // the *entire* stdout and stderr (buffered)
         });
-    };
+    }
 
     async function nsbCalc() {
-
+      var cost_array =[];
       var crop_final_price = JSON.parse(sessionStorage.getItem('cropWithPrice'))
       //read data from the output
       var output = await plugin.readData();
       var yieldRaw = output.yield;
-      console.log(output)
+
       //console.log(yieldRaw)
       let yield = [];
-      var revenue = 0;
+      var revenue = {};
       let i = 0;
 
       //taking out the final yield with the the number of the day
@@ -148,18 +147,19 @@
           yield.push(element);
         }
       })
+      //cost should be for each year, which is in nsb per year
       yield.forEach(function (element) {
-        revenue = revenue + element / 1000 *
+        let revenue_each = element / 1000 *
           Object.values(crop_final_price[i])[0]['price'] *
-          currency_rate_CAD *
-          bushel_tonne_exchange[Object.values(crop_final_price[i])[0]['crop']]
+        currency_rate_CAD *
+        bushel_tonne_exchange[Object.values(crop_final_price[i])[0]['crop']]
+        Object.values(crop_final_price[i])[0]['price']
+        Object.keys(crop_final_price[i])[0]
+        revenue[Object.keys(crop_final_price[i])[0]]=revenue_each
         i = i + 1;
       })
 
-      //connect to db to grab the production price
-      //depending on the mitigation method, the fixed cost is different
-      var nsb = revenue - total_cost;
-      console.log(nsb)
+
       display_result(nsb)
     }
 
@@ -168,11 +168,13 @@
     }
 
     $(document).ready(function () {
+      let carbon_tax_cal_QC = model_scheme.carbon_tax_cal_QC;
+      db_connection(db,'carbon_tax_cal_QC', carbon_tax_cal_QC, 'year',0)
       cropInfo();
       //writeRzwqm()chr;
       scraperFn();
     })
-  </script>
+   </script>
 
 </body>
 
