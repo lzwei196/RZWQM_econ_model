@@ -12,22 +12,80 @@
 
         </div>
         <br>
+        <div id="year_and_carbon_price" class="col-6">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">year</th>
+                        <th scope="col">carbon price</th>
+                    </tr>
+                </thead>
+                <tbody id="display_carbon_and_year">
+                </tbody>
+            </table>
+        </div>
+        <br>
         <div class="row justify-content-center">
             <button type="button" class="btn btn-primary btn-rounded" id="submit_cost_param_button">
                 Submit
             </button>
     </div>
+
     <script type="text/javascript">
         var fixed_cost_parts = require("./js/model_schemes.js").fixed_cost_parts;
+
         var expected_lifetime = require("./js/model_schemes.js").expected_lifetime;
-        var loading_cost_and_expected_lifetime = () =>{
-            db_connection(db, 'fixed_cost_parts', fixed_cost_parts, "project", loaded_project_name, 0, 1);
-            db_connection(db, 'expected_lifetime', expected_lifetime, name,null,2,0);
+
+        var year_with_confirmed_price = [];
+        var loading_cost_and_expected_lifetime = async () =>{
+            let fixed_costs_const = await db_connection(db, 'fixed_cost_parts', fixed_cost_parts, "project", loaded_project_name, 0, 1);
+            let expected_lifetime_const = await db_connection(db, 'expected_lifetime', expected_lifetime, name,null,2,0);
+            let filtered_exliftime_const = {};
+
+            Object.keys(fixed_costs_const).forEach(element_fixedcost=>{
+                console.log(element_fixedcost)
+                    expected_lifetime_const.forEach(element_exlife=>{
+                        console.log(element_exlife)
+                        if (element_exlife['name'].localeCompare(element_fixedcost)){
+                                filtered_exliftime_const[element_fixedcost] = element_exlife['year']
+                        }
+                    })
+            })
+
+            console.log(filtered_exliftime_const)
+            let carbon_tax_cal_QC = model_scheme.carbon_tax_cal_QC;
+            var carbon_tax_price_qc = await db_connection(db,'carbon_tax_cal_QC', carbon_tax_cal_QC,name,3,2)
+            var select = '<select class="form-control">'
+            carbon_tax_price_qc.forEach(element => {
+                const year = element['year']
+                const price = element['price']
+                select = select + '<option value=' + price +'>' + year+': '+ price+'</option>'
+            })
+
+            //adding the select options to each year
+            if (project_duation_array){
+                project_duation_array.forEach(element =>{
+                    $('#display_carbon_and_year').append(
+                        '<tr>' +
+                        '<td>'+element+ '</td>' +
+                            '<td id='+ element + '>' +
+                            select + '</select>'
+                        +'</td>' +
+                        '</tr>'
+                    )
+                })
+            }
         }
+
         $(document).ready(loading_cost_and_expected_lifetime())
+        $('#submit_cost_param_button').click(() =>{
+            year_with_confirmed_price = []
+            project_duation_array.forEach(element =>{
+                year_with_confirmed_price.push({[element]:$('#'+element).children().val()})
+            });
+        })
     </script>
     </div>
 </body>
-
 
 </html>
