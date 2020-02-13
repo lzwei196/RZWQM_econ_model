@@ -37,22 +37,22 @@
         var expected_lifetime = require("./js/model_schemes.js").expected_lifetime;
 
         var year_with_confirmed_price = [];
+
+        //document ready function, call db and return the according result.
         var loading_cost_and_expected_lifetime = async () =>{
             let fixed_costs_const = await db_connection(db, 'fixed_cost_parts', fixed_cost_parts, "project", loaded_project_name, 0, 1);
             let expected_lifetime_const = await db_connection(db, 'expected_lifetime', expected_lifetime, name,null,2,0);
             let filtered_exliftime_const = {};
 
-            Object.keys(fixed_costs_const).forEach(element_fixedcost=>{
-                console.log(element_fixedcost)
-                    expected_lifetime_const.forEach(element_exlife=>{
-                        console.log(element_exlife)
-                        if (element_exlife['name'].localeCompare(element_fixedcost)){
-                                filtered_exliftime_const[element_fixedcost] = element_exlife['year']
-                        }
-                    })
+            expected_lifetime_const.forEach(element => {
+                Object.keys(fixed_costs_const).forEach(element_fixedcost => {
+                    if (element['name'].trim() == element_fixedcost.trim()) {
+                        filtered_exliftime_const[element_fixedcost] = element['year']
+                    }
+                })
             })
 
-            console.log(filtered_exliftime_const)
+            create_input_table(filtered_exliftime_const,'fixed_cost_parts')
             let carbon_tax_cal_QC = model_scheme.carbon_tax_cal_QC;
             var carbon_tax_price_qc = await db_connection(db,'carbon_tax_cal_QC', carbon_tax_cal_QC,name,3,2)
             var select = '<select class="form-control">'
@@ -76,6 +76,7 @@
                 })
             }
         }
+
 
         $(document).ready(loading_cost_and_expected_lifetime())
         $('#submit_cost_param_button').click(() =>{

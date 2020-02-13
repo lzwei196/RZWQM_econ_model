@@ -6,6 +6,7 @@ const ipc = require("electron").ipcRenderer;
 var model_scheme = require('./js/model_schemes')
 let loaded_project_name = "";
 let duration_year_regex = /\b\d{4}\b/g;
+var moment = require('moment');
 
 var db_connection = async function (db, table_name, model_scheme, property, value, fill, findOneOrNot) {
   let info_model = await project_model_function(db, table_name, model_scheme);

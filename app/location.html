@@ -118,6 +118,14 @@
     $(document).ready(async function () {
       document.getElementById('name').innerHTML = 'Current project: ' + loaded_project_name;
       let query_result = await db_connection(db, "project_general_info", project_general_info, 'name', loaded_project_name, 1, 1);
+
+      const test = moment("10/11/2016", "DD-MM-YYYY")
+      const test_end = moment("31/12/2016", "DD-MM-YYYY")
+      console.log(test)
+      console.log(test_end)
+
+      console.log(test_end.diff(test,'days'))
+
       project_duation_array = create_project_duration_array(query_result);
     });
 
