@@ -103,6 +103,7 @@
     function locate_Rzwqm_folder() {
       let locateReleaseFile = plugin.locateTheReleaseFile();
     }
+
     var create_project_duration_array = (query_result) =>{
       let project_duration = query_result['duration'].match(duration_year_regex)
       let project_duration_diff = parseInt(project_duration[1])-parseInt(project_duration[0])
@@ -112,21 +113,20 @@
         project_duration_array.push(parseInt(project_duration[0]) + i)
         i++
       }
+      console.log(project_duration_array)
       return project_duration_array;
     }
 
     $(document).ready(async function () {
       document.getElementById('name').innerHTML = 'Current project: ' + loaded_project_name;
       let query_result = await db_connection(db, "project_general_info", project_general_info, 'name', loaded_project_name, 1, 1);
-
-      const test = moment("10/11/2016", "DD-MM-YYYY")
-      const test_end = moment("31/12/2016", "DD-MM-YYYY")
-      console.log(test)
-      console.log(test_end)
-
-      console.log(test_end.diff(test,'days'))
-
+      const year_with_date = if_date(query_result['duration'])
+      console.log(year_with_date)
       project_duation_array = create_project_duration_array(query_result);
+      console.log(project_duation_array.length)
+      console.log(if_read_date(project_duation_array))
+      complete_date_each_year(year_with_date, if_read_date(project_duation_array), project_duation_array)
+      console.log(ana_date)
     });
 
   </script>

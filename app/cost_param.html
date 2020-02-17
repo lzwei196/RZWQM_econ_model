@@ -38,6 +38,9 @@
 
         var year_with_confirmed_price = [];
 
+        var filtered_exliftime_const_with_price =[];
+
+
         //document ready function, call db and return the according result.
         var loading_cost_and_expected_lifetime = async () =>{
             let fixed_costs_const = await db_connection(db, 'fixed_cost_parts', fixed_cost_parts, "project", loaded_project_name, 0, 1);
@@ -48,9 +51,11 @@
                 Object.keys(fixed_costs_const).forEach(element_fixedcost => {
                     if (element['name'].trim() == element_fixedcost.trim()) {
                         filtered_exliftime_const[element_fixedcost] = element['year']
+                        filtered_exliftime_const_with_price.push({[element_fixedcost]:[{'price':fixed_costs_const[element_fixedcost]},{'year':element['year']}]})
                     }
                 })
             })
+            console.log(filtered_exliftime_const_with_price)
 
             create_input_table(filtered_exliftime_const,'fixed_cost_parts')
             let carbon_tax_cal_QC = model_scheme.carbon_tax_cal_QC;
@@ -84,7 +89,9 @@
             project_duation_array.forEach(element =>{
                 year_with_confirmed_price.push({[element]:$('#'+element).children().val()})
             });
+            console.log(year_with_confirmed_price)
         })
+
     </script>
     </div>
 </body>

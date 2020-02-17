@@ -139,8 +139,24 @@
       let yield = [];
       var revenue = {};
       let i = 0;
+      let CO2_final = splice_ana_field(ana_date,output.CO2)
+      let N2O_final = splice_ana_field(ana_date,output.N2O)
+      let NxO_final = splice_ana_field(ana_date,output.NxO)
+      let CH4_final = splice_ana_field(ana_date,output.CH4)
 
-      //taking out the final yield with the the number of the day
+      //for each year, first calculate the fixed cost and production cost each year(since they would be the same for each year)
+      //except if it has different caltivars
+      //they are all in per hectare in the database
+
+      //fixed cost each year
+      let fixed_cost_each_year = 0;
+        filtered_exliftime_const_with_price.forEach(item=>{
+         // console.log(Object.values(item)[0][0]['price'])
+          fixed_cost_each_year = fixed_cost_each_year+(Object.values(item)[0][0]['price']/Object.values(item)[0][1]['year'])
+      })
+
+
+              //taking out the final yield with the the number of the day
       yieldRaw.forEach(function (element, index) {
         if (element != 0 && yieldRaw[index + 1] == 0) {
           yield.push(element);
@@ -158,8 +174,6 @@
         i = i + 1;
       })
 
-
-      display_result(nsb)
     }
 
     function display_result(result) {
@@ -168,7 +182,6 @@
 
     $(document).ready(function () {
       cropInfo();
-      //writeRzwqm()chr;
       scraperFn();
     })
    </script>

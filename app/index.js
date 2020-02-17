@@ -7,6 +7,7 @@ var model_scheme = require('./js/model_schemes')
 let loaded_project_name = "";
 let duration_year_regex = /\b\d{4}\b/g;
 var moment = require('moment');
+var ana_date = [];
 
 var db_connection = async function (db, table_name, model_scheme, property, value, fill, findOneOrNot) {
   let info_model = await project_model_function(db, table_name, model_scheme);
@@ -42,6 +43,83 @@ var db_connection = async function (db, table_name, model_scheme, property, valu
   }
 };
 
+var date_diff_endof = (year) =>{
+  const start = moment(year, "DD-MM-YYYY")
+  const end = moment(year, "DD-MM-YYYY").endOf('year').format("DD/MM/YYYY").toString();
+  const end_moment = moment(end, 'DD-MM-YYYY')
+  return end_moment.diff(start, 'days')
+}
+
+var date_diff_startof = (year) =>{
+  const end = moment(year, "DD-MM-YYYY")
+  const start = moment(year, "DD-MM-YYYY").startOf('year').format("DD/MM/YYYY").toString();
+  const start_moment = moment(start, 'DD-MM-YYYY')
+  return end.diff(start_moment, 'days')
+}
+
+var if_date= (year) =>{
+  if (year.length  === 1){
+    return year
+  }else if (year.length > 1 ){
+    const splitted_year = year.split('-').map(x=>x.trim())
+    return  splitted_year;
+  }
+}
+
+var if_read_date = (duration_array) =>{
+  switch (true) {
+    //only has one year
+    case duration_array.length === 1:
+      return 1;
+      //only has two years
+    case duration_array.length === 2:
+      return 2;
+      //have more than two years.
+    case duration_array.length > 2 :
+      return 3;
+  }
+}
+
+var complete_date_each_year = (year, length, duration)=>{
+  if(length === 1){
+    const days_in_year = date_diff_endof(year)
+    ana_date.push({[duration[0]]:days_in_year})
+  } else if (length === 2){
+      for (let z =0; z<duration.length;z++){
+        let days_in_year = date_diff_endof(year[z])
+        ana_date.push({[duration[z]]:days_in_year})
+      }
+  }else {
+      for (let z=0; z<duration.length;z++){
+        if (z === 0){
+          let days_in_year = date_diff_endof(year[0])
+          ana_date.push({[duration[z]]:days_in_year+1})
+        }else if (z===duration.length-1){
+          let days_in_year = date_diff_startof(year[1])
+          ana_date.push({[duration[z]]:days_in_year+1})
+        }else {
+          let year_with_date = '01-01-'+duration[z]
+          let days_in_year = date_diff_endof(year_with_date)
+          ana_date.push({[duration[z]]:days_in_year+1})
+        }
+      }
+  }
+}
+
+var splice_ana_field =(ana_date, field_data)=>{
+  const final_field_each_year = [];
+  ana_date.forEach(function (item,index,name) {
+    let days = 0;
+    if (index === 0) {
+      days = days + Object.values(item)[0]
+      final_field_each_year.push({[Object.keys(item)[0]]: field_data.splice(0, days)})
+    }else {
+      final_field_each_year.push({[Object.keys(item)[0]]: field_data.splice(days, days + Object.values(item)[0])})
+      days = days + Object.values(item)[0]
+    }
+  })
+  return final_field_each_year
+}
 
 //need to adjust from array filter to object reduce, taking out the value thats not null, then assign the value to the corresponding field by using jquery
     var filter_object_results = (myObj)=>{

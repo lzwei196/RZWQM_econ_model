@@ -105,13 +105,14 @@
       //let data = fs.readFileSync(filepath).toString().split("\n");
       let resultData = fs.readFileSync(resultFilepath).toString().split("\n");
       //console.log(data);
-      resultData.splice(0, 23);
+      resultData.splice(0, 24);
       //writeToLocal(data);
       //should take in argument
       let N2O = [];
       let NxO = [];
       let CO2 = [];
       let yield = [];
+      let  CH4 = [];
       let yearDay = [];
       let data = [];
       for (let i = 0; i < resultData.length - 1; i++) {
@@ -121,21 +122,20 @@
         while (numbers = regex.exec(oneData)) {
           resultArray.push(numbers[0]);
         }
-        N2O.push(Number(resultArray[100]));
-        NxO.push(Number(resultArray[101]));
+        CH4.push(Number(resultArray[95]))
+        N2O.push(Number(resultArray[96]));
+        NxO.push(Number(resultArray[97]));
         CO2.push(Number(resultArray[77]));
         yield.push(Number(resultArray[43]))
         yearDay.push(resultArray[0]);
-        data.push({
-          "N2O": N2O,
-          "CO2": CO2,
-          "yield": yield
-        })
       }
       return {
         yield: yield,
         N2O: N2O,
-        CO2: CO2
+        CO2: CO2,
+        yearDay:yearDay,
+        NxO:NxO,
+        CH4:CH4
       };
     }
   }
