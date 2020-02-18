@@ -22,7 +22,6 @@ var db_connection = async function (db, table_name, model_scheme, property, valu
   }else if(findOneOrNot === 0){
     info_result = await info_model.find(property)
     // filtered_output_obj = await filter_array_results(info_result)
-
   }else {
     info_result = await info_model.find(property)
   }

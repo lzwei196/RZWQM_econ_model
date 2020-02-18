@@ -38,6 +38,7 @@
     var constantRaw = fs.readFileSync("constants.json");
     var constant = JSON.parse(constantRaw);
     var currency_rate_CAD = JSON.parse(sessionStorage.getItem('currency_rate'))['CAD']
+    var production_cost = [];
 
     function readRzwqm() {
       plugin.readRzwqm();
@@ -184,10 +185,16 @@
       $("#revenue").append('<h3 align="center" >' + result + '</h3>')
     }
 
-    $(document).ready(function () {
+    $(document).ready(async function () {
       cropInfo();
       scraperFn();
-    })
+      let production_cost_model_scheme = model_scheme.production_cost
+     // production_cost = await db_connection(db,'production_cost',production_cost_model_scheme, "caltivar_breed",null,2,0
+              let production_model = await project_model_function(db,'production_cost',production_cost_model_scheme);
+      let final_result =await production_model.find(caltivar_breed)
+      console.log(final_result)
+    }
+    )
    </script>
 
 </body>
