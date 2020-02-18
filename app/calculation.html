@@ -131,6 +131,7 @@
 
       var cost_array =[];
       var crop_final_price = JSON.parse(sessionStorage.getItem('cropWithPrice'))
+      console.log(crop_final_price)
       //read data from the output
       var output = await plugin.readData();
       var yieldRaw = output.yield;
@@ -151,10 +152,13 @@
       //fixed cost each year
       let fixed_cost_each_year = 0;
         filtered_exliftime_const_with_price.forEach(item=>{
-         // console.log(Object.values(item)[0][0]['price'])
+         //(Object.values(item)[0][0]['price'])
           fixed_cost_each_year = fixed_cost_each_year+(Object.values(item)[0][0]['price']/Object.values(item)[0][1]['year'])
       })
 
+      let production_cost_array = [];
+      let plant_date = JSON.parse(sessionStorage.getItem('plant_date'))
+          plant_date.forEach
 
               //taking out the final yield with the the number of the day
       yieldRaw.forEach(function (element, index) {
