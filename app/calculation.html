@@ -5,6 +5,7 @@
 </head>
 
 <body>
+<div class="container-fluid" align="center" id="content-options-location">
   <div id='carbonPrice'>
   </div>
   <div class="calculate-button" align="center" id="calculate-button">
@@ -21,11 +22,21 @@
   <br>
   <br>
 
-  <div id="revenue">
-    <h3 class="nsb-price" align="center">Net Social Benefit(CAD)：</h3>
+  <div id="nsb" class="col-6" align="center">
+      <table class="table">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">Year</th>
+          <th scope="col">Net benefit-cost(CAD)</th>
+        </tr>
+        </thead>
+        <tbody id="display_nsb">
+        </tbody>
+      </table>
   </div>
-
+</div>
   <script>
+    // <h3 class="nsb-price" align="center">Net Social Benefit(CAD)：</h3>
     //loading up the required depenency variable
     var fs = require('fs');
     var ProjectDir = '';
@@ -39,6 +50,53 @@
     var constant = JSON.parse(constantRaw);
     var currency_rate_CAD = JSON.parse(sessionStorage.getItem('currency_rate'))['CAD']
     var production_cost = [];
+    var GHG_tax_cost_final = [];
+    var final_nsb_each_year = [];
+    var final_production_cost_each_year = [];
+    var final_nsb_each_year_obj = {};
+
+    var generate_nsb_table = (nsb) =>{
+        nsb.forEach(element =>{
+          Object.keys(element).forEach(function (key) {
+            $('#display_nsb').append(
+                    '<tr>' +
+                    '<td>'+key+ '</td>' +
+                    '<td id='+ key + '>' +
+                    element[key].toFixed(2)
+                    +'</td>' +
+                    '</tr>'
+            )
+          })
+      })
+    }
+
+    var return_sum_GHG = function (ana_field_GHG) {
+        let aggregate = [];
+        ana_field_GHG.forEach(function (item) {
+          let obj = {}
+        let sum = Object.values(item)[0].reduce((accumulator, current_value)=> accumulator+current_value,0)
+          obj[Object.keys(item)[0]] = sum
+          aggregate.push(obj)
+        })
+      return aggregate;
+    }
+
+    var return_production_cost_sum =(production_cost) =>{
+      let final_cost = [];
+       production_cost.forEach(function (item) {
+            let obj = {};
+            let sum = 0;
+            let cost_array = Object.values(item)[0]
+            Object.values(cost_array).forEach(function (cost) {
+                if(typeof cost != 'string') {
+                    sum = sum + cost
+                }
+            })
+          obj[Object.keys(item)[0]] = sum;
+          final_cost.push(obj)
+        })
+      return final_cost
+    }
 
     function readRzwqm() {
       plugin.readRzwqm();
@@ -105,7 +163,6 @@
           [splited[6]]: cropArray[splited[0]]
         });
       }
-
       ss_plant(plant_date)
     }
 
@@ -130,9 +187,7 @@
 
     async function nsbCalc() {
 
-      var cost_array =[];
-      var crop_final_price = JSON.parse(sessionStorage.getItem('cropWithPrice'))
-      console.log(crop_final_price)
+      var crop_final_price = await JSON.parse(sessionStorage.getItem('cropWithPrice'))
       //read data from the output
       var output = await plugin.readData();
       var yieldRaw = output.yield;
@@ -145,10 +200,31 @@
       let N2O_final = splice_ana_field(ana_date,output.N2O)
       let NxO_final = splice_ana_field(ana_date,output.NxO)
       let CH4_final = splice_ana_field(ana_date,output.CH4)
+      var GHG_final = []
+
+      //return the aggregate GHG emission each year:
+       project_duation_array.forEach(function (item, index) {
+         let obj = {};
+          let sum = 0;
+          sum = sum + Object.values(return_sum_GHG(CO2_final)[index])[0]
+         sum = sum + Object.values(return_sum_GHG(N2O_final)[index])[0]
+         sum = sum + Object.values(return_sum_GHG(NxO_final)[index])[0]
+         sum = sum + Object.values(return_sum_GHG(CH4_final)[index])[0]
+         obj[item] = sum
+         GHG_final.push(obj)
+      }
+      )
+
 
       //for each year, first calculate the fixed cost and production cost each year(since they would be the same for each year)
       //except if it has different caltivars
       //they are all in per hectare in the database
+
+      project_duation_array.forEach(function (item,index) {
+            let obj = {}
+            obj[item] = Object.values(year_with_confirmed_price[index])[0]* (Object.values(GHG_final[index])[0]/1000)
+            GHG_tax_cost_final.push(obj)
+      })
 
       //fixed cost each year
       let fixed_cost_each_year = 0;
@@ -159,7 +235,17 @@
 
       let production_cost_array = [];
       let plant_date = JSON.parse(sessionStorage.getItem('plant_date'))
-          plant_date.forEach
+          plant_date.forEach(function (plant,index) {
+              production_cost.forEach(function (plant_cost) {
+                if (plant_cost['caltivar_breed'].trim() == Object.values(plant)[0].trim()) {
+                  let obj = {};
+                  obj[Object.keys(plant)[0]] = plant_cost
+                  production_cost_array.push(obj)
+                }
+              })
+          })
+
+      //gather all the GHG for each year, so what i need to do is to take out the GHG emission from each year
 
               //taking out the final yield with the the number of the day
       yieldRaw.forEach(function (element, index) {
@@ -179,23 +265,35 @@
         i = i + 1;
       })
 
-    }
+      final_production_cost_each_year = return_production_cost_sum(production_cost_array)
 
-    function display_result(result) {
-      $("#revenue").append('<h3 align="center" >' + result + '</h3>')
-    }
+      //calculate the net benefit vs. cost
+      Object.values(revenue).forEach(function (item,index) {
+            let obj = {};
+            //console.log(item, fixed_cost_each_year,Object.values(production_cost_array[index])[0],Object.values(GHG_tax_cost_final[index])[0] )
+            let nsb = item - fixed_cost_each_year - Object.values(final_production_cost_each_year[index])[0] - Object.values(GHG_tax_cost_final[index])[0]
+            obj[Object.keys(production_cost_array[index])[0]] = nsb;
+            final_nsb_each_year.push(obj);
+      })
+      console.log(final_nsb_each_year)
+      generate_nsb_table(final_nsb_each_year)
+      final_nsb_each_year_obj = array_to_obj(final_nsb_each_year)
+}
 
-    $(document).ready(async function () {
-      cropInfo();
-      scraperFn();
-      let production_cost_model_scheme = model_scheme.production_cost
-     // production_cost = await db_connection(db,'production_cost',production_cost_model_scheme, "caltivar_breed",null,2,0
-              let production_model = await project_model_function(db,'production_cost',production_cost_model_scheme);
-      let final_result =await production_model.find(caltivar_breed)
-      console.log(final_result)
-    }
-    )
-   </script>
+function display_result(result) {
+$("#revenue").append('<h3 align="center" >' + result + '</h3>')
+}
+
+$(document).ready(async function () {
+await cropInfo();
+await scraperFn();
+let production_cost_model_scheme = model_scheme.production_cost
+// production_cost = await db_connection(db,'production_cost',production_cost_model_scheme, "caltivar_breed",null,2,0
+let production_model = await project_model_function(db,'production_cost',production_cost_model_scheme);
+production_cost =await production_model.find(name)
+}
+)
+</script>
 
 </body>
 
