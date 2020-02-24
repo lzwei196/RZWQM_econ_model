@@ -9,6 +9,14 @@ let duration_year_regex = /\b\d{4}\b/g;
 var moment = require('moment');
 var ana_date = [];
 
+var array_to_obj = (the_array) =>{
+  let result = {};
+  for (let i = 0; i < the_array.length; i++) {
+    result[Object.keys(the_array[i])[0]] = Object.values(the_array[i])[0];
+  }
+  return result
+}
+
 var db_connection = async function (db, table_name, model_scheme, property, value, fill, findOneOrNot) {
   let info_model = await project_model_function(db, table_name, model_scheme);
   let info_result = {};

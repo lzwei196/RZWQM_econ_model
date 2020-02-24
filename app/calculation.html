@@ -147,6 +147,14 @@
         '==               M A N U R E   M A N A G E M E N T                    ==') - 3;
       var cropArray = [];
       var plant_date = [];
+      var xlsx = require('xlsx');
+
+      var export_to_csv = (the_array) =>{
+          let newWB = xlsx.utils.book_new();
+          let newWS = xlsx.utils.aoa_to_sheet(the_array)
+          xlsx.utils.book_append_sheet(newWB,newWS,"NSB")
+          xlsx.writeFile(newWB,"newDataFile.xlsx")
+      }
 
       for (var i = beginLine; i <= endLine; i++) {
         if (i === beginLine) {
@@ -278,6 +286,13 @@
       console.log(final_nsb_each_year)
       generate_nsb_table(final_nsb_each_year)
       final_nsb_each_year_obj = array_to_obj(final_nsb_each_year)
+      console.log( yield)
+      console.log(revenue)
+      console.log(final_production_cost_each_year)
+      console.log(fixed_cost_each_year)
+      console.log( GHG_tax_cost_final)
+      console.log(GHG_final)
+      console.log(year_with_confirmed_price)
 }
 
 function display_result(result) {

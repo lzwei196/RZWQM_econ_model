@@ -29,7 +29,6 @@ const production_cost = {
     unique: true,
     primary: true
   },
-
   seed_price: Number,
   fertilizer_price: Number,
   spread_lime_price: Number,
@@ -47,7 +46,12 @@ const production_cost = {
   drying_on_farm_price: Number,
   storage_and_vantilation_price: Number,
   transport_top_regional_center_price: Number,
-  joint_plan: Number
+  joint_plan: Number,
+  tranport_to_crushing_plant:Number,
+  pulverized:Number,
+  roller:Number,
+  stone_removal:Number,
+  sowing_with_grain_drill:Number
 };
 
 const fixed_cost_parts = {

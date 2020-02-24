@@ -20,12 +20,11 @@
                 <button type="button" class="btn btn-danger btn-rounded" onclick="">Export to CSV</button>
               </div>
     <!-- prepare a DOM container with width and height -->
-    <div id="main" class="container-fluid" style="width: 600px;height:400px;"></div>
+    <div id="First" class="container-fluid" style="width: 600px;height:400px;"></div>
 
 </body>
 <script type="text/javascript">
     //loading up dependecies
-    var app = require('electron').remote;
     var dialog = app.dialog;
     //var path = require('path');
     var fs = require('fs');
@@ -42,7 +41,6 @@
 
     //global variables
     var xlsx = require('xlsx');
-    let excel = [];
     var readData = require('./js/plugin').readData()
 
     //load the page when the DOM is ready
@@ -50,20 +48,6 @@
         drawGraph();
     });
 
-    function writeToXlsx(){
-        console.log(excel);
-        let data = excel;
-        let newWB = xlsx.utils.book_new();
-        let newWS = xlsx.utils.json_to_sheet(data)
-        xlsx.utils.book_append_sheet(newWB,newWS,"DATA")
-        xlsx.writeFile(newWB,"newDataFile.xlsx")
-    }
-
-    function writeToLocal(data) {
-        fs.writeFile("C:\\GHG-SE\\GHG-SE-FD\\RZWQM.DAT", data.join("\n"), function (err) {
-            if (err) return console.log(err);
-        })
-    }
 
     // based on prepared DOM, initialize echarts instance
     function drawGraph() {
@@ -72,31 +56,58 @@
 
         var option = {
             title: {
-                text: 'GHG Emission'
+                text: 'Net Cost-Benefit Analysis'
             },
-            tooltip: {},
-            legend: {
-                data: ['N2O', 'NxO']
+            tooltip: {
+                show: true,
+                trigger: 'axis',
             },
-            xAxis: {
-                data: yearDay,
+            grid: [{
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                height:'100px',
+                containLabel: true,
+                top:'50px',
+            },{
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                height:'100px',
+                top:'180px',
+                containLabel: true
+            }],
+            xAxis: [{
+                data: Object.keys(final_nsb_each_year_obj),
                 type: 'category',
                 boundaryGap: false,
-            },
-            yAxis: {
-                type: 'value'
-            },
+                gridIndex: 0
+            },{
+
+            }],
+            yAxis: [{
+                type: 'value',
+                gridIndex: 0
+            },{
+                type: 'value',
+                gridIndex: 1
+            }],
             series: [{
-                name: 'N2O',
+                name: 'Net Cost-Benefit',
                 type: 'line',
                 stack: 'total',
-                data: N2O
-            }, {
-                name: 'NxO',
-                type: 'line',
-                stack: 'total',
-                data: NxO
-            }]
+                data: Object.values(final_nsb_each_year_obj),
+                xAxisIndex: 0,
+                yAxisIndex: 0,
+            },
+                {
+                    name: 'Net Cost-Benefit',
+                    type: 'line',
+                    stack: 'total',
+                    data: Object.values(final_nsb_each_year_obj),
+                    xAxisIndex: 1,
+                    yAxisIndex: 1,
+                }]
         };
 
         // use configuration item and data specified to show chart
