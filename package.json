@@ -23,7 +23,7 @@
     "echarts": "^4.6.0",
     "electron-builder": "^22.2.0",
     "idb": "^5.0.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jsdom": "^16.2.0",
     "json2csv": "^4.5.4",
     "mathjs": "^6.5.0",
