@@ -38,7 +38,7 @@
     "sqlite3": "^4.1.1",
     "tether": "^1.4.7",
     "trilogy": "^2.0.2",
-    "xlsx": "^0.15.4"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.12.0",
