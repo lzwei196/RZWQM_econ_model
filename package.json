@@ -17,7 +17,7 @@
     "cities.json": "^1.1.5",
     "compass": "^0.1.1",
     "convert-array-to-csv": "^1.0.10",
-    "d3": "^5.15.0",
+    "d3": "^7.6.1",
     "dateformat": "^3.0.3",
     "datepicker-bootstrap": "^1.9.13",
     "echarts": "^4.6.0",
